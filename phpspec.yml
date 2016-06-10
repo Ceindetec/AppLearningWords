@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: accesorfid
+        psr4_prefix: accesorfid
+        src_path: accesorfid
