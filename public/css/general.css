@@ -186,3 +186,7 @@
 		opacity: 0;
 	}
 }
+
+table.dataTable td, table.dataTable th {
+	text-align: center;
+}
