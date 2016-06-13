@@ -28,7 +28,7 @@ return [
     |
     */
 
-    'model' => accesorfid\User::class,
+    'model' => LearningWords\User::class,
 
     /*
     |--------------------------------------------------------------------------

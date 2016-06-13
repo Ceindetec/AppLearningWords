@@ -1,6 +1,6 @@
 <?php
 
-namespace accesorfid\Events;
+namespace LearningWords\Events;
 
 abstract class Event
 {

@@ -1,4 +1,4 @@
-<?php namespace accesorfid\Commands;
+<?php namespace LearningWords\Commands;
 
 abstract class Command {
 

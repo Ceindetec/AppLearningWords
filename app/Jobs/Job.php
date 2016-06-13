@@ -1,6 +1,6 @@
 <?php
 
-namespace accesorfid\Jobs;
+namespace LearningWords\Jobs;
 
 use Illuminate\Bus\Queueable;
 

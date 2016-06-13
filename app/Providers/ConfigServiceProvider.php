@@ -1,4 +1,4 @@
-<?php namespace accesorfid\Providers;
+<?php namespace LearningWords\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

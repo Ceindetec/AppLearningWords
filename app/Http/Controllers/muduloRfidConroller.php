@@ -1,11 +1,11 @@
 <?php
 
-namespace accesorfid\Http\Controllers;
+namespace LearningWords\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use accesorfid\Http\Requests;
-use accesorfid\Http\Controllers\Controller;
+use LearningWords\Http\Requests;
+use LearningWords\Http\Controllers\Controller;
 
 class muduloRfidConroller extends Controller
 {

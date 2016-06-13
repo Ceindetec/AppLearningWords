@@ -1,10 +1,10 @@
 <?php
 
-namespace accesorfid\Http\Controllers\Auth;
+namespace LearningWords\Http\Controllers\Auth;
 
-use accesorfid\User;
+use LearningWords\User;
 use Validator;
-use accesorfid\Http\Controllers\Controller;
+use LearningWords\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
