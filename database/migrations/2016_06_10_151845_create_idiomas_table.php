@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsuariotestsTable extends Migration
+class CreateIdiomasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,10 @@ class CreateUsuariotestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('usuariotests', function (Blueprint $table) {
+        Schema::create('idiomas', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('usuario');
-            $table->string('email');
-            $table->string('contrasena');
+            $table->string('nombre');
+            $table->string('sigla');           
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateUsuariotestsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('usuariotests');
+        Schema::drop('idiomas');
     }
 }

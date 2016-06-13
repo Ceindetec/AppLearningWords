@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVerbosTable extends Migration
+class CreateTipoPalabrasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,10 @@ class CreateVerbosTable extends Migration
      */
     public function up()
     {
-        Schema::create('verbos', function (Blueprint $table) {
+        Schema::create('tipos_palabra', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('verbo')->unique();
-            $table->string('presente')->unique();
-            $table->string('pasado')->unique();
-            $table->string('participio')->unique();
-            $table->enum('tipo',['regular', 'irregular']);
+            $table->string('nombre');
+            $table->string('sigla');            
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class CreateVerbosTable extends Migration
      */
     public function down()
     {
-        Schema::drop('verbos');
+        Schema::drop('tipos_palabra');
     }
 }

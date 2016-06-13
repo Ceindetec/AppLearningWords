@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVocabulariosTable extends Migration
+class CreateActividadesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,10 @@ class CreateVocabulariosTable extends Migration
      */
     public function up()
     {
-        Schema::create('vocabularios', function (Blueprint $table) {
+        Schema::create('actividades', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nombre', 25)->unique();
-            $table->string('descripcion', 25)->nullable();
-            $table->enum('tipo', ['palabra', 'verbo']);
+            $table->string('nombre');
+            $table->string('sigla'); 
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateVocabulariosTable extends Migration
      */
     public function down()
     {
-        Schema::drop('vocabularios');
+        Schema::drop('actividades');
     }
 }
