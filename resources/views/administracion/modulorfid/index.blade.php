@@ -1,25 +1,6 @@
 @extends('layouts.admin.principal')
 
-@section('css')
-<style>
-td, th {
-	text-align: center;
-}
-.btgrid {
-	padding: 2px 12px;
-	margin-bottom: 2px;
-	margin-right: 2px;
-}
-.lista{
-	padding-top: 6px;
-	padding-bottom: 6px;
-}
-.icon{
-	padding-left: 0px;
-	padding-top: 2px;
-}
-</style>
-@endsection
+
 
 @section('content')
 
