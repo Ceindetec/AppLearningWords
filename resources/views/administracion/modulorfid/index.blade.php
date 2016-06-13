@@ -69,7 +69,7 @@ $(function(){
 
 	$('#MudulosRFID').on('init.dt', function ( ) {
 		handleAjaxModal();
-	} )
+	});
 
 	table[0] = $('#MudulosRFID').DataTable( {
 		"language": {
