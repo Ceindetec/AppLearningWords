@@ -1,6 +1,6 @@
 <?php
 
-namespace accesorfid;
+namespace LearningWords;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
@@ -19,10 +19,5 @@ class User extends Model implements AuthenticatableContract,
     protected $primaryKey = 'documento';
 
     protected $table = 'users';
-
-  
-    protected $fillable = ['documento','rol', 'nombres', 'apellidos','contrasena'];
-
-
-    //protected $hidden = ['password', 'remember_token'];
+    protected $fillable = ['documento','rol', 'nombres', 'apellidos','contrasena','institucion_id'];
 }

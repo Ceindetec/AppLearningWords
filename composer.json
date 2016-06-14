@@ -24,7 +24,7 @@
             "Bl"
         ],
         "psr-4": {
-            "accesorfid\\": "app/"
+            "LearningWords\\": "app/"
         }
     },
     "autoload-dev": {

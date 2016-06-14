@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePalabrasEspsTable extends Migration
+class CreateInstitucionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,11 @@ class CreatePalabrasEspsTable extends Migration
      */
     public function up()
     {
-        Schema::create('palabras_esp', function (Blueprint $table) {
+        Schema::create('instituciones', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('palabra');
-             $table->integer('categorias_id')->unsigned();
-            $table->foreign('categorias_id')->references('id')->on('categorias');
+            $table->string('nombre',100);
+            $table->string('nit',100);
+            $table->integer('cantidad_licencias');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreatePalabrasEspsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('palabras_esp');
+        Schema::drop('instituciones');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace accesorfid\Http\Middleware;
+namespace LearningWords\Http\Middleware;
 
 use Illuminate\Cookie\Middleware\EncryptCookies as BaseEncrypter;
 

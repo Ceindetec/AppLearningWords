@@ -15,10 +15,12 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->string('documento',10)->unique();
             $table->primary('documento');
-            $table->enum('rol', ['estudiante', 'docente']);
+            $table->enum('rol', ['superadmin','administrador','estudiante', 'docente']);
             $table->string('nombres',100);
             $table->string('apellidos',100);
             $table->string('contrasena',60);
+            $table->integer('institucion_id')->unsigned();
+            $table->foreign('institucion_id')->references('id')->on('instituciones');
             $table->rememberToken();
             $table->timestamps();
         });

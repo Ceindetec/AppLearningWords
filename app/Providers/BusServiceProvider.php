@@ -1,4 +1,4 @@
-<?php namespace accesorfid\Providers;
+<?php namespace LearningWords\Providers;
 
 use Illuminate\Bus\Dispatcher;
 use Illuminate\Support\ServiceProvider;
@@ -16,7 +16,7 @@ class BusServiceProvider extends ServiceProvider {
 		$dispatcher->mapUsing(function($command)
 		{
 			return Dispatcher::simpleMapping(
-				$command, 'accesorfid\Commands', 'accesorfid\Handlers\Commands'
+				$command, 'LearningWords\Commands', 'LearningWords\Handlers\Commands'
 			);
 		});
 	}

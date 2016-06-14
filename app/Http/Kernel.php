@@ -1,6 +1,6 @@
 <?php
 
-namespace accesorfid\Http;
+namespace LearningWords\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -13,11 +13,11 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
-        \accesorfid\Http\Middleware\EncryptCookies::class,
+        \LearningWords\Http\Middleware\EncryptCookies::class,
         \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
         \Illuminate\Session\Middleware\StartSession::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-        \accesorfid\Http\Middleware\VerifyCsrfToken::class,
+        \LearningWords\Http\Middleware\VerifyCsrfToken::class,
     ];
 
     /**
@@ -26,8 +26,8 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \accesorfid\Http\Middleware\Authenticate::class,
+        'auth' => \LearningWords\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'guest' => \accesorfid\Http\Middleware\RedirectIfAuthenticated::class,
+        'guest' => \LearningWords\Http\Middleware\RedirectIfAuthenticated::class,
     ];
 }

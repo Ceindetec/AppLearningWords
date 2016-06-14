@@ -1,6 +1,6 @@
 <?php
 
-namespace accesorfid\Providers;
+namespace LearningWords\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

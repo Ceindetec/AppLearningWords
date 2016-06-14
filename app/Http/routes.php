@@ -15,10 +15,14 @@
  *METODOS GET 
  */
 
-Route::get('registromodulorfid', 'muduloRfidConroller@index')->name('registromodulorfid');
+Route::resource('lecciones', 'leccionesController');
+Route::post('listalecciones', 'leccionesController@cargarLeccionesByDocente')->name('lecciones.cargar');
+
+//nombre, controlador@método->nombreruta
+/*Route::get('registromodulorfid', 'muduloRfidConroller@index')->name('registromodulorfid');
 Route::post('gridmodulosRFID', 'muduloRfidConroller@gridmodulosRFID')->name('gridmodulosRFID');
 Route::get('editarmodulo', 'muduloRfidConroller@editarmoduloRFID')->name('editarmodulo');
-Route::get('registrarmodulo', 'muduloRfidConroller@registrarmoduloRFID')->name('registrarmodulo');
+Route::get('registrarmodulo', 'muduloRfidConroller@registrarmoduloRFID')->name('registrarmodulo');*/
 //Route::get('/', 'mainController@index');
 
 
