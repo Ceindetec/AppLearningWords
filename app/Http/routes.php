@@ -17,7 +17,7 @@
 
 Route::resource('lecciones', 'leccionesController');
 Route::post('listalecciones', 'leccionesController@cargarLeccionesByDocente')->name('lecciones.cargar');
-
+Route::post('listacategorias', 'leccionesController@cargarLeccionesByDocente')->name('lecciones.categorias');
 //nombre, controlador@método->nombreruta
 /*Route::get('registromodulorfid', 'muduloRfidConroller@index')->name('registromodulorfid');
 Route::post('gridmodulosRFID', 'muduloRfidConroller@gridmodulosRFID')->name('gridmodulosRFID');
