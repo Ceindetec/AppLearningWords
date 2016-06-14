@@ -36,6 +36,15 @@
 			<tbody></tbody>
 		</table>
 	</div>
+
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h3 class="panel-title">select 2</h3>
+		</div>
+		<div class="panel-body">
+			{!!Form::select('size', [], null, ['class'=>'form-control'])!!}
+		</div>
+	</div>
 </div>
 
 
@@ -47,6 +56,8 @@
 <script type="text/javascript">
 
 $(function(){
+
+	
 
 	$('#MudulosRFID').on('init.dt', function ( ) {
 		handleAjaxModal();
@@ -93,6 +104,16 @@ function eliminar(event){
 	});
 	
 }
+
+
+var data = [{id: '0', text: 'Text to display'}, { id: '1',text: 'deiby'}, { id: '2',text: 'julian'}, { id: '3',text: 'cristian'},
+			 {id: '4', text: 'Text to display'}, { id: '5',text: 'deiby'}, { id: '6',text: 'julian'}, { id: '7',text: 'cristian'}]
+
+$('select').select2({
+  data: data,
+  placeholder: "Elija al menos una opción ...",
+  language: "es"
+});
 
 </script>
 

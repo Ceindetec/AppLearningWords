@@ -31,6 +31,10 @@
   <!-- msgbox css-->
   {!!Html::style('css/msgbox/jquery.msgbox.css')!!}
 
+  <!-- select2 -->
+
+  {!!Html::style('css/select2/select2.css')!!}
+
   <!-- Datatables -->
   
   {!!Html::style('vendors/datatable/css/jquery.dataTables.css')!!}
@@ -171,7 +175,9 @@
 <!-- msgbox js-->
 {!!Html::script('js/msgbox/jquery.msgbox.js')!!}
 
-
+<!-- select2 -->
+{!!Html::script('js/select2/select2.full.js')!!}
+{!!Html::script('js/select2/es.js')!!}
 
 <!--kendojs -->
 {!!Html::script('js/kendo/kendo.all.min.js')!!}
