@@ -3,6 +3,8 @@
 namespace LearningWords\Http\Controllers;
 
 use LearningWords\leccionesEnc;
+use LearningWords\categoria;
+use LearningWords\palabrasEsp;
 use Illuminate\Http\Request;
 
 use LearningWords\Http\Requests;
@@ -27,7 +29,10 @@ class leccionesController extends Controller
      */
     public function create()
     {
-        return view('lecciones.crearLeccion');
+        $categorias = categoria::select('id', 'nombre')->get();
+        foreach($categorias as $categoria)
+            $listaCategorias[$categoria['id']] = $categoria['nombre'];
+        return view('lecciones.crearLeccion', compact('listaCategorias'));
     }
 
     /**
@@ -99,6 +104,12 @@ class leccionesController extends Controller
 
         $listaLecciones = leccionesEnc::where('usuario_documento',1)->get();
        
+        return json_encode(["data"=>$listaLecciones]);
+    }
+
+    function cargarPalabrasBusqueda($id_categoria){
+
+        $listapalabras = palabrasEsp::where('categorias_id',$id_categoria)->get();       
         return json_encode(["data"=>$listaLecciones]);
     }
 }
