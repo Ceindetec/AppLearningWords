@@ -12,9 +12,7 @@ td, th {
 @section('content')
 <div class="page-title">
 	<div class="title_left">
-		<h3>
-			Crear lección
-		</h3>
+		<h3>Crear lección</h3>
 	</div>
 </div>
 
@@ -24,19 +22,18 @@ td, th {
 	</div>
 	<div class="panel-body">
 		<div class="row">
-			{!!Form::open()!!}					
-					<div class="form-group">
-						{!!Form::label('Buscar palabra: ')!!}
-						{!!Form::text('Nombre',null,['class'=>'form-control', 'required'])!!}
-					</div>			
-					 <div class="form-group">
-						{!!Form::label('Seleccione categoria: ')!!}
-						<div class="form-group">
-							{!!Form::select('categorias', array('L' => 'Large', 'S' => 'Small'),null,['class'=>'form-control', 'required'])!!}
-						</div>
-					</div>			
-			{!!Form::close()!!}
-			
+			{!!Form::open()!!}	
+				<div class="form-group">
+					{!!Form::label('Seleccione categoria: ')!!}
+				<div class="form-group">
+					{!!Form::select('categorias', $listaCategorias ,null,['class'=>'form-control', 'id' => 'categ', 'required', 'placeholder' => 'Seleccione ...'])!!}
+				</div>
+				</div>				
+				<div class="form-group">
+					{!!Form::label('Buscar palabra: ')!!}
+					{!!Form::text('Nombre',null,['class'=>'form-control','readonly','id'=>'name', 'required','placeholder' => 'Escriba la palabra a buscar'])!!}
+				</div>								 			
+			{!!Form::close()!!}			
 		</div>
 	</div>
 </div>
@@ -69,6 +66,8 @@ td, th {
 
 <script type="text/javascript">
 
+var palabrasByCategoria;
+
 $(function(){
 
 	table[0] = $('#palabrasAgregadas').DataTable( {
@@ -98,6 +97,21 @@ $(function(){
 	} );
 
 });
+
+$('#categ').on('change', function ( ) {
+	var categoria = $('#categ').val();
+	if(categoria){		
+		$('#name').attr('readonly',false);
+		$.post("{!!route('lecciones.categorias')!!}",{"id_categoria": categoria}, function(result){
+			palabrasByCategoria = result;
+			console.log("palabras: ",palabrasByCategoria);
+		});
+	}
+		
+	else
+		$('#name').	attr('readonly',true);
+});
+
 
 function eliminarLeccion(event){
 	var element = event.target;
