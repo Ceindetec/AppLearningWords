@@ -1,6 +1,6 @@
 <?php
 
-namespace accesorfid\Console\Commands;
+namespace LearningWords\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Inspiring;

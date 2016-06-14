@@ -1,6 +1,6 @@
 <?php
 
-namespace accesorfid\Providers;
+namespace LearningWords\Providers;
 
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -14,7 +14,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'accesorfid\Http\Controllers';
+    protected $namespace = 'LearningWords\Http\Controllers';
 
     /**
      * Define your route model bindings, pattern filters, etc.

@@ -1,6 +1,6 @@
 <?php
 
-namespace accesorfid\Http\Middleware;
+namespace LearningWords\Http\Middleware;
 
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace accesorfid\Exceptions;
+namespace LearningWords\Exceptions;
 
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;

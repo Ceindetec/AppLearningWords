@@ -2,12 +2,13 @@
 
 namespace LearningWords\Http\Controllers;
 
+use LearningWords\leccionesEnc;
 use Illuminate\Http\Request;
 
 use LearningWords\Http\Requests;
 use LearningWords\Http\Controllers\Controller;
 
-class idiomaController extends Controller
+class leccionesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +17,7 @@ class idiomaController extends Controller
      */
     public function index()
     {
-        //
+        return view('lecciones.index');
     }
 
     /**
@@ -26,7 +27,7 @@ class idiomaController extends Controller
      */
     public function create()
     {
-        //
+        return view('lecciones.crearLeccion');
     }
 
     /**
@@ -48,7 +49,7 @@ class idiomaController extends Controller
      */
     public function show($id)
     {
-        //
+        $var = leccionesEnc::find($id);        
     }
 
     /**
@@ -85,33 +86,19 @@ class idiomaController extends Controller
         //
     }
 
-    public function espanol()
-    {
-        $config = [
-            "sProcessing"=>     "Procesando...",
-            "sLengthMenu"=>     "Mostrar _MENU_ registros",
-            "sZeroRecords"=>    "No se encontraron resultados",
-            "sEmptyTable"=>     "Ningún dato disponible en esta tabla",
-            "sInfo"=>           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-            "sInfoEmpty"=>      "Mostrando registros del 0 al 0 de un total de 0 registros",
-            "sInfoFiltered"=>   "(filtrado de un total de _MAX_ registros)",
-            "sInfoPostFix"=>    "",
-            "sSearch"=>         "Buscar:",
-            "sUrl"=>            "",
-            "sInfoThousands"=>  ",",
-            "sLoadingRecords"=> "Cargando...",
-            "oPaginate"=> [
-            "sFirst"=>    "Primero",
-            "sLast"=>     "Ãšltimo",
-            "sNext"=>     "Siguiente",
-            "sPrevious"=> "Anterior"
-        ],
-            "oAria"=> [
-                "sSortAscending"=>  ": Activar para ordenar la columna de manera ascendente",
-                "sSortDescending"=> ": Activar para ordenar la columna de manera descendente"
-            ]
-        ];
+    
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $usuario_documento
+     * @return json listaLecciones: listado de lecciones creadas por un docente
+     */
+    // TO DO
+    // Implementar recepcion de parametro usuario_documento para filtrar
+    function cargarLeccionesByDocente(){
 
-        return json_encode($config);
+        $listaLecciones = leccionesEnc::where('usuario_documento',1)->get();
+       
+        return json_encode(["data"=>$listaLecciones]);
     }
 }

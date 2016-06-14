@@ -16,6 +16,9 @@ class CreateTraduccionesTable extends Migration
             $table->increments('id');
             $table->integer('palabra_id')->unsigned();
             $table->foreign('palabra_id')->references('id')->on('palabras_esp');
+            $table->integer('padre_id')->nullable();            
+            $table->integer('tiempoverbal_id')->unsigned();
+            $table->foreign('tiempoverbal_id')->references('id')->on('tiempos_verbales');
             $table->integer('idiomas_id')->unsigned();
             $table->foreign('idiomas_id')->references('id')->on('idiomas');
             $table->string('traduccion');

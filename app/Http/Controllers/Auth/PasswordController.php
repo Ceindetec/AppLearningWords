@@ -1,8 +1,8 @@
 <?php
 
-namespace accesorfid\Http\Controllers\Auth;
+namespace LearningWords\Http\Controllers\Auth;
 
-use accesorfid\Http\Controllers\Controller;
+use LearningWords\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
 class PasswordController extends Controller

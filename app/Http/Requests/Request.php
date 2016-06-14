@@ -1,6 +1,6 @@
 <?php
 
-namespace accesorfid\Http\Requests;
+namespace LearningWords\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
