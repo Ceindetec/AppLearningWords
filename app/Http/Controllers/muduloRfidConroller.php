@@ -26,6 +26,7 @@ class muduloRfidConroller extends Controller
      */
     public function editarmoduloRFID(Request $request){
         $id = $request->input('id');
+
         return view('administracion.modulorfid.modaleditarmodulo');
     }
 
@@ -42,10 +43,7 @@ class muduloRfidConroller extends Controller
      * @return [json] [data con la lista de modulos]
      */
     function gridmodulosRFID(){
-
-        return json_encode(['data'=>[['id' => 1, 'idmodulo'=>'121312312','nombre'=>'ofina 1'], 
-           ['id' => 2, 'idmodulo'=>'12qwe','nombre'=>'ofina 2'], 
-           ['id' => 3, 'idmodulo'=>'1213rttry2','nombre'=>'sala de juntas']
-           ]]);
+        $query = [['id' => 1, 'idmodulo'=>'121312312','nombre'=>'ofina 1'], ['id' => 2, 'idmodulo'=>'12qwe','nombre'=>'ofina 2'], ['id' => 3, 'idmodulo'=>'1213rttry2','nombre'=>'sala de juntas']];
+        return json_encode(['data'=> $query ]);
     }
 }

@@ -43,3 +43,4 @@ idiomas
 */
 
 Route::get('espanol', 'idiomaController@espanol')->name('espanol');
+Route::get('palabras', 'PalabraController@index');

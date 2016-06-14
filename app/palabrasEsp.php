@@ -11,4 +11,6 @@ class palabrasEsp extends Model
 
 
     
+        return $this->hasMany('accesorfid\traducciones');
+    }
 }
