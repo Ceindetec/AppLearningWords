@@ -36,16 +36,19 @@
 			<tbody></tbody>
 		</table>
 	</div>
+</div>
 
-	<div class="panel panel-primary">
+<div class="panel panel-primary">
 		<div class="panel-heading">
 			<h3 class="panel-title">select 2</h3>
 		</div>
 		<div class="panel-body">
-			{!!Form::select('size', [], null, ['class'=>'form-control'])!!}
+			<div class="form-group">
+				{!!Form::select('size', [], null, ['class'=>'col-md-8'])!!}
+			</div>
+			
 		</div>
 	</div>
-</div>
 
 
 
@@ -111,7 +114,6 @@ var data = [{id: '0', text: 'Text to display'}, { id: '1',text: 'deiby'}, { id: 
 
 $('select').select2({
   data: data,
-  placeholder: "Elija al menos una opción ...",
   language: "es"
 });
 
