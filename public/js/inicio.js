@@ -24,13 +24,16 @@ $(function(){
     handleAjaxModal();
 
     $(".animacarga").hide();
+
+    $(document).on('mouseover','table a[data-modal]', function(){
+        handleAjaxModal();
+    })
 })
 
 
 
 
 function handleAjaxModal() {
-
 
     // Limpia los eventos asociados para elementos ya existentes, asi evita duplicación
     $("a[data-modal]").unbind("click");
@@ -77,7 +80,7 @@ function handleAjaxModal() {
 }
 
 
-function EventoFormularioModal(modal, onSuccess) {
+function EventoFormularioModal(modal, onSuccess, oneError) {
     modal.find('form').submit(function () {
         $.ajax({
             url: this.action,
@@ -87,11 +90,16 @@ function EventoFormularioModal(modal, onSuccess) {
                 onSuccess(result);
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                var message = "Error de ejecución: " + textStatus + " " + errorThrown;
-                $.msgbox(message, { type: 'error' });
-                console.log("Error: ");
-            }
-        });
+                if(jqXHR.status == 422){
+                    oneError(JSON.parse(jqXHR.responseText));
+                }else{
+                   var message = "Error de ejecución: " + textStatus + " " + errorThrown;
+                   $.msgbox(message, { type: 'error' });
+                   console.log("Error: "); 
+               }
+
+           }
+       });
         return false;
     });
 }
