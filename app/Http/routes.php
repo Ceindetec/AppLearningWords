@@ -27,11 +27,11 @@ Route::post('eliminardetlecciongrid', 'leccionesDetController@eliminardetleccion
 Route::post('buscarpalabraleccion', 'leccionesDetController@buscarpalabraleccion')->name('leccionesDet.buscarpalabra');
 
 //nombre, controlador@método->nombreruta
-/*Route::get('registromodulorfid', 'muduloRfidConroller@index')->name('registromodulorfid');
+Route::get('registromodulorfid', 'muduloRfidConroller@index')->name('registromodulorfid');
 Route::post('gridmodulosRFID', 'muduloRfidConroller@gridmodulosRFID')->name('gridmodulosRFID');
 Route::get('editarmodulo', 'muduloRfidConroller@editarmoduloRFID')->name('editarmodulo');
-Route::get('registrarmodulo', 'muduloRfidConroller@registrarmoduloRFID')->name('registrarmodulo');*/
-//Route::get('/', 'mainController@index');
+Route::get('registrarmodulo', 'muduloRfidConroller@registrarmoduloRFID')->name('registrarmodulo');
+Route::get('/', 'mainController@index');
 
 
 
@@ -43,4 +43,11 @@ idiomas
 */
 
 Route::get('espanol', 'idiomaController@espanol')->name('espanol');
+
 Route::get('palabras', 'PalabraController@index');
+Route::post('palabras/getpalabras', 'PalabraController@getPalabras')->name('getPalabras');
+Route::get('palabras/editarpalabra', 'PalabraController@editarPalabra')->name('editarPalabra');
+Route::get('palabras/crear', 'PalabraController@crearPalabra')->name('crearPalabra');
+Route::post('palabras/update', 'PalabraController@update')->name('updatePal');
+
+

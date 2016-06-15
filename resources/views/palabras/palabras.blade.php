@@ -34,14 +34,15 @@
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title"></h3>
-            <a href="{!!route('registrarmodulo')!!}" class="btn btn-success" data-modal="">Registrar nueva palabra</a>
+            {{--<a href="{!!route('registrarmodulo')!!}" class="btn btn-success" data-modal="">Registrar nueva palabra</a>--}}
         </div>
         <div class="panel-body">
             <table id="palabras" class="table table-striped table-bordered no-footer" cellspacing="0" width="100%">
                 <thead>
                 <tr>
+                    <th>id</th>
                     <th>Palabra</th>
-                    <th>traduccion</th>
+                    <th>Traduccion</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
                 </tr>
@@ -65,11 +66,11 @@
         "url": "{!!route('espanol')!!}"
         },
         ajax: {
-        url: "{!!route('gridmodulosRFID')!!}",
+        url: "{!!route('getPalabras')!!}",
         "type": "POST"
         },
         columns: [  { data: 'id' },
-        { data: 'palabra' },
+        { data: 'español' },
         { data: 'traduccion' }],
         "columnDefs": [
         {
@@ -80,7 +81,7 @@
         {
         "targets": [3],
         "data": null,
-        "defaultContent": "<a href={!!route('editarmodulo')!!} data-modal='' data-id='id' table='0'; class='btn btn-primary'>Editar</a>"
+        "defaultContent": "<a href={!!route('editarPalabra')!!} data-modal='' data-id='id' table='0'; class='btn btn-primary'>Editar</a>"
         },
         {
         "targets": [4],
