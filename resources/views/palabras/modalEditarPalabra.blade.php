@@ -7,6 +7,8 @@
     <div class="modal-body">
         {!!Form::hidden('idTraduccion')!!}
         {!!Form::hidden('idPalabra')!!}
+        {!!Form::hidden('tiempo')!!}
+        {!!Form::hidden('tipo')!!}
         <div class="form-group">
             {!!Form::label('Palabra Español (*)')!!}
             {!!Form::text('palabra',null,['class'=>'form-control', 'required'])!!}

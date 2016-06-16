@@ -7,13 +7,14 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'CreateActividadesTable' => $baseDir . '/database/migrations/2016_06_10_151451_create_actividades_table.php',
-    'CreateCategoriasTable' => $baseDir . '/database/migrations/2016_06_13_180543_create_categorias_table.php',
+    'CreateCategoriasTable' => $baseDir . '/database/migrations/2016_05_13_180543_create_categorias_table.php',
     'CreateControlAvancesTable' => $baseDir . '/database/migrations/2016_06_10_164229_create_control_avances_table.php',
     'CreateEvaluacionesTable' => $baseDir . '/database/migrations/2016_06_10_175920_create_evaluaciones_table.php',
     'CreateIdiomasTable' => $baseDir . '/database/migrations/2016_06_10_151845_create_idiomas_table.php',
     'CreateInstitucionsTable' => $baseDir . '/database/migrations/2013_06_13_114604_create_institucions_table.php',
     'CreateLeccionesDetsTable' => $baseDir . '/database/migrations/2016_06_10_162929_create_lecciones_dets_table.php',
     'CreateLeccionesEncsTable' => $baseDir . '/database/migrations/2016_06_10_151657_create_lecciones_encs_table.php',
+    'CreatePalabrasEspCategoriasTable' => $baseDir . '/database/migrations/2016_06_16_103218_create_palabras_esp_categorias_table.php',
     'CreatePalabrasEspsTable' => $baseDir . '/database/migrations/2016_06_10_152702_create_palabras_esps_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreateTiempoVerbalsTable' => $baseDir . '/database/migrations/2015_06_10_171453_create_tiempo_verbals_table.php',

@@ -44,10 +44,15 @@ idiomas
 
 Route::get('espanol', 'idiomaController@espanol')->name('espanol');
 
+
+/*
+Palabras
+*/
 Route::get('palabras', 'PalabraController@index');
 Route::post('palabras/getpalabras', 'PalabraController@getPalabras')->name('getPalabras');
-Route::get('palabras/editarpalabra', 'PalabraController@editarPalabra')->name('editarPalabra');
 Route::get('palabras/crear', 'PalabraController@crearPalabra')->name('crearPalabra');
+Route::post('palabras/insert', 'PalabraController@insertPalabra')->name('insertPalabra');
+Route::get('palabras/editarpalabra', 'PalabraController@editarPalabra')->name('editarPalabra');
 Route::post('palabras/update', 'PalabraController@update')->name('updatePal');
 
 

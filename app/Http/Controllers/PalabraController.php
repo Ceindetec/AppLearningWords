@@ -4,11 +4,15 @@ namespace LearningWords\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use LearningWords\categoria;
 use LearningWords\Http\Requests;
 use LearningWords\Http\Controllers\Controller;
 use LearningWords\palabrasEsp;
+use LearningWords\tiempoVerbal;
+use LearningWords\tipoPalabra;
 use LearningWords\traducciones;
 use Symfony\Component\HttpKernel\Tests\DataCollector\DumpDataCollectorTest;
+use LearningWords\Http\Requests\RequestEditarPalabra;
 
 class PalabraController extends Controller
 {
@@ -66,11 +70,9 @@ class PalabraController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * [update Edita la traduccion y la palabta en español].
+     * @param  Request  $request [trae el idpalabra y la palabra español, y el idtraduccion y la traduccion correspondientes a la palabra que se quiere editar]
+     * @return [json] [Respuesta satisfactoria o negativa a accion segun corresponda]
      */
     public function update(Request $request)
     {
@@ -97,11 +99,11 @@ class PalabraController extends Controller
         }
         if ($cambios == 0){
             $result['estado'] = false;
-            $result['mensaje'] = 'Debe introducir al menos un cambio';
+            $result['mensaje'] = 'Debe introducir al menos un cambio.';
         }
         else {
             $result['estado'] = true;
-            $result['mensaje'] = 'Cambios efectuados';
+            $result['mensaje'] = 'Cambios efectuados correctamente.';
         }
         return json_encode($result);
     }
@@ -125,8 +127,8 @@ class PalabraController extends Controller
     {
         $query=traducciones::where('idiomas_id', 1)->get();
         foreach($query as $palabra){
-
             $palabra['español'] = $palabra->palabra_esp();
+            $palabra['tiempo'] = $palabra->getTiempoVerbal->nombre;
         }
         return json_encode(["data" => $query]);
     }
@@ -138,15 +140,46 @@ class PalabraController extends Controller
     public function editarPalabra(Request $request){
         $query = traducciones::where('id', $request->input('id'))->get();
         $espanol = palabrasEsp::where('id', $query[0]->palabra_id)->get();
-        $datosForm = ['palabra'=>$espanol[0]->palabra, 'traduccion'=>$query[0]->traduccion, 'idTraduccion'=>$query[0]->id, 'idPalabra'=>$espanol[0]->id];
+        $datosForm = ['palabra'=>$espanol[0]->palabra, 'traduccion'=>$query[0]->traduccion, 'idTraduccion'=>$query[0]->id, 'idPalabra'=>$espanol[0]->id, 'tiempo'=>$query[0]->tiempoverbal_id, 'tipo'=>$query[0]->tipo_id];
         return view('palabras.modalEditarPalabra', compact("datosForm"));
     }
+
     /**
-     * [updatePal ejecuta accion encargada del update de la palabra seleccionada]
+     * [crearPalabra Regresa el modal que permite crear una nueva palabra]
+     * @return [view] [palabras.modalCrearPalabra]
      */
-    public function updatePal(){
+    public  function crearPalabra(){
+        $tiempos = tiempoVerbal::all();
+        $tipos = tipoPalabra::all();
+        $categorias = categoria::all();
+
+        $arrayTiempos = Array();
+        $arrayTipos = Array();
+        $arrayCategorias = Array();
+
+        foreach ($tiempos as $tiempo){
+            $arrayTiempos[$tiempo->id] = $tiempo->nombre;
+        }
+
+        foreach ($tipos as $tipo) {
+            $arrayTipos[$tipo->id] = $tipo->nombre;
+        }
+
+        foreach ($categorias as $categoria){
+            $arrayCategorias[$categoria->id] = $categoria->nombre;
+        }
+        $arrayCategorias['otro']="Otro..";
+        return view('palabras.modalCrearPalabra', compact("arrayTiempos", "arrayTipos", 'arrayCategorias'));
 
     }
 
-
+    /**
+     * [insertPalabra Valida e inserta la informacion de una nueva palabra].
+     * @param  RequestEditarPalabra  $request [Trae toda la informacion ingresada por el usuario en el formulario de nueva palabra]
+     * @return [json] [Respuesta satisfactoria o negativa a accion segun corresponda]
+     */
+    public function insertPalabra(Request $request){
+//        $idpalabraEsp =
+        dd($request->all());
+    }
 }

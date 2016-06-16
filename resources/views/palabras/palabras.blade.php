@@ -34,7 +34,7 @@
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title"></h3>
-            {{--<a href="{!!route('registrarmodulo')!!}" class="btn btn-success" data-modal="">Registrar nueva palabra</a>--}}
+            <a href="{!!route('crearPalabra')!!}" class="btn btn-success" data-modal="">Registrar nueva palabra</a>
         </div>
         <div class="panel-body">
             <table id="palabras" class="table table-striped table-bordered no-footer" cellspacing="0" width="100%">
@@ -43,6 +43,7 @@
                     <th>id</th>
                     <th>Palabra</th>
                     <th>Traduccion</th>
+                    <th>Tiempo</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
                 </tr>
@@ -58,38 +59,39 @@
 
     $(function(){
         $('#palabras').on('init.dt', function ( ) {
-        handleAjaxModal();
+            handleAjaxModal();
         });
 
         table[0] = $('#palabras').DataTable( {
-        "language": {
-        "url": "{!!route('espanol')!!}"
-        },
-        ajax: {
-        url: "{!!route('getPalabras')!!}",
-        "type": "POST"
-        },
-        columns: [  { data: 'id' },
-        { data: 'español' },
-        { data: 'traduccion' }],
-        "columnDefs": [
-        {
-        "targets": [0],
-        "visible": false,
-        "searchable": false
-        },
-        {
-        "targets": [3],
-        "data": null,
-        "defaultContent": "<a href={!!route('editarPalabra')!!} data-modal='' data-id='id' table='0'; class='btn btn-primary'>Editar</a>"
-        },
-        {
-        "targets": [4],
-        "data": null,
-        "defaultContent":  "<button class='btn btn-danger' onclick='eliminar(event)'>Eliminar</button>"
-        }
-        ],
-        "scrollX": true
+            "language": {
+                "url": "{!!route('espanol')!!}"
+            },
+            ajax: {
+                url: "{!!route('getPalabras')!!}",
+                "type": "POST"
+            },
+            columns: [  { data: 'id' },
+            { data: 'español' },
+            { data: 'traduccion' },
+            { data: 'tiempo'}],
+            "columnDefs": [
+                {
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+                },
+                {
+                "targets": [4],
+                "data": null,
+                "defaultContent": "<a href={!!route('editarPalabra')!!} data-modal='' data-id='id' table='0'; class='btn btn-primary'>Editar</a>"
+                },
+                {
+                "targets": [5],
+                "data": null,
+                "defaultContent":  "<button class='btn btn-danger' onclick='eliminar(event)'>Eliminar</button>"
+                }
+            ],
+            "scrollX": true
         } );
 
         });
