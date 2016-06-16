@@ -6,6 +6,8 @@ use LearningWords\leccionesEnc;
 use LearningWords\leccionesDet;
 use LearningWords\categoria;
 use LearningWords\palabrasEsp;
+use LearningWords\controlAvance;
+use LearningWords\evaluaciones;
 use Illuminate\Http\Request;
 
 use LearningWords\Http\Requests;
@@ -35,7 +37,7 @@ class leccionesController extends Controller
     $nombre = $request->input("nombre");
     $docente = $request->input("usuario_documento");
 
-    $esta = $this->checkNombreLeccionByDocente($docente, $nombre);     
+    $esta = $this->checkNombreLeccionByDocente($docente, $nombre);
         if($esta == 0){
             $var = new leccionesEnc($request->all());
             $var->save();      
@@ -78,7 +80,14 @@ class leccionesController extends Controller
    
     public function edit($id)
     {
-        //
+        $data['encabezado'] = leccionesEnc::find($id);
+       
+        $categorias = categoria::select('id', 'nombre')->get();
+        foreach($categorias as $categoria)
+            $listaCategorias[$categoria['id']] = $categoria['nombre'];
+
+        $data['categorias'] = $listaCategorias;
+        return view('lecciones.editarLeccion', $data);
     }
 
   
@@ -88,12 +97,10 @@ class leccionesController extends Controller
     }
 
     
-    public function destroy($id)
-    {
-        //
+    public function destroy(Request $request){
+        $leccion = leccionesEnc::find($request->id);
+        $leccion->delete();
     }
-
-   
     
     /**
      * Remove the specified resource from storage.
@@ -105,7 +112,7 @@ class leccionesController extends Controller
     // Implementar recepcion de parametro usuario_documento para filtrar
     function cargarLeccionesByDocente(){
 
-        $listaLecciones = leccionesEnc::where('usuario_documento','86071518')->get();       
+        $listaLecciones = leccionesEnc::where('usuario_documento','86074808')->get();       
         return json_encode(["data"=>$listaLecciones]);
     }
 
@@ -113,5 +120,16 @@ class leccionesController extends Controller
         $id_categoria = $request -> input("id_categoria");
         $listapalabras = palabrasEsp::select('id','palabra')->where('categorias_id',$id_categoria)->get();       
         return $listapalabras;
+    }
+
+    function checkEstadoLeccion(Request $request){
+        $id_leccion = $request -> input("id");
+        $countActividades = controlAvance::where('leccion_id', $id_leccion)->count();
+        $countEvaluaciones = evaluaciones::where('leccion_id', $id_leccion)->count();
+        
+        if($countEvaluaciones > 0 ||  $countActividades > 0 )
+            return 1;        
+        else
+            return 0;
     }
 }

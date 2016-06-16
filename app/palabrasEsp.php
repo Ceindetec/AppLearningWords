@@ -8,4 +8,7 @@ class palabrasEsp extends Model
 {
     protected $table = 'palabras_esp';
     protected $fillable = ['palabra','categorias_id'];
+
+
+    
 }
