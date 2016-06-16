@@ -29,5 +29,9 @@ class Kernel extends HttpKernel
         'auth' => \LearningWords\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \LearningWords\Http\Middleware\RedirectIfAuthenticated::class,
+        'is_super' => \LearningWords\Http\Middleware\IsSuperAdmin::class,
+        'is_admin' => \LearningWords\Http\Middleware\IsAdmin::class,
+        'is_docente' => \LearningWords\Http\Middleware\IsDocente::class,
+        'is_estudiante' => \LearningWords\Http\Middleware\IsEstudiante::class
     ];
 }

@@ -13,9 +13,20 @@
 
 $factory->define(LearningWords\User::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->email,
-        'password' => bcrypt(str_random(10)),
+    	'nombres' => $faker->name,
+        'apellidos' => $faker->lastName,
+        'documento' => '86071518',
+        'password' => 'Secreto',
         'remember_token' => str_random(10),
+        'rol' => $faker->randomElement(['docente', 'estudiante']),
+        'institucion_id' => 1
+    ];
+});
+
+$factory->define(LearningWords\institucion::class, function (Faker\Generator $faker) {
+    return [
+        'nombre' => 'Ceindetec',
+        'nit' => '123456789',
+        'cantidad_licencias' => 100
     ];
 });
