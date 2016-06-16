@@ -11,7 +11,7 @@
   <meta name='csrf-param' content='authenticity_token'>
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
-  <title>Control RFID! | </title>
+  <title>Learning Words !! </title>
 
   <!-- Bootstrap -->
   {!!Html::style('vendors/bootstrap/dist/css/bootstrap.min.css')!!} 

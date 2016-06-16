@@ -19,6 +19,8 @@ class CreateControlAvancesTable extends Migration
             $table->foreign('usuario_documento')->references('documento')->on('users');
             $table->integer('actividad_id')->unsigned();
             $table->foreign('actividad_id')->references('id')->on('actividades');
+            $table->integer('leccion_id')->unsigned();
+            $table->foreign('leccion_id')->references('id')->on('lecciones_encs')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->enum('rol', ['superadmin','administrador','estudiante', 'docente']);
             $table->string('nombres',100);
             $table->string('apellidos',100);
-            $table->string('contrasena',60);
+            $table->string('password',60);
             $table->integer('institucion_id')->unsigned();
             $table->foreign('institucion_id')->references('id')->on('instituciones');
             $table->rememberToken();
