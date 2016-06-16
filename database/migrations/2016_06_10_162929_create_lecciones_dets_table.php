@@ -15,7 +15,7 @@ class CreateLeccionesDetsTable extends Migration
         Schema::create('lecciones_dets', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('leccion_id')->unsigned();
-            $table->foreign('leccion_id')->references('id')->on('lecciones_encs');
+            $table->foreign('leccion_id')->references('id')->on('lecciones_encs')->onDelete('cascade');
             $table->integer('palabra_id')->unsigned();
             $table->foreign('palabra_id')->references('id')->on('palabras_esp');
             $table->timestamps();

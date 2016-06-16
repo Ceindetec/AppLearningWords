@@ -12,7 +12,7 @@ td, th {
 @section('content')
 <div class="page-title">
 	<div class="title_left">
-		<h3>Crear lección</h3>
+		<h3>Editar lección</h3>
 	</div>
 </div>
 
@@ -22,16 +22,20 @@ td, th {
 	</div>
 	<div class="panel-body">
 		<div class="row">
-			{!!Form::open()!!}	
+			{!!Form::model($encabezado, ['route'=>['lecciones.update', $encabezado->id]])!!}	
 				<div class="form-group">
 					{!!Form::label('Nombre de la lección: ')!!}
 				<div class="form-group">
-					{!!Form::text('nombreleccion', null,['class'=>'form-control', 'id' => 'nombreleccion', 'required', 'placeholder' => 'Asigne un nombre a la lección actual ...'])!!}
+					{!!Form::text('nombreleccion', $encabezado->nombre ,['class'=>'form-control', 'id' => 'nombreleccion', 'required', 'placeholder' => 'Asigne un nombre a la lección actual ...'])!!}
+					{!! Form::hidden('leccion_id', $encabezado->id, ['id' => 'leccion_id']) !!}
 				</div>
+			{!!Form::close()!!}		
+
+			{!!Form::open()!!}	
 				<div class="form-group">
 					{!!Form::label('Seleccione categoria: ')!!}
 				<div class="form-group">
-					{!!Form::select('categorias', $listaCategorias ,null,['class'=>'form-control', 'id' => 'categ', 'required', 'placeholder' => 'Seleccione ...'])!!}
+					{!!Form::select('categorias', $categorias ,null,['class'=>'form-control', 'id' => 'categ', 'required', 'placeholder' => 'Seleccione ...'])!!}
 				</div>
 				</div>				
 				<div class="form-group">
@@ -62,13 +66,15 @@ td, th {
 		<table id="palabrasAgregadas" class="table table-striped table-bordered no-footer" cellspacing="0" width="100%">
 			<thead>
 				<tr>
-					<th>Id</th>			
+					<th>Id</th>
+					<th>Leccion</th>		
 					<th>Palabra</th>						
 					<th>Eliminar</th>
 				</tr>
 			</thead>
 			<tbody>
 				
+			
 			</tbody>
 		</table>
 	</div>
@@ -76,6 +82,7 @@ td, th {
 		{!! Form::button('Guardar', array('class' => 'btn btn-success', 'id'=>'guardar')) !!}
 	</div>
 </div>
+
 @endsection
 
 @section('scripts')
@@ -83,12 +90,15 @@ td, th {
 <script type="text/javascript">
 
 $(function(){
-
 	table[0] = $('#palabrasAgregadas').DataTable( {
 		"language": {
 			"url": "{!!route('espanol')!!}"
 		},
-		columns: [ ],
+		ajax: {
+			url: "{!!route('detallelecciongrid', ['id' => $encabezado->id])!!}",
+			"type": "POST"
+		},
+		columns: [ {data: 'id'}, {data:'getleccion.nombre'}, {data:'getpalabra.palabra'}],
 		"columnDefs": [
 		{
 			"targets": [0],
@@ -96,15 +106,29 @@ $(function(){
 			"searchable": false
 		},
 		{
-			"targets": [2],
+			"targets": [3],
 			"data": null,
 			"defaultContent":  "<button class='btn btn-danger' onclick='eliminarPalabra(event)'>Eliminar</button>" 
 		}
 		],
 		"scrollX": true
 	} );
-
 });
+
+
+function eliminarPalabra(event){
+	var element = event.target;
+	$.msgbox("Esta seguro que desea elimnar este modulo", { type: 'confirm' }, function(result){
+		if(result == 'Aceptar')
+		{
+			var data = table[0].row( $(element).parents('tr') ).data();
+			$.post("{{route('eliminardetlecciongrid')}}",{'id':data.id},function(){
+				table[0].ajax.reload();
+			});
+		}
+	});
+	
+}
 
 /*****************************************************************************************************************/
 // Función que carga las palabras de una categoría seleccionada
@@ -121,51 +145,63 @@ $('#categ').on('change', function ( ) {
                         id: result.id
                     }
                 });			
-			cargarPalabrasBusqueda(data);
+				$('#name').empty();
+			 	$('#name').select2({
+				 	data: data,
+				 	language: "es",
+				});
 		});
-	}
-		
+	}		
 	else
 		$('#name').	attr('readonly',true);
 });
 
 
-
 /*****************************************************************************************************************/
 // Función que agrega las palabras de manera temporal a la tabla de leccion
 /*****************************************************************************************************************/
-var palabras = [];
-$('#guardar').attr('disabled',true);
+/*var palabras = [];
+$('#guardar').attr('disabled',true);*/
 
 $('#agregarPalabra').on('click', function () {
 	var t = $('#palabrasAgregadas').DataTable();    
-	var esta = false;
+	var esta;
 	var validator = $("form").kendoValidator().data("kendoValidator");
-                    if (validator.validate()) {     
-						esta = buscarpalabra($('#name').val());
-						
-						if(esta){
-							if (esta == false){								
-								agregarpalabras(t);			
-								$('#guardar').attr('disabled',false);
-							}
-									
-						else
-							$.msgbox("La palabra " + $('#name option:selected').text() + " ya se encuentra en la lección actual.", { type: 'error' });
-						}
-						else{
-							agregarpalabras(t);
-							$('#guardar').attr('disabled',false);
-						}
-							
+                    if (validator.validate()) {                         	
+						//esta = buscarpalabra($('#name').val() , $('#leccion_id').val());	
+						$.ajax({
+								type : "POST",
+								url : "{{route('leccionesDet.buscarpalabra')}}",
+								async: true,
+								data: {"leccion_id": $('#leccion_id').val(), "palabra_id": $('#name').val()},
+								success: function(respuesta){
+									if(respuesta > 0){							
+										alert(1);
+										
+									}
+									else{
+										
+										$.msgbox("La palabra " + $('#name option:selected').text() + " ya se encuentra en la lección actual.", { type: 'error' });		
+									}		
+								}	
+						});		
 				}	
 });
+
+function agregarpalabras(t){	
+	t.row.add( [
+		$('#name').val(),
+		$('#name option:selected').text(),
+		null
+	] ).draw( false );   
+palabras.push( $('#name').val());  
+}
 
 /*****************************************************************************************************************/
 // Función que guarda la lección en la base de datos
 /*****************************************************************************************************************/
 
-$('#guardar').on('click', function () {
+/*$('#guardar').on('click', function () {
 
 $.ajax({
 			type : "POST",
@@ -200,55 +236,7 @@ $.ajax({
 				
 			}
 		});
-});
-
-
-function buscarpalabra(id){
-	for(i=0;i< palabras.length;i++) {		
-		if(id == palabras[i])
-			{return true;}
-	}
-}
-
-function agregarpalabras(t){
-	t.row.add( [
-		$('#name').val(),
-		$('#name option:selected').text(),
-		null
-	] ).draw( false );   
-palabras.push( $('#name').val());  
-}
-
-function eliminarPalabra(event){
-	
-	var element = event.target;
-	var data = table[0].row( $(element).parents('tr') ).data();	
-	var id_palabra = data[0];
-	for(i=0; i< palabras.length; i++){
-						if(id_palabra == palabras[i]){
-							palabras.splice(i,1);
-							
-							if( palabras.length==0)
-								{$('#guardar').attr('disabled',true);
-						}
-						break;
-						}
-							
-				}		
-	
-	table[0].row( $(element).parents('tr') ).remove().draw();
-		
-	//});
-	
-};
-
-function cargarPalabrasBusqueda(datos){
-  $('#name').empty();
-  $('#name').select2({
-	 	data: datos,
-	    language: "es",
-	});
-}
+});*/
 
 
 
