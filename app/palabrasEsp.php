@@ -16,7 +16,7 @@ class palabrasEsp extends Model
      *         [error] [Cuando la palabra no tiene categorias registradas]
      */
     public function getCategoria()
-    
+    {
         $nombre = categoria::SELECT('nombre')->where('id', $this->categorias_id)->get();
         if ($nombre != null)
             return $nombre;
