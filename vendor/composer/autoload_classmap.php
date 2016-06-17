@@ -1525,5 +1525,6 @@ return array(
     'TestCase' => $baseDir . '/tests/TestCase.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
     'Thumbnail' => $vendorDir . '/kendoui/lib/ImageBrowser.php',
+    'UserTableSeeder' => $baseDir . '/database/seeds/UserTableSeeder.php',
     'Utils' => $vendorDir . '/utils/utils.php',
 );
