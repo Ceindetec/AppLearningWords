@@ -7,6 +7,7 @@ use Validator;
 use LearningWords\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Auth;
 
 class AuthController extends Controller
 {
@@ -22,6 +23,8 @@ class AuthController extends Controller
     */
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
+
+    protected $username = 'documento';
 
     /**
      * Create a new authentication controller instance.
@@ -41,9 +44,12 @@ class AuthController extends Controller
      */
     protected function validator(array $data)
     {
+        //dd($data);$data
         return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
+            'nombres' => 'required|max:255',
+            'apellidos' => 'required|max:255',
+            'documento' => 'required|unique:users',
+            'institucion_id' => 'required',
             'password' => 'required|confirmed|min:6',
         ]);
     }
@@ -57,9 +63,49 @@ class AuthController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
+            'nombres' => 'required|max:255',
+            'apellidos' => 'required|max:255',
+            'documento' => 'required|unique:users',
+            'institucion_id' => 'required',
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    /**
+     * Get the path to the login route.
+     *
+     * @return string
+     */
+    public function loginPath()
+    {
+        return route('login');
+    }
+
+    /**
+     * Get the post register / login redirect path.
+     *
+     * @return string
+     */
+    public function redirectPath()
+    {
+        //dd(Auth::user()->rol);
+        switch (Auth::user()->rol) {
+            case 'superadmin':
+                return route('usuarios.index');
+                break;
+            case 'administrador':
+                return route('usuarios.index');
+                break;
+            case 'docente':
+                return route('docentes.index');
+                break;
+            case 'estudiante':
+                return route('estudiantes.index');
+                break;
+            default:
+                return route('home');
+                break;
+        }
+        
     }
 }

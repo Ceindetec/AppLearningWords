@@ -14,6 +14,13 @@
 /*
  *METODOS GET 
  */
+Route::get('/', function(){
+	return view('index');
+});
+
+Route::get('home', function(){
+	return view('index');
+});
 
 Route::resource('lecciones', 'leccionesController');
 Route::resource('leccionesdet', 'leccionesDetController', ['only'=>['store','destroy']]);
@@ -33,8 +40,17 @@ Route::get('editarmodulo', 'muduloRfidConroller@editarmoduloRFID')->name('editar
 Route::get('registrarmodulo', 'muduloRfidConroller@registrarmoduloRFID')->name('registrarmodulo');
 Route::get('/', 'mainController@index');
 
+Route::get('login', 'Auth\AuthController@getLogin')->name('login');
+Route::post('login', 'Auth\AuthController@postLogin')->name('login');
+Route::get('logout', 'Auth\AuthController@getLogout')->name('logout');
 
+// Registration routes...
+Route::get('register', 'Auth\AuthController@getRegister')->name('register');
+Route::post('register', 'Auth\AuthController@postRegister')->name('register');
 
+Route::group(['middleware' => 'is_super'], function(){
+	Route::resource('usuarios', 'Admin\usuariosController');
+});
 
 
 
