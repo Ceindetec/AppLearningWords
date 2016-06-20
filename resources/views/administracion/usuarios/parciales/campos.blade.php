@@ -18,6 +18,7 @@
         	{!! Form::label('password', 'Contraseña') !!}
         	{!! Form::password('password', ['class'=>'form-control']) !!}
     	</div>
+        @if(isset($usuarioAdmin))
         @if($usuarioAdmin->rol == 'superadmin')
         <div class="form-group">
             {!! Form::label('institucion_id', 'Institucion') !!}
@@ -25,16 +26,17 @@
         </div>
         @elseif($usuarioAdmin->rol == 'administrador')
         <div class="form-group">
-            {!! Form::hidden('institucion_id', $usuario->institucion_id, ['class'=>'form-control']) !!}
+            {!! Form::hidden('institucion_id', $usuarioAdmin->institucion_id, ['class'=>'form-control']) !!}
         </div>
         @endif
         <div class="form-group">
             {!! Form::label('rol', 'Tipo de cuenta') !!}
             @if($usuarioAdmin->rol == 'administrador')
-            {!! Form::select('rol',['docente' => 'Docente', 'estudiante' => 'Estudiante'], 'docente',['class'=>'form-control']) !!}
+            {!! Form::select('rol',['docente' => 'Docente', 'estudiante' => 'Estudiante', 'administrador' => 'Administrador'], 'docente',['class'=>'form-control']) !!}
             @elseif($usuarioAdmin->rol == 'superadmin')
             {!! Form::select('rol',['superadmin' => 'SuperAdmin', 'administrador' => 'Administrador'], 'administrador',['class'=>'form-control']) !!}
             @endif
         </div>
+        @endif
     </div>
 </div>

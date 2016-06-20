@@ -14,14 +14,13 @@
 /*
  *METODOS GET 
  */
-Route::get('/', function(){
-Route::resource('actividadesRepaso', 'actividadesRepasoController');
-	return view('index');
-});
+Route::get('home', [
+	'uses'=>'homeController@index',
+	'as'=>'home'
+	]);
 
-Route::get('home', function(){
-	return view('index');
-});
+Route::get('/', 'homeController@index');
+Route::resource('actividadesRepaso', 'actividadesRepasoController');
 Route::resource('lecciones', 'leccionesController');
 Route::resource('leccionesdet', 'leccionesDetController', ['only'=>['store','destroy']]);
 Route::post('verificalecciones', 'leccionesController@checkEstadoLeccion')->name('lecciones.verificar');
@@ -48,8 +47,18 @@ Route::get('logout', 'Auth\AuthController@getLogout')->name('logout');
 Route::get('register', 'Auth\AuthController@getRegister')->name('register');
 Route::post('register', 'Auth\AuthController@postRegister')->name('register');
 
-Route::group(['middleware' => 'is_super'], function(){
-	Route::resource('usuarios', 'Admin\usuariosController');
+Route::group(['middleware' => ['is_admin']], function(){
+	Route::get('administracion', [
+	'uses'=>'homeController@administracion',
+	'as'=>'administracion.index'
+	]);
+	Route::resource('usuarios', 'Admin\usuariosController', ['except' => ['destroy']]);
+	Route::get('usuarios/delete/{id}', 'Admin\usuariosController@destroy')->name('usuarios.destroy');
+
+	Route::group(['middleware' => ['is_super']], function(){
+		Route::resource('instituciones', 'Admin\institucionController', ['except' => ['destroy']]);
+		Route::get('instituciones/delete/{id}', 'Admin\institucionController@destroy')->name('instituciones.destroy');
+	});
 });
 
 

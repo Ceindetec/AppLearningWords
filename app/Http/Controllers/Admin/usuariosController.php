@@ -19,8 +19,16 @@ class usuariosController extends Controller
      */
     public function index()
     {
-        $data['usuarios'] = User::all();
+        //dd("si estoy entrando");
         $data['usuarioAdmin'] = Auth::user();
+        if($data['usuarioAdmin']->rol == 'superadmin'){
+            $data['usuarios'] = User::whereIn('rol', ['superadmin', 'administrador'])->get();
+        }elseif($data['usuarioAdmin']->rol == 'administrador'){
+            $data['usuarios'] = User::where('institucion_id', $data['usuarioAdmin']->institucion_id)
+                                    //->whereNotIn('documento', $data['usuarioAdmin']->documento)
+                                    ->whereIn('rol', ['administrador', 'docente', 'estudiante'])
+                                    ->get();
+        }
         //$data['usuarios']['inst'] = 
         //dd($data['usuarios']);
         return view('administracion.usuarios.index', $data);
@@ -56,7 +64,7 @@ class usuariosController extends Controller
         //dd($request->all());
         $usuario = new User($request->all());
         $usuario->save();
-        //$this->index();
+        return redirect()->route('usuarios.index');
     }
 
     /**
@@ -67,6 +75,7 @@ class usuariosController extends Controller
      */
     public function show($id)
     {
+        //dd($id);
         $usuario = User::find($id);
         return view('administracion.usuarios.edit', compact('usuario'));
     }
@@ -100,9 +109,11 @@ class usuariosController extends Controller
      */
     public function update(usuarioCreateRequest $request, $id)
     {
+        //dd($id);
         $usuario = User::find($id);
         $usuario->fill($request->all());
         $usuario->save();
+        return redirect()->route('usuarios.index');
     }
 
     /**
@@ -113,6 +124,8 @@ class usuariosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //dd($id);
+        $resultado = User::destroy($id);
+        return redirect()->route('usuarios.index');
     }
 }
