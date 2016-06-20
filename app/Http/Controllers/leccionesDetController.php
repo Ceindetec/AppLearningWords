@@ -3,7 +3,7 @@
 namespace LearningWords\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use DB;
 use LearningWords\Http\Requests;
 use LearningWords\Http\Controllers\Controller;
 use LearningWords\leccionesDet; 
@@ -12,7 +12,12 @@ class leccionesDetController extends Controller
 {   
     public function store(Request $request)
     {
-        //
+        $leccion_id = $request->input("leccion_id");
+        $palabra_id = $request->input("palabra_id");
+        //$var = new leccionesDet($request->all());
+       // $var->save();      
+       // return response()->json(["id" => $var->id]);
+        DB::table('lecciones_dets')->insert(['leccion_id' => $leccion_id,'palabra_id' => $palabra_id ]); 
     }
 
  

@@ -15,8 +15,6 @@ class CreatePalabrasEspsTable extends Migration
         Schema::create('palabras_esp', function (Blueprint $table) {
             $table->increments('id');
             $table->string('palabra');
-             $table->integer('categorias_id')->unsigned();
-            $table->foreign('categorias_id')->references('id')->on('categorias');
             $table->timestamps();
         });
     }

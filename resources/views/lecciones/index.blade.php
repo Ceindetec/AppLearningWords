@@ -19,8 +19,10 @@ td, th {
 
 <div class="panel panel-primary">
 	<div class="panel-heading">
-		<h3 class="panel-title"></h3>		
-		<a href="{!!route('lecciones.create')!!}" class="btn btn-success">Crear nueva lección</a>
+		<h3 class="panel-title">
+			
+		</h3>		
+		 <a href="{!!route('lecciones.create')!!}" class="btn btn-success">Crear nueva lección</a> 
 	</div>
 	<div class="panel-body">
 		<table id="leccionesByDocente" class="table table-striped table-bordered no-footer" cellspacing="0" width="100%">
@@ -46,10 +48,6 @@ td, th {
 
 $(function(){
 
-	/*$('#leccionesByDocente').on('init.dt', function ( ) {
-		handleAjaxModal();
-	});*/
-
 	table[0] = $('#leccionesByDocente').DataTable( {
 		"language": {
 			"url": "{!!route('espanol')!!}"
@@ -70,7 +68,6 @@ $(function(){
 		{
 			"targets": [2],
 			"data": null,
-			//"defaultContent": "<a href={!!route('lecciones.edit')!!} data-id='id' table='0'; class='btn btn-primary'>Editar</a>" 
 			"defaultContent": "<button class='btn btn-info' onclick='editarLeccion(event)'>Editar</button>" 
 		},
 		{
@@ -109,7 +106,6 @@ function editarLeccion(event){
 function eliminarLeccion(event){
 	var element = event.target;
 	var data = table[0].row( $(element).parents('tr') ).data();	
-	//var urlll = "{!! route('lecciones.destroy', ':idLeccion') !!}";
 	console.log("id",data.id);	
 	$.ajax({
 			type : "POST",
@@ -138,6 +134,9 @@ function eliminarLeccion(event){
 		});	
 }
 
+/*****************************************************************************************************************/
+// Función que construye el data table de los detalles de la lección.
+/*****************************************************************************************************************/
 function eliminar(datos){
 	
 	$.ajax({

@@ -6,6 +6,7 @@ use LearningWords\leccionesEnc;
 use LearningWords\leccionesDet;
 use LearningWords\categoria;
 use LearningWords\palabrasEsp;
+use LearningWords\palabrasEsp_categoria;
 use LearningWords\controlAvance;
 use LearningWords\evaluaciones;
 use Illuminate\Http\Request;
@@ -92,8 +93,20 @@ class leccionesController extends Controller
 
   
     public function update(Request $request, $id)
-    {
-        //
+    {      
+        $nombre = $request -> input("nombre");
+        $usuario_documento = $request -> input("usuario_documento");
+        $countNombre = leccionesEnc::where('nombre', $nombre)->
+                                     where('usuario_documento', $usuario_documento)->count();
+        if($countNombre>0)
+            return 1;
+        else
+        {
+            $enc = leccionesEnc::find($id);
+            $enc->fill($request->all());
+            $enc->save();
+            return 0;
+        }
     }
 
     
@@ -118,8 +131,14 @@ class leccionesController extends Controller
 
     function cargarPalabrasBusqueda(Request $request){
         $id_categoria = $request -> input("id_categoria");
-        $listapalabras = palabrasEsp::select('id','palabra')->where('categorias_id',$id_categoria)->get();       
+        
+        $listapalabras = palabrasEsp_categoria::where('id_Categoria',$id_categoria)->get();       
+        foreach ($listapalabras as $palabra) {
+            $palabra->getpalabra;
+        }
         return $listapalabras;
+        //return ['data'=> $listapalabras];
+    
     }
 
     function checkEstadoLeccion(Request $request){

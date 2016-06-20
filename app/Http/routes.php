@@ -15,13 +15,13 @@
  *METODOS GET 
  */
 Route::get('/', function(){
+Route::resource('actividadesRepaso', 'actividadesRepasoController');
 	return view('index');
 });
 
 Route::get('home', function(){
 	return view('index');
 });
-
 Route::resource('lecciones', 'leccionesController');
 Route::resource('leccionesdet', 'leccionesDetController', ['only'=>['store','destroy']]);
 Route::post('verificalecciones', 'leccionesController@checkEstadoLeccion')->name('lecciones.verificar');
