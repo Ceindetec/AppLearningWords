@@ -29,8 +29,6 @@ class usuariosController extends Controller
                                     ->whereIn('rol', ['administrador', 'docente', 'estudiante'])
                                     ->get();
         }
-        //$data['usuarios']['inst'] = 
-        //dd($data['usuarios']);
         return view('administracion.usuarios.index', $data);
     }
 
@@ -48,7 +46,6 @@ class usuariosController extends Controller
             //if($institucion->nombre != 'Ceindetec')
             $ins[$institucion->id] = $institucion->nombre;
         }
-        //dd($ins);
         $data['instituciones'] = $ins;
         return view('administracion.usuarios.create', $data);
     }
@@ -124,7 +121,6 @@ class usuariosController extends Controller
      */
     public function destroy($id)
     {
-        //dd($id);
         $resultado = User::destroy($id);
         return redirect()->route('usuarios.index');
     }

@@ -40,7 +40,6 @@ class institucionController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
         $institucion = new institucion($request->all());
         $institucion->save();
         return redirect()->route('instituciones.index');
