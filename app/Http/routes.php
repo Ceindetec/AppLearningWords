@@ -86,9 +86,18 @@ Palabras
 */
 Route::get('palabras', 'PalabraController@index');
 Route::post('palabras/getpalabras', 'PalabraController@getPalabras')->name('getPalabras');
-Route::get('palabras/crear', 'PalabraController@crearPalabra')->name('crearPalabra');
-Route::post('palabras/insert', 'PalabraController@insertPalabra')->name('insertPalabra');
-Route::get('palabras/editarpalabra', 'PalabraController@editarPalabra')->name('editarPalabra');
+Route::get('palabras/crear', 'PalabraController@ModalcrearPalabra')->name('crearPalabra');
+Route::post('palabras/insert', 'PalabraController@insertarPalabra')->name('insertPalabra');
+Route::get('palabras/editarpalabra', 'PalabraController@ModaleditarPalabra')->name('editarPalabra');
 Route::post('palabras/update', 'PalabraController@update')->name('updatePal');
+Route::post('palabras/borrar', 'PalabraController@destroy')->name('deletePal');
+
+
+/*
+ * Categorias
+*/
+Route::post('categoria/insert', 'PalabraController@insertCategoria')->name('insertCategoria');
+
+
 
 
