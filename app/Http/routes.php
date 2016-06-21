@@ -21,18 +21,29 @@ Route::get('home', [
 
 Route::get('/', 'homeController@index');
 Route::resource('actividadesRepaso', 'actividadesRepasoController');
+
+/*************** Routes funcionalidad actividades de repaso *************************************************/
+Route::get('actividadesRepaso', 'actividadesRepasoController@index')->name('actividadesRepaso.index');
+
+Route::get('actividaduno/{idleccion}', 'actividadUnoController@index')->name('actividaduno.index');
+
+Route::get('actividaddos', 'actividadDosController@index')->name('actividaddos.index');
+Route::get('actividadtres', 'actividadTresController@index')->name('actividadtres.index');
+/***********************************************************************************************************/
+
+/*************** Routes funcionalidad lecciones de repaso **************************************************/
 Route::resource('lecciones', 'leccionesController');
 Route::resource('leccionesdet', 'leccionesDetController', ['only'=>['store','destroy']]);
 Route::post('verificalecciones', 'leccionesController@checkEstadoLeccion')->name('lecciones.verificar');
 Route::post('listalecciones', 'leccionesController@cargarLeccionesByDocente')->name('lecciones.cargar');
 Route::post('guardarlecciones', 'leccionesController@guardarDetalleLeccion')->name('lecciones.guardardetalle');
 Route::post('listacategorias', 'leccionesController@cargarPalabrasBusqueda')->name('lecciones.categorias');
-
 Route::post('detallelecciongrid', 'leccionesDetController@detallelecciongrid')->name('detallelecciongrid');
 Route::post('eliminardetlecciongrid', 'leccionesDetController@eliminardetlecciongrid')->name('eliminardetlecciongrid');
 Route::post('buscarpalabraleccion', 'leccionesDetController@buscarpalabraleccion')->name('leccionesDet.buscarpalabra');
+/***********************************************************************************************************/
 
-//nombre, controlador@método->nombreruta
+
 Route::get('registromodulorfid', 'muduloRfidConroller@index')->name('registromodulorfid');
 Route::post('gridmodulosRFID', 'muduloRfidConroller@gridmodulosRFID')->name('gridmodulosRFID');
 Route::get('editarmodulo', 'muduloRfidConroller@editarmoduloRFID')->name('editarmodulo');
