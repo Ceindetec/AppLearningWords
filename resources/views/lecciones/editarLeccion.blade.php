@@ -145,7 +145,6 @@ function eliminarPalabra(event){
 $('#categ').on('change', function ( ) {
 	var categoria = $('#categ').val();
 	if(categoria){		
-		//$('#name').attr('readonly',false);
 		/** Obtiene las palabras asociadas a la categoria seleccionada **/
 		$.post("{!!route('lecciones.categorias')!!}",{"id_categoria": categoria}, function(result){
 			var datos;	

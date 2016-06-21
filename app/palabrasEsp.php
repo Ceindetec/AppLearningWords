@@ -24,5 +24,14 @@ class palabrasEsp extends Model
             return "error";
     }
 
+    public function getTraduccion(){
+        //TO DO
+        //REEMPLAZAR EL 1 POR LA VARIABLE DE SESSION IDIOMA
+        if($this->hasOne('LearningWords\traducciones'))
+        {
+            return $this->hasOne('LearningWords\traducciones','palabra_id')->where('idiomas_id',1);           
+        }
+        return null;
+    }
 
 }
