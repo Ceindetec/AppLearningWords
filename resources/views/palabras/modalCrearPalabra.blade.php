@@ -6,17 +6,22 @@
     </div>
     <div class="modal-body">
         <div class="form-group row">
-            <div class="col-xs-12">{!!Form::label('Palabra Español (*)')!!}</div>
-            <div class="col-xs-12">{!!Form::text('palabra',null,['class'=>'form-control', 'required'])!!}</div>
+            <div class="col-xs-12">{!!Form::label('palabra', 'Palabra Español (*)')!!}</div>
+            <div class="col-xs-12">{!!Form::text('palabra',null,['class'=>'form-control solo-letra', 'required'])!!}</div>
         </div>
         <div class="form-group row">
-            <div class="col-xs-12">{!!Form::label('Traduccion (*)')!!}</div>
-            <div class="col-xs-12">{!!Form::text('traduccion',null,['class'=>'form-control', 'required'])!!}</div>
+            <div class="col-xs-12">{!!Form::label('traduccion', 'Traduccion (*)')!!}</div>
+            <div class="col-xs-12">{!!Form::text('traduccion',null,['class'=>'form-control solo-letra', 'required'])!!}</div>
         </div>
         <div class="form-group row">
-            <div class="col-xs-12">{!!Form::label('categoria', 'Categoria',['class'=>'control-label']) !!}</div>
+            <div class="col-xs-6">{!!Form::label('categoria', 'Categoria',['class'=>'control-label']) !!}</div>
+            <div class="col-xs-6">{!!Form::label('newCategoria', 'Nueva',['class'=>'control-label']) !!}</div>
             <div class="col-xs-6">
-                {!!Form::select('categoria', $arrayCategorias ,null ,['class'=>'form-control'])!!}
+                {!!Form::select('categoria[]', $arrayCategorias ,null ,['class'=>'form-control select2_multiple solo-letra','style'=>'width:100%;',  'multiple'=>'multiple', 'id'=>'categoria', 'required'])!!}
+            </div>
+            <div class="col-xs-4">{!!Form::text('newCategoria',null,['class'=>'form-control solo-letra', 'id'=>'newCategoria'])!!}</div>
+            <div class="col-xs-2 text-center">
+                <button type="button" class="btn btn-primary" onclick="nuevaCat()"><i class="fa fa-check" aria-hidden="true"></i></button>
             </div>
         </div>
         <div class="form-group row" id="padreCheck">
@@ -25,10 +30,6 @@
                 {!!Form::select('tipo', $arrayTipos ,null ,['class'=>'form-control'])!!}
             </div>
         </div>
-        {{--<div class="form-group">--}}
-            {{--{!!Form::label('Traduccion (*)')!!}--}}
-            {{--{!!Form::text('traduccion',null,['class'=>'form-control', 'required'])!!}--}}
-        {{--</div>--}}
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -44,13 +45,12 @@
 
     $(function(){
         //validarFormulario();// validar forularios con kendo
-        EventoFormularioModal(modal, onSuccess)
+        EventoFormularioModal(modal, onSuccess);
 
-        $("#categoria").change(function(){
-            $("#newCat").remove();
-            if ($("#categoria").val() == "otro"){
-                $("#categoria").parent().after("<div class='col-xs-6' id='newCat'> <input  type='text' class='form-control' name='newCategoria' required autofocus> </div>");
-            }
+        $("#categoria").select2({
+            maximumSelectionLength: 5,
+            placeholder: "Min 1, Max 5..",
+            allowClear: true
         });
 
         $("#tipo").change(function(){
@@ -60,7 +60,44 @@
                 $("#tipo").parent().after("<div class='col-xs-6 text-center' id='divCheck'><input type='checkbox' name='checkTiempos' id='checkTiempos' value='seleccionado'> ¿Agregar tiempos verbales?</div>");
             }
         });
+
+        $('.solo-letra').keyup(function (){
+            this.value = (this.value + '').replace(/[^A-Za-z ]/g, '');
+        });
     });
+
+    function nuevaCat(){
+        if ($("#newCategoria").val() != ""){
+            var nombre = $("#newCategoria");
+            $.ajax({
+                type:"POST",
+                context: document.body,
+                url: '{{route('insertCategoria')}}',
+                data:{ 'nombre' : nombre.val()},
+                success: function(data){
+                    $.msgbox("Categoria agregada correctamente", { type: 'success'});
+                    $("#categoria").append('<option value="' + data + '" selected="selected">' + nombre.val() + '</option>');
+                    nombre.val("");
+                },
+                error: function(data){
+                    var respuesta =JSON.parse(data.responseText);
+                    var arr = Object.keys(respuesta).map(function(k) { return respuesta[k] });
+                    var mensaje="";
+                    for (var i=0; i<arr.length; i++)
+                        mensaje += arr[i][0]+"\n";
+                    nombre.val("");
+                    $.msgbox(mensaje, { type: 'error'});
+                    $("#newCategoria").focus();
+
+                }
+            });
+        }
+        else {
+            alert("Debe ingresar un nombre de categoria nueva");
+            $("#newCategoria").focus();
+        }
+
+    }
 
     $("#padreCheck").on('change', '#checkTiempos', function(){
         $("#divTiempos").remove();
@@ -81,7 +118,7 @@
                                             "<div class='col-xs-4 text-center'><input type='text' class='form-control' name='paIngles' required></div>" +
                                             "</div>" +
                                             "<div class='form-group row'>"+
-                                            "<div class='col-xs-2 text-center'><label for='fuEspañol'>Futuro</label></div>" +
+                                            "<div class='col-xs-2 text-center'><label for='fuEspañol'>Participio</label></div>" +
                                             "<div class='col-xs-4 text-center'><input type='text' class='form-control' name='fuEspañol' required></div>" +
                                             "<div class='col-xs-2 text-center'><label for='fuIngles'>Traduccion</label></div>" +
                                             "<div class='col-xs-4 text-center'><input type='text' class='form-control' name='fuIngles' required></div>" +

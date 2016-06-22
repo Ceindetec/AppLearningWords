@@ -11,7 +11,7 @@
 				<th>Función</th>
 				<th>Acciones</th>
 			</tr>
-			@foreach($usuarios as $usuario)
+			@foreach($usuarios as $usuario)			
 			<tr>
 				<td>{{$usuario->id}}</td>
 				<td>{{$usuario->nombres}} {{$usuario->apellidos}}</td>
@@ -24,14 +24,16 @@
 					@endif
 				</td>
 				<td>{{$usuario->rol}}</td>
-				<td>
+				<td>					
 					<a href="{{ route('usuarios.edit', $usuario->documento) }}" role="button" class="btn btn-primary">Editar</a>
+					@if($usuario->documento != $usuarioAdmin->documento)
 					<a href="{{ route('usuarios.destroy', $usuario->documento) }}" role="button" class="btn btn-danger">Eliminar</a>
+					@endif
 				</td>
 			</tr>
+			
 			@endforeach
 		</table>
 		
 	</div>
-	<div class="panel-footer"> Listado de usuarios</div>
 </div>
