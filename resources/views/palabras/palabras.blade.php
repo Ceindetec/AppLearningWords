@@ -41,6 +41,7 @@
                 <thead>
                 <tr>
                     <th>id</th>
+                    <th>idEspanol</th>
                     <th>Palabra</th>
                     <th>Traduccion</th>
                     <th>Tiempo</th>
@@ -62,7 +63,7 @@
             handleAjaxModal();
         });
 
-        table[0] = $('#palabras').DataTable( {
+        table[0] = $('#palabras').DataTable({
             "language": {
                 "url": "{!!route('espanol')!!}"
             },
@@ -71,6 +72,7 @@
                 "type": "POST"
             },
             columns: [  { data: 'id' },
+            { data: 'idEspanol'},
             { data: 'español' },
             { data: 'traduccion' },
             { data: 'tiempo'}],
@@ -81,19 +83,56 @@
                 "searchable": false
                 },
                 {
-                "targets": [4],
+                    "targets": [1],
+                    "visible": false,
+                    "searchable": false
+                },
+                {
+                "targets": [5],
                 "data": null,
                 "defaultContent": "<a href={!!route('editarPalabra')!!} data-modal='' data-id='id' table='0'; class='btn btn-primary'>Editar</a>"
                 },
                 {
-                "targets": [5],
+                "targets": [6],
                 "data": null,
                 "defaultContent":  "<button class='btn btn-danger' onclick='eliminar(event)'>Eliminar</button>"
                 }
             ],
             "scrollX": true
-        } );
-
         });
+    });
+
+    function eliminar(event){
+        var element = event.target;
+        $.msgbox("Esta accion eliminara el contenido seleccionado, ¿Desea continuar?", { type: 'confirm' }, function(result){
+            if(result == 'Aceptar') {
+                var data = table[0].row($(element).parents('tr')).data();
+                $.ajax({
+                    type:"POST",
+                    context: document.body,
+                    url: '{{route('deletePal')}}',
+                    data:{ 'id' : data['id'], 'idEsp' : data['idEspanol']},
+                    success: function(data){
+                        table[0].row($(element).parents('tr')).remove().draw(false);
+                        $.msgbox("Registro eliminado con exito.", { type: 'success'});
+                    },
+                    error: function(data){
+                        var respuesta =JSON.parse(data.responseText);
+                        var arr = Object.keys(respuesta).map(function(k) { return respuesta[k] });
+                        var mensaje="";
+                        for (var i=0; i<arr.length; i++)
+                            mensaje += arr[i][0]+"\n";
+                        nombre.val("");
+                        $.msgbox(mensaje, { type: 'error'});
+                    }
+                });
+
+
+            }
+        });
+
+    }
+
+
     </script>
 @endsection

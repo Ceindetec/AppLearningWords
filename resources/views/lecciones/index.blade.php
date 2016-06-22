@@ -97,7 +97,7 @@ function editarLeccion(event){
 					}
 					else{
 						//window.location = "{!!route('lecciones.edit')!!}";
-						window.location = "/lecciones/"+data.id+"/edit";
+						window.location = "lecciones/"+data.id+"/edit";
 					}
 			}
 		});
