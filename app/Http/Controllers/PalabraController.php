@@ -38,8 +38,8 @@ class PalabraController extends Controller
     {
 //        dd($request->all());
         $result = '';
-        $palEspanol = $request->input('palabra');
-        $traduccion = $request->input('traduccion');
+        $palEspanol = ucwords(strtolower($request->input('palabra')));
+        $traduccion = ucwords(strtolower($request->input('traduccion')));
         $respuesta = "";
         $result['estado'] = false;
         $cantIguales = 0;
@@ -52,14 +52,13 @@ class PalabraController extends Controller
             $catIngresadas = $request->input('categorias');
             $catExistentes = preg_split("/,/", $request->input('categoria'));
 
-//            dd("ingresadas = ".count($catIngresadas). " Existentes= ".count($catExistentes));
             for ($i = 0; $i<count($catIngresadas); $i++){
                 for($j=0; $j<count($catExistentes); $j++){
                     if($catExistentes[$j] == $catIngresadas[$i])
                         $cantIguales++;
                 }
             }
-//            dd("Cantidad iguales = ".$cantCategorias);
+
             if($palEspanol != $Palabra_esp->palabra){
                 $cant =  palabrasEsp::where('palabra', $palEspanol)->count();
                 if ($cant==0){
@@ -68,9 +67,8 @@ class PalabraController extends Controller
                     $cambios++;
                 }
             }
-//            dd("if(".$cantIguales ."!=".count($catExistentes)." || ".$cantIguales." != ".count($catIngresadas));
+
             if($cantIguales != count($catExistentes) || $cantIguales!= count($catIngresadas)){
-//                dd("cambiaron");
                 $afectadas = palabrasEsp_categoria::where('id_palabraEsp', '=', $request->input('idPalabra'))->delete();
                 for ($i=0; $i<count($catIngresadas); $i++)
                     $this->insertPalabraEsp_Categoria($request->input('idPalabra'), $catIngresadas[$i]);
@@ -129,10 +127,8 @@ class PalabraController extends Controller
             traducciones::destroy($idTraduccion);
             palabrasEsp_categoria::where('id_palabraEsp', $idpalabra)->delete();
             leccionesDet::where('palabra_id', $idpalabra)->delete();
-            palabrasEsp::destroy($idTraduccion);
+            palabrasEsp::destroy($idpalabra);
         }
-
-
     }
 
     /**
@@ -224,7 +220,6 @@ class PalabraController extends Controller
     public function ModalcrearPalabra(){
         $arrayTipos = $this->getTiposPalabras();
         $arrayCategorias = $this->getCategorias();
-
         return view('palabras.modalCrearPalabra', compact("arrayTipos", 'arrayCategorias'));
     }
 
@@ -239,7 +234,7 @@ class PalabraController extends Controller
         $traduccion = $request->input('traduccion');
         $respuesta = "";
         $result['estado'] = false;
-        if ($request->input('palabra') != "" && $request->input('traduccion') != "" && count($request->input('categoria')) != 0 ){
+        if ($palEspanol != "" && $traduccion != "" && count($request->input('categoria')) != 0 ){
             if(isset($request->checkTiempos)){
                 if ($this->validarExistencia($palEspanol, $traduccion, 'N/A')) {
                     $respuesta = "Verbo ya registrado";
@@ -285,8 +280,10 @@ class PalabraController extends Controller
      * @return [int] [Devuelve el id de la categoria insertada]
      */
     public function insertCategoria(RequestCategoria $request){
+        $nombre = ucwords(strtolower($request->input('nombre')));
+//        dd($nombre);
         $categoria = new categoria();
-        $categoria->fill($request->all());
+        $categoria->nombre = $nombre;
         $categoria->save();
         return ($categoria->id);
     }
@@ -300,8 +297,8 @@ class PalabraController extends Controller
      */
     public function validarExistencia($espanol, $traduccion, $siglaTiempo){
         $texto = false;
-        $idEspanol = palabrasEsp::select('id')->where('palabra', $espanol)->get();
-        $regtraduccion = traducciones::where('traduccion', $traduccion)->get();
+        $idEspanol = palabrasEsp::select('id')->where('palabra', ucwords(strtolower($espanol)))->get();
+        $regtraduccion = traducciones::where('traduccion', ucwords($traduccion))->get();
         $tiempo = tiempoVerbal::select('id')->where('sigla', $siglaTiempo)->get();
         if(count($idEspanol)>0 && count($regtraduccion)>0){
             if($regtraduccion[0]->palabra_id == $idEspanol[0]->id && $regtraduccion[0]->tiempoverbal_id == $tiempo[0]->id) {
@@ -316,10 +313,11 @@ class PalabraController extends Controller
      * @param  RequestCategoria $request [Trae la informacion del formulario de insertar nueva palabra]
      * @return [int] [Devuelve el id de la traduccion insertada]
      */
-    public function ejecutarInsertPalabras($palabraEspanol, $traduccion, $padreid, $siglaTiempoV, $arrayCategorias, $tipo){
+    public function ejecutarInsertPalabras($palEspanol, $traduccion, $padreid, $siglaTiempoV, $arrayCategorias, $tipo){
         $respuesta="";
-
-        $idpalabraEsp = palabrasEsp::select('id')->where('palabra', $palabraEspanol)->get();
+        $palEspanol = ucwords(strtolower($palEspanol));
+        $traduccion = ucwords(strtolower($traduccion));
+        $idpalabraEsp = palabrasEsp::select('id')->where('palabra', $palEspanol)->get();
         $regTraduccion = traducciones::where('traduccion', $traduccion)->get();
 
         if(count($regTraduccion)>0 && count($idpalabraEsp)>0){
@@ -345,7 +343,7 @@ class PalabraController extends Controller
         }
         else{
             //Añadir palabra esp
-            $idPEspInsertada = $this->insertPalabraEsp($palabraEspanol);
+            $idPEspInsertada = $this->insertPalabraEsp($palEspanol);
             //Añadir categorias de palabra en español
             for ($i=0; $i<count($arrayCategorias); $i++)
                 $this->insertPalabraEsp_Categoria($idPEspInsertada, $arrayCategorias[$i]);

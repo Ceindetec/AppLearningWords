@@ -24,14 +24,16 @@ class RequestCategoria extends Request
     public function rules()
     {
         return [
-            'nombre' => 'required|unique:categorias,nombre'
+            'nombre' => 'required|unique:categorias,nombre|regex:/[A-ZñÑa-z ]*/'
         ];
     }
 
     public function messages()
     {
         return [
-            'nombre.unique' => 'Categoria ya registrada en la base de datos'
+            'nombre.unique' => 'Categoria ya registrada en la base de datos',
+            'nombre.required' => 'Debe ingresar un nombre para la nueva categoria',
+            'nombre.regex'=>'El nombre de la nueva categoria no debe contener números'
         ];
     }
 }

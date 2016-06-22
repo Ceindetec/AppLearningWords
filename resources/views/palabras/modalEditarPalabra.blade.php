@@ -12,11 +12,11 @@
         {!!Form::hidden('categoria', null, ['id'=>'categoria'])!!}
         <div class="form-group row">
             <div class="col-xs-12">{!!Form::label('palabra','Palabra Español (*)')!!}</div>
-            <div class="col-xs-12">{!!Form::text('palabra',null,['class'=>'form-control', 'required'])!!}</div>
+            <div class="col-xs-12">{!!Form::text('palabra',null,['class'=>'form-control solo-letra', 'required'])!!}</div>
         </div>
         <div class="form-group row">
             <div class="col-xs-12">{!!Form::label('traduccion','Traduccion (*)')!!}</div>
-            <div class="col-xs-12">{!!Form::text('traduccion',null,['class'=>'form-control', 'required'])!!}</div>
+            <div class="col-xs-12">{!!Form::text('traduccion',null,['class'=>'form-control solo-letra', 'required'])!!}</div>
         </div>
         <div class="form-group row">
             <div class="col-xs-6">{!!Form::label('tipo','Tipo')!!}</div>
@@ -25,12 +25,12 @@
             <div class="col-xs-6">{!!Form::select('tiempo', $tiemposV ,null ,['class'=>'form-control'])!!}</div>
         </div>
         <div class="form-group row">
-            <div class="col-xs-6">{!!Form::label('categoria', 'Categoria',['class'=>'control-label']) !!}</div>
+            <div class="col-xs-6">{!!Form::label('categoria', 'Categoria (*)',['class'=>'control-label']) !!}</div>
             <div class="col-xs-6">{!!Form::label('newCategoria', 'Nueva',['class'=>'control-label']) !!}</div>
             <div class="col-xs-6">
-                {!!Form::select('categorias[]', $categoriasP ,null ,['class'=>'form-control select2_multiple','style'=>'width:100%;',  'multiple'=>'multiple', 'id'=>'categorias', 'required'])!!}
+                {!!Form::select('categorias[]', $categoriasP ,null ,['class'=>'form-control select2_multiple','style'=>'width:100%;',  'multiple'=>'multiple', 'id'=>'categorias'])!!}
             </div>
-            <div class="col-xs-4">{!!Form::text('newCategoria',null,['class'=>'form-control', 'id'=>'newCategoria'])!!}</div>
+            <div class="col-xs-4">{!!Form::text('newCategoria',null,['class'=>'form-control solo-letra', 'id'=>'newCategoria'])!!}</div>
             <div class="col-xs-2 text-center">
                 <button type="button" class="btn btn-primary" onclick="nuevaCat()"><i class="fa fa-check" aria-hidden="true"></i></button>
             </div>
@@ -66,7 +66,9 @@
 //        alert ( $("#categorias").val());
         $("#categorias").select2();
 
-
+        $('.solo-letra').keyup(function (){
+            this.value = (this.value + '').replace(/[^A-Za-z ]/g, '');
+        });
 
         if ($("#tipo option:selected").text() != "Verbo"){
             $('#tiempo').attr('disabled', true);
