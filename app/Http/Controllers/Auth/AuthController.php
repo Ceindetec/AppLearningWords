@@ -91,13 +91,13 @@ class AuthController extends Controller
         //dd(Auth::user()->rol);
         switch (Auth::user()->rol) {
             case 'superadmin':
-                return route('usuarios.index');
+                return route('administracion.index');
                 break;
             case 'administrador':
-                return route('usuarios.index');
+                return route('administracion.index');
                 break;
             case 'docente':
-                return route('docentes.index');
+                return route('lecciones.index');
                 break;
             case 'estudiante':
                 return route('estudiantes.index');

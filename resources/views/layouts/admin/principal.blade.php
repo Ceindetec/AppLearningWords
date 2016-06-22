@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
-
+<?php $user = Auth::user(); ?>
 <head>
 
   <meta charset="utf-8"> 
