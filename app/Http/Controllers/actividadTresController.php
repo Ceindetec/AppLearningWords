@@ -4,6 +4,8 @@ namespace LearningWords\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use LearningWords\leccionesDet;
+use LearningWords\traducciones;
 use LearningWords\Http\Requests;
 use LearningWords\Http\Controllers\Controller;
 
@@ -14,9 +16,64 @@ class actividadTresController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        return view('actividadesRepaso.actividadtres');
+    public function index($id){
+
+
+        $listaTraducciones = array();
+        $traduccionesMostrar = array();
+        $Traducciones =array();
+
+        $palabrasEspDet = leccionesDet::select('palabra_id')->where('leccion_id', $id)->orderBy('palabra_id','asc')->get();
+
+        foreach($palabrasEspDet as $palabraEsp){
+            $traducciones = traducciones::select('id', 'traduccion')
+                ->where('palabra_id', $palabraEsp->palabra_id)
+                ->where('idiomas_id', 1)
+                ->get();
+            $Traducciones[$traducciones[0]->id]=$traducciones[0]->traduccion;
+
+
+        }
+
+        foreach($palabrasEspDet as $palabraEsp){
+            $traducciones = traducciones::select('id', 'traduccion')
+                ->where('palabra_id', $palabraEsp->palabra_id)
+                ->where('idiomas_id', 1)
+                ->get();
+
+            foreach($traducciones as $trad){
+                $listaTraduccionesextras =array();
+                $listaAMostrar = array();
+                $listaTraducciones[$palabraEsp->palabra_id] = $trad->traduccion;
+                $listaTraduccionesextras=$Traducciones;
+
+                unset($listaTraduccionesextras[$traducciones[0]->id]);
+                shuffle($listaTraduccionesextras);
+
+                for($i=0;$i<count($listaTraduccionesextras);$i++){
+                    if($i>2)
+                        break;
+                    $listaAMostrar[]=$listaTraduccionesextras[$i];
+
+
+                }
+
+                $listaAMostrar[]=$trad->traduccion;
+                shuffle($listaAMostrar);
+
+
+
+                $traduccionesMostrar[$palabraEsp->palabra_id] = $listaAMostrar;
+            }
+
+        }
+        //shuffle($traduccionesMostrar);
+        $data['palabrasEspDet'] = $palabrasEspDet;
+        $data['listaTraducciones'] = $listaTraducciones;
+        $data['traduccionesMostrar'] = $traduccionesMostrar;
+        $data['leccion'] = $id;
+        //dd($data);
+        return view('actividadesRepaso.actividadtres',$data);
     }
 
     /**

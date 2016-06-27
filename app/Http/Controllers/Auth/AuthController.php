@@ -100,7 +100,7 @@ class AuthController extends Controller
                 return route('lecciones.index');
                 break;
             case 'estudiante':
-                return route('estudiantes.index');
+                return route('actividadesRepaso.index');
                 break;
             default:
                 return route('home');

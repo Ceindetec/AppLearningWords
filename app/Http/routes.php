@@ -20,15 +20,17 @@ Route::get('home', [
 	]);
 
 Route::get('/', 'homeController@index');
-Route::resource('actividadesRepaso', 'actividadesRepasoController');
+//Route::resource('actividadesRepaso', 'actividadesRepasoController');
 
 /*************** Routes funcionalidad actividades de repaso *************************************************/
-Route::get('actividadesRepaso', 'actividadesRepasoController@index')->name('actividadesRepaso.index');
+Route::group(['middleware' => ['is_estudiante']], function() {
 
-Route::get('actividaduno/{idleccion}', 'actividadUnoController@index')->name('actividaduno.index');
+	Route::get('actividadesRepaso', 'actividadesRepasoController@index')->name('actividadesRepaso.index');
 
-Route::get('actividaddos', 'actividadDosController@index')->name('actividaddos.index');
-Route::get('actividadtres', 'actividadTresController@index')->name('actividadtres.index');
+	Route::get('actividaduno/{idleccion}', 'actividadUnoController@index')->name('actividaduno.index');
+	Route::get('actividaddos/{idleccion}', 'actividadDosController@index')->name('actividaddos.index');
+	Route::get('actividadtres/{idleccion}', 'actividadTresController@index')->name('actividadtres.index');
+});
 /***********************************************************************************************************/
 
 /*************** Routes funcionalidad lecciones de repaso **************************************************/
