@@ -10,6 +10,7 @@ use LearningWords\palabrasEsp_categoria;
 use LearningWords\controlAvance;
 use LearningWords\evaluaciones;
 use Illuminate\Http\Request;
+use LearningWords\actividades;
 
 use LearningWords\Http\Requests;
 use LearningWords\Http\Controllers\Controller;
@@ -41,7 +42,7 @@ class leccionesController extends Controller
     $esta = $this->checkNombreLeccionByDocente($docente, $nombre);
         if($esta == 0){
             $var = new leccionesEnc($request->all());
-            $var->save();      
+            $var->save();
             return response()->json(["id" => $var->id]);
         }
         else{

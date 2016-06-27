@@ -5,6 +5,8 @@ namespace LearningWords\Http\Controllers;
 use Illuminate\Http\Request;
 
 use LearningWords\Http\Requests;
+use LearningWords\leccionesDet;
+use LearningWords\traducciones;
 use LearningWords\Http\Controllers\Controller;
 
 class actividadDosController extends Controller
@@ -14,9 +16,33 @@ class actividadDosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-   public function index()
-    {
-        return view('actividadesRepaso.actividaddos');
+   public function index($id){
+        $listaTraducciones = array();
+        $traduccionesMostrar = array();
+        $palabrasEspDet = leccionesDet::select('palabra_id')->where('leccion_id', $id)->orderBy('palabra_id','asc')->get();
+        foreach($palabrasEspDet as $palabraEsp){
+         $traducciones = traducciones::select('palabra_id', 'traduccion')
+             ->where('palabra_id', $palabraEsp->palabra_id)
+             ->where('idiomas_id', 1)
+             ->get();
+         $palabraEsp->getpalabra;
+         foreach($traducciones as $trad){
+          $listaTraducciones[$palabraEsp->palabra_id] = $trad->traduccion;
+          $traduccionesMostrar[$palabraEsp->palabra_id] = $trad->traduccion;
+         }
+
+        }
+        shuffle($traduccionesMostrar);
+        $data['palabrasEspDet'] = $palabrasEspDet;
+        $data['listaTraducciones'] = $listaTraducciones;
+
+   //dd($listaTraducciones);
+
+        $data['traduccionesMostrar'] = $traduccionesMostrar;
+       $data['leccion'] = $id;
+
+        return view('actividadesRepaso.actividaddos',$data);
+
     }
 
     /**

@@ -52,14 +52,15 @@ td, th {
 function actividaduno(){
 	var leccion= $('#lecciones').val();
 	if(leccion)		
-		window.location = /actividaduno/+leccion;
+		window.location = "actividaduno/" + leccion;
 	else
 		$.msgbox("Debe seleccionar una lección para repasar.",{type:'error'});
 }
 function actividaddos(){
-	var leccion_id = $('#lecciones').val();
-	if(leccion_id){		
-		window.location = "{!!route('actividaddos.index')!!}";
+	var leccion = $('#lecciones').val();
+	if(leccion){
+		window.location = "actividaddos/" + leccion;
+
 	}
 	else{
 		$.msgbox("Debe seleccionar una lección para repasar.",{type:'error'});
@@ -68,9 +69,10 @@ function actividaddos(){
 }
 
 function actividadtres(){
-	var leccion_id = $('#lecciones').val();
-	if(leccion_id){		
-		window.location = "{!!route('actividadtres.index')!!}";
+	var leccion = $('#lecciones').val();
+	if(leccion){
+		window.location = "actividadtres/" + leccion;
+
 	}
 	else{
 		$.msgbox("Debe seleccionar una lección para repasar.",{type:'error'});
