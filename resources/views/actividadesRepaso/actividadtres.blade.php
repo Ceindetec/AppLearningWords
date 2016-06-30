@@ -222,15 +222,19 @@
 			});
 
 			if(validar){
-
-
-
 				/*Aqui va lo que se quiere que haga en la base de datos para guardar el progreso de la actividad*/
-
-
-
-				$("#siguiente").removeClass("hidden").addClass("show");
-				$("#regresar").removeClass("hidden").addClass("show");
+				$.ajax({
+					type: "POST",
+					context: document.body,
+					url: '{{route('actividadFinalizada')}}',
+					data: {'id_leccion':'{{$idleccion}}','id_actividad':3},
+					success: function (data) {
+						$("#regresar").removeClass("hidden").addClass("show");
+					},
+					error: function () {
+						console.log('error en la concexción');
+					}
+				});
 
 			}
 

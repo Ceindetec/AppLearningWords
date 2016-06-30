@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+
 //use LearningWords\institucion;
 
 class User extends Model implements AuthenticatableContract,
@@ -33,5 +34,16 @@ class User extends Model implements AuthenticatableContract,
     public function setPasswordAttribute($pass){
         if(!empty($pass))
             $this->attributes['password'] = bcrypt($pass);
+    }
+
+    public function getControlAvance($leccion_id){
+        if($this->rol == 'estudiante'){
+            //return "prueba";
+            $respuesta = controlAvance::where('usuario_documento', $this->documento)->where('leccion_id', $leccion_id)->get();
+            if(count($respuesta) > 0)
+                return $respuesta;
+            else
+                return false;
+        }
     }
 }

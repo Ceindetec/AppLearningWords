@@ -45,19 +45,14 @@ td, th {
 <div class="panel panel-primary">
 	<div class="panel-heading">
 		<h3 class="panel-title">
-			Escribe el numero de la traducción frente a cada palabra en español.
+			Arrastra la traducción frente a cada palabra en español.
 		</h3>		
 		
 	</div>
 	<div class="panel-body padre" >
 		{!!Form::open()!!}	
 	<?php $i = 0;
-
-		$repuestas = array();
 	?>
-{{--	{!! Form::hidden('palabrasEsp', json_encode($palabrasEspDet), ['id' => 'palabrasEsp']) !!}
-		{!! Form::hidden('palabrasEsp', json_encode($listaTraducciones), ['id' => 'traducciones']) !!}
-		{!! Form::hidden('trad', json_encode($traduccionesMostrar), ['id' => 'trad']) !!}--}}
 
 	@foreach($palabrasEspDet as $valor)
 		 
@@ -65,13 +60,11 @@ td, th {
 			<div class ="col-md-3 col-md-offset-2" style="text-align:right"	>
 				@if($valor->getpalabra)
 					{!!Form::label($valor->getpalabra->palabra)!!}
-					{{--{!! Form::hidden('palabra'.$i,$i, ['id' => 'palabra'.$i]) !!}--}}
 				@endif
 			</div>
 			<div class ="col-md-2">
 
 				<div id="respuesta{{$i}}" class=" form-control respuestas droppable" >
-
 
 				</div>
 
@@ -83,7 +76,6 @@ td, th {
 		</br>
 		<?php 
 			$i++;
-			//$count++;
 		?>
 		@endforeach
 
@@ -97,7 +89,7 @@ td, th {
 			</div>
 			<div class="col-xs-6">
 				{!! Form::button('Siguiente', array('class' => 'btn btn-success pull-right hidden', 'id'=>'siguiente')) !!}
-				{!! Form::button('Menu de Actividades', array('class' => 'btn btn-success pull-right hidden', 'id'=>'regresar')) !!}
+				{!! Form::button('Menu de Actividades', array('class' => 'btn btn-success pull-right ', 'id'=>'regresar')) !!}
 			</div>
 		</div>
 
@@ -110,7 +102,6 @@ td, th {
 @section('scripts')
 
 	{!!Html::script('js/jquery-ui-1.11.4/jquery-ui.js')!!}
-	{{--<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>--}}
 
 <script type="text/javascript">
 
@@ -132,7 +123,6 @@ td, th {
 
 		$( ".droppable" ).droppable({
 			drop: function(event, ui) {
-				//dataIndex = ui.draggable.index()
 					//console.log(ui.draggable.index());
 				var contenido = ui.draggable[0].innerHTML;
 
@@ -153,12 +143,6 @@ td, th {
 	});
 
 
-
-
-
-	/*palabras = $('#palabrasEsp').val();
-	palabrasJson = JSON.parse(palabras);*/
-
 	var palabrasEsp = '{!! json_encode($palabrasEspDet) !!}';
 
 	//console.log(JSON.parse(palabrasEsp));
@@ -173,22 +157,11 @@ td, th {
 
 	//console.log(traduccionesJson);
 
-
 	var traduccionesmostrar = '{!! json_encode($traduccionesMostrar) !!}';
 	var traduccionesJsonMos = JSON.parse(traduccionesmostrar);
 	console.log(traduccionesJsonMos);
 	console.log(traduccionesJsonMos[0]);
 
-
-/*	traduccion = $('#traducciones').val();
-	traduccionJson = JSON.parse(traduccion);
-	//console.log(traduccionJson);
-
-	//console.log("traducciones: ",$('#traducciones').val());
-	//console.log("mostrar: ",$('#trad').val());
-	mostrarTrad = $('#trad').val();
-	trad = JSON.parse(mostrarTrad);
-	//console.log("vector",trad)*/
 
 $('#verificar').on('click', function ( ) {
 
@@ -214,15 +187,20 @@ $('#verificar').on('click', function ( ) {
 	});
 
 	if(validar){
-
-
-
 		/*Aqui va lo que se quiere que haga en la base de datos para guardar el progreso de la actividad*/
-
-
-
-		$("#siguiente").removeClass("hidden").addClass("show");
-		$("#regresar").removeClass("hidden").addClass("show");
+		$.ajax({
+			type: "POST",
+			context: document.body,
+			url: '{{route('actividadFinalizada')}}',
+			data: {'id_leccion':'{{$idleccion}}','id_actividad':1},
+			success: function (data) {
+				$("#siguiente").removeClass("hidden").addClass("show");
+				$("#regresar").removeClass("hidden").addClass("show");
+			},
+			error: function () {
+				console.log('error en la concexción');
+			}
+		});
 
 	}
 	
