@@ -26,14 +26,19 @@ abstract class IsType
     public function handle($request, Closure $next)
     {
         //dd($this->getType());
-        if($this->auth->user()->rol !== $this->getType()){
-            if($request->ajax()){
-                return response('Unauthorized.', 401);
-            }else{
-                return redirect()->to('home');
+
+        if($this->auth->user()) {
+
+            if ($this->auth->user()->rol !== $this->getType()) {
+                if ($request->ajax()) {
+                    return response('Unauthorized.', 401);
+                } else {
+                    return redirect()->to('home');
+                }
             }
+        }else{
+            return redirect()->to('login');
         }
-        
         return $next($request);
     }
 }

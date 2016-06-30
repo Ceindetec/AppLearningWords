@@ -83,7 +83,7 @@
 				</div>
 				<div class="col-xs-6">
 					{!! Form::button('Siguiente', array('class' => 'btn btn-success pull-right hidden', 'id'=>'siguiente')) !!}
-					{!! Form::button('Menu de Actividades', array('class' => 'btn btn-success pull-right hidden', 'id'=>'regresar')) !!}
+					{!! Form::button('Menu de Actividades', array('class' => 'btn btn-success pull-right', 'id'=>'regresar')) !!}
 				</div>
 			</div>
 		</div>
@@ -161,15 +161,20 @@
 				i++;
 			});
 			if(validar){
-
-
-
 				/*Aqui va lo que se quiere que haga en la base de datos para guardar el progreso de la actividad*/
-
-
-
-				$("#siguiente").removeClass("hidden").addClass("show");
-				$("#regresar").removeClass("hidden").addClass("show");
+				$.ajax({
+					type: "POST",
+					context: document.body,
+					url: '{{route('actividadFinalizada')}}',
+					data: {'id_leccion':'{{$idleccion}}','id_actividad':2},
+					success: function (data) {
+						$("#siguiente").removeClass("hidden").addClass("show");
+						$("#regresar").removeClass("hidden").addClass("show");
+					},
+					error: function () {
+						console.log('error en la concexción');
+					}
+				});
 
 			}
 
