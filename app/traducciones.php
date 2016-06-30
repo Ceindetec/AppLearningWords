@@ -38,6 +38,6 @@ class traducciones extends Model
 
    public function getTiempoVerbal()
    {
-      return $this->belongsTo('LearningWords\tiempoVerbal', 'tiempoverbal_id', 'documento');
+      return $this->belongsTo('LearningWords\tiempoVerbal', 'tiempoverbal_id', 'id');
    }
 }
