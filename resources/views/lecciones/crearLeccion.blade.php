@@ -21,7 +21,7 @@ td, th {
 		<h3 class="panel-title">Agregar palabras</h3>		
 	</div>
 	<div class="panel-body">
-		<div class="row">
+		{{--<div class="row">--}}
 			{!!Form::open()!!}	
 				<div class="form-group">
 					{!!Form::label('Nombre de la lección: ')!!}
@@ -74,6 +74,7 @@ td, th {
 	</div>
 	<div class="panel-footer" style="text-align:right">
 		{!! Form::button('Guardar', array('class' => 'btn btn-success', 'id'=>'guardar')) !!}
+		{!! Form::button('Cancelar', array('class' => 'btn btn-success', 'id'=>'cancelar')) !!}
 	</div>
 </div>
 @endsection
@@ -82,6 +83,9 @@ td, th {
 
 <script type="text/javascript">
 
+/*****************************************************************************************************************/
+// Función que construye el data table de los detalles de la lección.
+/*****************************************************************************************************************/
 $(function(){
 
 	table[0] = $('#palabrasAgregadas').DataTable( {
@@ -112,19 +116,22 @@ $(function(){
 $('#categ').on('change', function ( ) {
 	var categoria = $('#categ').val();
 	if(categoria){		
-		$('#name').attr('readonly',false);
+		/** Obtiene las palabras asociadas a la categoria seleccionada **/
 		$.post("{!!route('lecciones.categorias')!!}",{"id_categoria": categoria}, function(result){
-			var data;		
-			data = $.map(result, function (result) {
-                    return {
-                        text: result.palabra,
-                        id: result.id
-                    }
-                });			
-			cargarPalabrasBusqueda(data);
+			var datos;	
+			var i = -1;	
+			datos = $.map(result, function () {	
+			i++;			
+            return { text: result[i].getpalabra.palabra, id: result[i].getpalabra.id }  
+               		});			
+			/** Agrega los datos al select2 **/
+				$('#name').empty();
+			 	$('#name').select2({
+				 	data: datos,
+				 	language: "es",
+				});
 		});
-	}
-		
+	}		
 	else
 		$('#name').	attr('readonly',true);
 });
@@ -156,8 +163,7 @@ $('#agregarPalabra').on('click', function () {
 						else{
 							agregarpalabras(t);
 							$('#guardar').attr('disabled',false);
-						}
-							
+						}							
 				}	
 });
 
@@ -167,11 +173,11 @@ $('#agregarPalabra').on('click', function () {
 
 $('#guardar').on('click', function () {
 
-$.ajax({
+	$.ajax({
 			type : "POST",
 			url : "{!!route('lecciones.store')!!}",
 			async: false,
-			data: {"nombre": $('#nombreleccion').val(), "usuario_documento": "86074808"},
+			data: {"nombre": $('#nombreleccion').val(), "usuario_documento": "{{\Auth::user()->documento}}"},
 			success: function(respuesta){
 				if(respuesta.id > 0){
 				var dataenvio = [];
@@ -202,6 +208,9 @@ $.ajax({
 		});
 });
 
+/*****************************************************************************************************************/
+// Función que verifica si una palabra ya fue insertada en la lección actual.
+/*****************************************************************************************************************/
 
 function buscarpalabra(id){
 	for(i=0;i< palabras.length;i++) {		
@@ -209,6 +218,10 @@ function buscarpalabra(id){
 			{return true;}
 	}
 }
+
+/*****************************************************************************************************************/
+// Función que agrega una nueva palabra en la tabla de la lección que se esta construyendo.
+/*****************************************************************************************************************/
 
 function agregarpalabras(t){
 	t.row.add( [
@@ -218,6 +231,10 @@ function agregarpalabras(t){
 	] ).draw( false );   
 palabras.push( $('#name').val());  
 }
+
+/*****************************************************************************************************************/
+// Función que elimina una palabra en la tabla de la lección que se esta construyendo.
+/*****************************************************************************************************************/
 
 function eliminarPalabra(event){
 	
@@ -236,11 +253,12 @@ function eliminarPalabra(event){
 							
 				}		
 	
-	table[0].row( $(element).parents('tr') ).remove().draw();
-		
-	//});
-	
+	table[0].row( $(element).parents('tr') ).remove().draw();	
 };
+
+/*****************************************************************************************************************/
+// Función que carga las palabras al elemento selec2 de la vista registro de lección.
+/*****************************************************************************************************************/
 
 function cargarPalabrasBusqueda(datos){
   $('#name').empty();
@@ -251,6 +269,9 @@ function cargarPalabrasBusqueda(datos){
 }
 
 
+$('#cancelar').on('click', function () {
+	window.location="{!!route('lecciones.index')!!}";
+});
 
 </script>
 

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
-
+<?php $user = Auth::user(); ?>
 <head>
 
   <meta charset="utf-8"> 
@@ -18,7 +18,7 @@
   <!-- Font Awesome -->
   {!!Html::style('vendors/font-awesome/css/font-awesome.min.css')!!}
   <!-- iCheck -->
-  <!-- {!!Html::style('vendors/iCheck/skins/flat/green.css')!!}-->
+  {!!Html::style('vendors/iCheck/skins/flat/green.css')!!}
   <!-- bootstrap-progressbar -->
   {!!Html::style('vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css')!!}
   <!-- jVectorMap -->
@@ -33,7 +33,7 @@
 
   <!-- select2 -->
 
-  {!!Html::style('css/select2/select2.css')!!}
+  {!!Html::style('vendors/select2/dist/css/select2.min.css')!!}
 
   <!-- Datatables -->
   
@@ -49,12 +49,12 @@
 
   <div class="animacarga">
     
-    <div class="cssload-thecube">
+    {{--<div class="cssload-thecube">
       <div class="cssload-cube cssload-c1"></div>
       <div class="cssload-cube cssload-c2"></div>
       <div class="cssload-cube cssload-c4"></div>
       <div class="cssload-cube cssload-c3"></div>
-    </div>
+    </div>--}}
 
   </div>
 
@@ -146,7 +146,7 @@
 <!-- bootstrap-progressbar -->
 {!!Html::script('vendors/bootstrap-progressbar/bootstrap-progressbar.min.js')!!}
 <!-- iCheck -->
-<!-- {!!Html::script('vendors/iCheck/icheck.min.js')!!} -->
+{!!Html::script('vendors/iCheck/icheck.min.js')!!}
 <!-- Skycons -->
 <!-- {!!Html::script('vendors/skycons/skycons.js')!!} -->
 <!-- Flot -->
@@ -176,7 +176,7 @@
 {!!Html::script('js/msgbox/jquery.msgbox.js')!!}
 
 <!-- select2 -->
-{!!Html::script('js/select2/select2.full.js')!!}
+{!!Html::script('vendors/select2/dist/js/select2.full.min.js')!!}
 {!!Html::script('js/select2/es.js')!!}
 
 <!--kendojs -->

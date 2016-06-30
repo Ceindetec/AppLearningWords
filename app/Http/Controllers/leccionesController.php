@@ -6,9 +6,12 @@ use LearningWords\leccionesEnc;
 use LearningWords\leccionesDet;
 use LearningWords\categoria;
 use LearningWords\palabrasEsp;
+use LearningWords\palabrasEsp_categoria;
 use LearningWords\controlAvance;
 use LearningWords\evaluaciones;
 use Illuminate\Http\Request;
+use Guzzle\Tests\Plugin\Redirect;
+use LearningWords\actividades;
 
 use LearningWords\Http\Requests;
 use LearningWords\Http\Controllers\Controller;
@@ -22,7 +25,9 @@ class leccionesController extends Controller
         return view('lecciones.index');
     }
 
-   
+//   public function editar(){
+//       return view('lecciones.editarLeccion');
+//   }
     public function create()
     {
         $categorias = categoria::select('id', 'nombre')->get();
@@ -40,7 +45,7 @@ class leccionesController extends Controller
     $esta = $this->checkNombreLeccionByDocente($docente, $nombre);
         if($esta == 0){
             $var = new leccionesEnc($request->all());
-            $var->save();      
+            $var->save();
             return response()->json(["id" => $var->id]);
         }
         else{
@@ -80,20 +85,37 @@ class leccionesController extends Controller
    
     public function edit($id)
     {
-        $data['encabezado'] = leccionesEnc::find($id);
-       
-        $categorias = categoria::select('id', 'nombre')->get();
-        foreach($categorias as $categoria)
-            $listaCategorias[$categoria['id']] = $categoria['nombre'];
+        $leccion = leccionesEnc::find($id);
+        if (count($leccion) >0){
+            $data['encabezado'] = leccionesEnc::find($id);
 
-        $data['categorias'] = $listaCategorias;
-        return view('lecciones.editarLeccion', $data);
+            $categorias = categoria::select('id', 'nombre')->get();
+            foreach($categorias as $categoria)
+                $listaCategorias[$categoria['id']] = $categoria['nombre'];
+
+            $data['categorias'] = $listaCategorias;
+            return view('lecciones.editarLeccion', $data);
+        }
+        else
+            return \Redirect::route('lecciones.index');
     }
 
   
     public function update(Request $request, $id)
-    {
-        //
+    {      
+        $nombre = $request -> input("nombre");
+        $usuario_documento = $request -> input("usuario_documento");
+        $countNombre = leccionesEnc::where('nombre', $nombre)->
+                                     where('usuario_documento', $usuario_documento)->count();
+        if($countNombre>0)
+            return 1;
+        else
+        {
+            $enc = leccionesEnc::find($id);
+            $enc->fill($request->all());
+            $enc->save();
+            return 0;
+        }
     }
 
     
@@ -106,20 +128,25 @@ class leccionesController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $usuario_documento
-     * @return json listaLecciones: listado de lecciones creadas por un docente
+     * @return [json] listaLecciones: listado de lecciones creadas por un docente
      */
-    // TO DO
-    // Implementar recepcion de parametro usuario_documento para filtrar
     function cargarLeccionesByDocente(){
 
-        $listaLecciones = leccionesEnc::where('usuario_documento','86074808')->get();       
+        $listaLecciones = leccionesEnc::where('usuario_documento',\Auth::user()->documento)->get();
+        foreach ($listaLecciones as $leccion)
+            $leccion['canPalabras'] = $leccion->getTotalPalabras();
         return json_encode(["data"=>$listaLecciones]);
     }
 
     function cargarPalabrasBusqueda(Request $request){
         $id_categoria = $request -> input("id_categoria");
-        $listapalabras = palabrasEsp::select('id','palabra')->where('categorias_id',$id_categoria)->get();       
+        
+        $listapalabras = palabrasEsp_categoria::where('id_Categoria',$id_categoria)->get();       
+        foreach ($listapalabras as $palabra)
+            $palabra->getpalabra;
         return $listapalabras;
+        //return ['data'=> $listapalabras];
+    
     }
 
     function checkEstadoLeccion(Request $request){

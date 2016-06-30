@@ -8,9 +8,9 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li class="">
 					<a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-						<!--<img src="images/img.jpg" alt=""> esto si se usa imagen-->
-						@if(isset($usuario))
-							{{ $usuario->nombres }} {{ $usuario->apellidos }}
+						
+						@if(null != $user)
+							{{ $user->nombres }} {{ $user->apellidos }}
 							<span class="fa fa-angle-down"></span>
 							<ul class="dropdown-menu dropdown-usermenu pull-right">
 								<li><a href="javascript:;"> Perfil</a></li>
