@@ -21,7 +21,7 @@ td, th {
 		<h3 class="panel-title">Agregar palabras</h3>		
 	</div>
 	<div class="panel-body">
-		<div class="row">
+		{{--<div class="row">--}}
 			{!!Form::open()!!}	
 				<div class="form-group">
 					{!!Form::label('Nombre de la lección: ')!!}
@@ -74,6 +74,7 @@ td, th {
 	</div>
 	<div class="panel-footer" style="text-align:right">
 		{!! Form::button('Guardar', array('class' => 'btn btn-success', 'id'=>'guardar')) !!}
+		{!! Form::button('Cancelar', array('class' => 'btn btn-success', 'id'=>'cancelar')) !!}
 	</div>
 </div>
 @endsection
@@ -176,7 +177,7 @@ $('#guardar').on('click', function () {
 			type : "POST",
 			url : "{!!route('lecciones.store')!!}",
 			async: false,
-			data: {"nombre": $('#nombreleccion').val(), "usuario_documento": "86074808"},
+			data: {"nombre": $('#nombreleccion').val(), "usuario_documento": "{{\Auth::user()->documento}}"},
 			success: function(respuesta){
 				if(respuesta.id > 0){
 				var dataenvio = [];
@@ -268,6 +269,9 @@ function cargarPalabrasBusqueda(datos){
 }
 
 
+$('#cancelar').on('click', function () {
+	window.location="{!!route('lecciones.index')!!}";
+});
 
 </script>
 

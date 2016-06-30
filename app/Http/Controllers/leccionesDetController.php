@@ -26,9 +26,9 @@ class leccionesDetController extends Controller
     public function detallelecciongrid(Request $request){
         $query = leccionesDet::where('leccion_id', $request->id)->get();
         foreach ($query as $qu) {
-            $qu->getpalabra;
-            $qu->getleccion;
+            $qu->getpalabra->getTraduccion;
         }
+//        dd($query);
         return ['data'=> $query];
     }
 

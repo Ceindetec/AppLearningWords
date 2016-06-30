@@ -21,38 +21,31 @@ td, th {
 		<h3 class="panel-title">Agregar palabras</h3>		
 	</div>
 	<div class="panel-body">
-		<div class="row">
-			{!!Form::model($encabezado, ['route'=>['lecciones.update', $encabezado->id]])!!}	
-				<div class="form-group">
-					{!!Form::label('Nombre de la lección: ')!!}
-				<div class="form-group">
-					{!!Form::text('nombreleccion', $encabezado->nombre ,['class'=>'form-control', 'id' => 'nombreleccion', 'required', 'placeholder' => 'Asigne un nombre a la lección actual ...'])!!}
-					{!! Form::hidden('leccion_id', $encabezado->id, ['id' => 'leccion_id']) !!}
-				</div>
-			{!!Form::close()!!}		
+		{!!Form::model($encabezado, ['route'=>['lecciones.update', $encabezado->id]])!!}
+			<div class="form-group">
+				{!!Form::label('Nombre de la lección: ')!!}
+				{!!Form::text('nombreleccion', $encabezado->nombre ,['class'=>'form-control', 'id' => 'nombreleccion', 'required', 'placeholder' => 'Asigne un nombre a la lección actual ...'])!!}
+				{!! Form::hidden('leccion_id', $encabezado->id, ['id' => 'leccion_id']) !!}
+			</div>
+		{!!Form::close()!!}
 
-			{!!Form::open()!!}	
-				<div class="form-group">
-					{!!Form::label('Seleccione categoria: ')!!}
-				<div class="form-group">
-					{!!Form::select('categorias', $categorias ,null,['class'=>'form-control', 'id' => 'categ', 'required', 'placeholder' => 'Seleccione ...'])!!}
-				</div>
-				</div>				
-				<div class="form-group">
-					<div class="form-group">
-					{!!Form::label('Buscar palabra: ')!!}		
-					</div>		
-					<div class="row">	
-						<div class="form-group col-md-10">	
+		{!!Form::open()!!}
+			<div class="form-group">
+				{!!Form::label('Seleccione categoria: ')!!}
+				{!!Form::select('categorias', $categorias ,null,['class'=>'form-control', 'id' => 'categ', 'required', 'placeholder' => 'Seleccione ...'])!!}
+			</div>
+			<div class="form-group">
+				{!!Form::label('Buscar palabra: ')!!}
+					<div class="row">
+						<div class="col-sm-10">
 							{!!Form::select('Nombre', [], null, ['class'=>'form-control','readonly','id'=>'name', 'required','placeholder' => 'Escriba la palabra a buscar'])!!}
 						</div>	
-						<div class="form-group col-md-2 align-right">	
+						<div class="col-sm-2 text-center">
 							{!! Form::button('Agregar', array('class' => 'btn btn-primary', 'id'=>'agregarPalabra')) !!}
 						</div>	
-					</div>	
-				</div>								 			
-			{!!Form::close()!!}			
-		</div>
+					</div>
+			</div>
+		{!!Form::close()!!}
 	</div>
 </div>
 
@@ -67,8 +60,8 @@ td, th {
 			<thead>
 				<tr>
 					<th>Id</th>
-					<th>Leccion</th>		
-					<th>Palabra</th>						
+					<th>Palabra</th>
+					<th>Traduccion</th>
 					<th>Eliminar</th>
 				</tr>
 			</thead>
@@ -80,9 +73,9 @@ td, th {
 	</div>
 	<div class="panel-footer" style="text-align:right">
 		{!! Form::button('Guardar', array('class' => 'btn btn-success', 'id'=>'guardar')) !!}
+		{!! Form::button('Cancelar', array('class' => 'btn btn-success', 'id'=>'cancelar')) !!}
 	</div>
 </div>
-
 @endsection
 
 @section('scripts')
@@ -104,7 +97,7 @@ $(function(){
 			url: "{!!route('detallelecciongrid', ['id' => $encabezado->id])!!}",
 			"type": "POST"
 		},
-		columns: [ {data: 'id'}, {data:'getleccion.nombre'}, {data:'getpalabra.palabra'}],
+		columns: [ {data: 'id'}, {data:'getpalabra.palabra'}, {data:'getpalabra.get_traduccion.traduccion'}],
 		"columnDefs": [
 		{
 			"targets": [0],
@@ -214,9 +207,9 @@ $('#guardar').on('click', function () {
 	if($('#nombreleccion').val() != nombre_leccion){
 		$.ajax({
 			type : "PUT",
-			url : "/lecciones/"+ $('#leccion_id').val(),
+			url : "{!!route('lecciones.update', $encabezado->id)!!}",
 			async: true,
-			data: {"nombre": $('#nombreleccion').val(), "usuario_documento": "86074808"},
+			data: {"nombre": $('#nombreleccion').val(), "usuario_documento": "{{\Auth::user()->documento}}"},
 			success: function(respuesta){
 				if (respuesta == 0){
 						$.msgbox("Se actualizó la lección de manera exitosa.",{type:'success'},function (){
@@ -235,7 +228,12 @@ $('#guardar').on('click', function () {
 						});
 	}
 });
-			
+
+
+
+$('#cancelar').on('click', function () {
+	window.location="{!!route('lecciones.index')!!}";
+});
 </script>
 
 @endsection
