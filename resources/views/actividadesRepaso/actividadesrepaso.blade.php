@@ -9,6 +9,13 @@ td, th {
 	height:100px;
 	width: 200px;
 }
+.estado{
+	font-size: 24px;
+}
+
+	.pregunta{
+		cursor: pointer;
+	}
 
 </style>
 @endsection
@@ -27,23 +34,30 @@ td, th {
 		</div>
 		<div class="panel-body">
 
+			<div class="col-xs-12 col-md-offset-1">
 			<div class="col-lg-3 col-md-6">
-				<div class="panel panel-danger">
+				@if($actividad1=="No iniciada")
+					<div class="panel panel-danger">
+						@elseif($actividad1=="En progreso")
+							<div class="panel panel-warning">
+								@else
+									<div class="panel panel-success">
+										@endif
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-xs-3">
 								<i class="fa fa-hand-pointer-o fa-5x" aria-hidden="true"></i>
 							</div>
 							<div class="col-xs-9 text-right">
-								<i class="fa fa-question" aria-hidden="true"></i>
+								<i class="fa fa-question pregunta" aria-hidden="true"></i>
 
-								<div>New Comments!</div>
+								<div class="estado">Actividad Uno</div>
 							</div>
 						</div>
 					</div>
-					<a href="#">
+					<a href="#" onclick='actividaduno(); return false;'>
 						<div class="panel-footer">
-							<span class="pull-left">View Details</span>
+							<span class="pull-left">{{$actividad1}}</span>
 							<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
 							<div class="clearfix"></div>
 						</div>
@@ -52,21 +66,27 @@ td, th {
 			</div>
 
 			<div class="col-lg-3 col-md-6">
-				<div class="panel panel-warning">
+				@if($actividad2=="No iniciada")
+					<div class="panel panel-danger">
+				@elseif($actividad2=="En progreso")
+					<div class="panel panel-warning">
+				@else
+					<div class="panel panel-success">
+				@endif
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-xs-3">
 								<i class="fa fa-pencil-square-o fa-5x" aria-hidden="true"></i>
 							</div>
 							<div class="col-xs-9 text-right">
-								<i class="fa fa-question" aria-hidden="true"></i>
-								<div>New Comments!</div>
+								<i class="fa fa-question pregunta" aria-hidden="true"></i>
+								<div class="estado">Actividad Dos</div>
 							</div>
 						</div>
 					</div>
-					<a href="#">
+					<a href="#" onclick='actividaddos(); return false;'>
 						<div class="panel-footer">
-							<span class="pull-left">View Details</span>
+							<span class="pull-left">{{$actividad2}}</span>
 							<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
 							<div class="clearfix"></div>
 						</div>
@@ -75,41 +95,41 @@ td, th {
 			</div>
 
 			<div class="col-lg-3 col-md-6">
-				<div class="panel panel-success">
+				@if($actividad3=="No iniciada")
+					<div class="panel panel-danger">
+						@elseif($actividad3=="En progreso")
+							<div class="panel panel-warning">
+								@else
+									<div class="panel panel-success">
+										@endif
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-xs-3">
 								<i class="fa fa-list-ul fa-5x" aria-hidden="true"></i>
 							</div>
 							<div class="col-xs-9 text-right">
-								<i class="fa fa-question" aria-hidden="true"></i>
-								<div>New Comments!</div>
+								<i class="fa fa-question pregunta" aria-hidden="true"></i>
+								<div class="estado">Actividad Tres</div>
 							</div>
 						</div>
 					</div>
-					<a href="#">
+					<a href="#" onclick='actividadtres(); return false;'>
 						<div class="panel-footer">
-							<span class="pull-left">View Details</span>
+							<span class="pull-left">{{$actividad3}}</span>
 							<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
 							<div class="clearfix"></div>
 						</div>
 					</a>
 				</div>
 			</div>
-			 <div class = 'form-group'>
-				<div class = 'col-md-4' style="text-align:center">
-					<button class='btn btn-primary button_x' onclick='actividaduno()'>Actividad uno</button>
-				</div>
-				<div class = 'col-md-4' style="text-align:center">
-					<button class='btn btn-success button_x' onclick='actividaddos()'>Actividad dos</button>
-				</div>
-				<div class = 'col-md-4' style="text-align:center">
-					<button class='btn btn-info button_x' onclick='actividadtres()'>Actividad tres</button>
-				</div>
+
 			</div>
 
-		</div>
 
+		</div>
+		<div class="panel-footer">
+			{!! Form::button('Menu de Lecciones', array('class' => 'btn btn-success ', 'id'=>'menelecciones')) !!}
+		</div>
 
 	</div>
 </div>
@@ -125,15 +145,21 @@ var table;
 
 function actividaduno(){
 		window.location = "{{route("actividadUno",$idleccion)}}";
+	return false;
 }
 function actividaddos(){
 		window.location = "{{route("actividadDos",$idleccion)}}";
+	return false;
 }
 
 function actividadtres(){
 		window.location = "{{route("actividadTres",$idleccion)}}";
+	return false;
 }
 
+	$("#menelecciones").on("click", function(){
+		window.location = "{{route("actividadesRepaso.index")}}";
+	});
 
 
 </script>

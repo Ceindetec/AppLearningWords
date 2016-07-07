@@ -207,10 +207,10 @@ $('#verificar').on('click', function ( ) {
 });
 
 	$('#regresar').on('click', function ( ) {
-		window.location = "../actividadesRepaso";
+		window.location = "{{route("actividadesRepaso",$leccion)}}";
 	});
 	$('#siguiente').on('click', function ( ) {
-		window.location = "../actividaddos/{{$leccion}}";
+		window.location = "{{route("actividadDos",$leccion)}}";
 	});
 </script>
 @endsection
