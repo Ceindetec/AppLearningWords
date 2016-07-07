@@ -24,14 +24,14 @@
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                         <div class="form-group">
-                            <label class="col-md-4 control-label">{{ trans('validation.attributes.email') }} Documento</label>
+                            <label class="col-md-4 control-label">Documento</label>
                             <div class="col-md-6">
                                 {!! Form::text('documento', null, ['class' => 'form-control', 'type' => 'email']) !!}
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-4 control-label">{{ trans('validation.attributes.password') }}</label>
+                            <label class="col-md-4 control-label">Contraseña</label>
                             <div class="col-md-6">
                                 {!! Form::password('password', ['class' => 'form-control']) !!}
                             </div>

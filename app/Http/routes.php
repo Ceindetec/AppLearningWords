@@ -25,13 +25,20 @@ Route::get('/', 'homeController@index');
 /*************** Routes funcionalidad actividades de repaso *************************************************/
 Route::group(['middleware' => ['is_estudiante']], function() {
 
-	Route::get('actividadesRepaso', 'actividadesRepasoController@index')->name('actividadesRepaso.index');
+	Route::get('leccionesRepaso', 'actividadesController@index')->name('actividadesRepaso.index');
+	Route::get('actividades/{idleccion}', 'actividadesController@actividades')->name('actividadesRepaso');
 
-	Route::get('actividaduno/{idleccion}', 'actividadUnoController@index')->name('actividaduno.index');
-	Route::get('actividaddos/{idleccion}', 'actividadDosController@index')->name('actividaddos.index');
-	Route::get('actividadtres/{idleccion}', 'actividadTresController@index')->name('actividadtres.index');
+	Route::get('actividadesRepaso/{id_docente}', 'actividadesController@leccionesDocente')->name('leccionesDocente');
+	Route::get('actividaduno/{idleccion}', 'actividadesController@actividadUno')->name('actividadUno');
+	Route::get('actividaddos/{idleccion}', 'actividadesController@actividadDos')->name('actividadDos');
+	Route::get('actividadtres/{idleccion}', 'actividadesController@actividadTres')->name('actividadTres');
+
+	Route::post('actividadfinalizada', 'actividadesController@controlAvanceFinalisada')->name('actividadFinalizada');
+
 });
 /***********************************************************************************************************/
+
+
 
 /*************** Routes funcionalidad lecciones de repaso **************************************************/
 Route::group(['middleware'=>['is_docente']], function(){
@@ -49,7 +56,7 @@ Route::group(['middleware'=>['is_docente']], function(){
 	/*
 	Palabras
 	*/
-	Route::get('palabras', 'PalabraController@index');
+	Route::get('palabras', 'PalabraController@index')->name('Palabras');
 	Route::post('palabras/getpalabras', 'PalabraController@getPalabras')->name('getPalabras');
 	Route::get('palabras/crear', 'PalabraController@ModalcrearPalabra')->name('crearPalabra');
 	Route::post('palabras/insert', 'PalabraController@insertarPalabra')->name('insertPalabra');
@@ -70,12 +77,6 @@ Route::group(['middleware'=>['is_docente']], function(){
 });
 /***********************************************************************************************************/
 
-
-Route::get('registromodulorfid', 'muduloRfidConroller@index')->name('registromodulorfid');
-Route::post('gridmodulosRFID', 'muduloRfidConroller@gridmodulosRFID')->name('gridmodulosRFID');
-Route::get('editarmodulo', 'muduloRfidConroller@editarmoduloRFID')->name('editarmodulo');
-Route::get('registrarmodulo', 'muduloRfidConroller@registrarmoduloRFID')->name('registrarmodulo');
-Route::get('/', 'mainController@index');
 
 Route::get('login', 'Auth\AuthController@getLogin')->name('login');
 Route::post('login', 'Auth\AuthController@postLogin')->name('login');

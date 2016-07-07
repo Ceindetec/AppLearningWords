@@ -104,7 +104,7 @@
 					{!! Form::button('Verificar', array('class' => 'btn btn-success', 'id'=>'verificar')) !!}
 				</div>
 				<div class="col-xs-6">
-					{!! Form::button('Menu de Actividades', array('class' => 'btn btn-success pull-right hidden', 'id'=>'regresar')) !!}
+					{!! Form::button('Menu de Actividades', array('class' => 'btn btn-success pull-right', 'id'=>'regresar')) !!}
 				</div>
 			</div>
 
@@ -222,22 +222,26 @@
 			});
 
 			if(validar){
-
-
-
 				/*Aqui va lo que se quiere que haga en la base de datos para guardar el progreso de la actividad*/
-
-
-
-				$("#siguiente").removeClass("hidden").addClass("show");
-				$("#regresar").removeClass("hidden").addClass("show");
+				$.ajax({
+					type: "POST",
+					context: document.body,
+					url: '{{route('actividadFinalizada')}}',
+					data: {'id_leccion':'{{$idleccion}}','id_actividad':3},
+					success: function (data) {
+						$("#regresar").removeClass("hidden").addClass("show");
+					},
+					error: function () {
+						console.log('error en la concexción');
+					}
+				});
 
 			}
 
 		});
 
 		$('#regresar').on('click', function ( ) {
-			window.location = "../actividadesRepaso";
+			window.location = "{{route("actividadesRepaso",$leccion)}}";
 		});
 
 	</script>
