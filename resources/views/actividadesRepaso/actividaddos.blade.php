@@ -180,10 +180,10 @@
 
 		});
 		$('#regresar').on('click', function ( ) {
-			window.location = "../actividadesRepaso";
+			window.location = "{{route("actividadesRepaso",$leccion)}}";
 		});
 		$('#siguiente').on('click', function ( ) {
-			window.location = "../actividadtres/{{$leccion}}";
+			window.location = "{{route("actividadTres",$leccion)}}";
 		});
 
 	</script>

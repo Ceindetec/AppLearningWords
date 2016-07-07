@@ -101,8 +101,10 @@ class actividadesController extends Controller
 
 
             foreach($controls as $control){
-                $nombreActividad = actividades::select("nombre")->where('id',$control->actividad_id)->get();
-                $data[$nombreActividad[0]->nombre]=$control->estado;
+
+                //dd($control);
+                //$nombreActividad = actividades::select("nombre")->where('id',$control->actividad_id)->get();
+                $data["actividad".$control->actividad_id]=$control->estado;
             }
 
 //dd($data);
@@ -116,8 +118,9 @@ class actividadesController extends Controller
 //    ------------------------------------------------------   adtividad UNO ------------------------------------------------------------------
 
     public function actividadUno($id_leccion){
+        $leccion = leccionesEnc::where('id', $id_leccion)->get();
 
-
+        if(count($leccion)>0){
         $control = controlAvance::where('leccion_id',$id_leccion)->where('actividad_id',1)->where('usuario_documento',\Auth::user()->documento)->get();
         if($control[0]->estado!="Finalizada"){
             $control[0]->estado="En progreso";
@@ -127,7 +130,13 @@ class actividadesController extends Controller
 
         $listaTraducciones = array();
         $traduccionesMostrar = array();
-        $palabrasEspDet = leccionesDet::select('palabra_id')->where('leccion_id', $id_leccion)->take(5)->orderBy('palabra_id','asc')->get();
+
+        $numPalabras =leccionesDet::select('palabra_id')->where('leccion_id', $id_leccion)->orderBy('palabra_id','asc')->count();
+
+        $limite = floor($numPalabras/3);
+        //dd($limite);
+
+        $palabrasEspDet = leccionesDet::select('palabra_id')->where('leccion_id', $id_leccion)->take($limite)->orderBy('palabra_id','asc')->get();
         foreach($palabrasEspDet as $palabraEsp){
             $traducciones = traducciones::select('palabra_id', 'traduccion')
                 ->where('palabra_id', $palabraEsp->palabra_id)
@@ -147,6 +156,9 @@ class actividadesController extends Controller
         $data['traduccionesMostrar'] = $traduccionesMostrar;
         $data['leccion'] = $id_leccion;
         return view('actividadesRepaso.actividaduno',$data);
+        }else{
+            return \Redirect::back();
+        }
     }
 
     //    ------------------------------------------------------   adtividad DOS ------------------------------------------------------------------
@@ -154,15 +166,25 @@ class actividadesController extends Controller
 
     public function actividadDos($id_leccion){
 
+        $leccion = leccionesEnc::where('id', $id_leccion)->get();
+
+        if(count($leccion)>0){
         $control = controlAvance::where('leccion_id',$id_leccion)->where('actividad_id',2)->where('usuario_documento',\Auth::user()->documento)->get();
         if($control[0]->estado!="Finalizada"){
             $control[0]->estado="En progreso";
             $control[0]->save();
         }
 
+        $numPalabras =leccionesDet::select('palabra_id')->where('leccion_id', $id_leccion)->orderBy('palabra_id','asc')->count();
+
+        $inicio = floor($numPalabras/3);
+        $fin= $inicio+$inicio;
+
+        //dd($inicio ." -> ".$fin);
+
         $listaTraducciones = array();
         $traduccionesMostrar = array();
-        $palabrasEspDet = leccionesDet::select('palabra_id')->where('leccion_id', $id_leccion)->orderBy('palabra_id','asc')->get();
+        $palabrasEspDet = leccionesDet::select('palabra_id')->where('leccion_id', $id_leccion)->skip($fin)->take(5)->orderBy('palabra_id','asc')->get();
         foreach($palabrasEspDet as $palabraEsp){
             $traducciones = traducciones::select('palabra_id', 'traduccion')
                 ->where('palabra_id', $palabraEsp->palabra_id)
@@ -176,6 +198,7 @@ class actividadesController extends Controller
 
         }
         shuffle($traduccionesMostrar);
+        $data['idleccion'] = $id_leccion;
         $data['palabrasEspDet'] = $palabrasEspDet;
         $data['listaTraducciones'] = $listaTraducciones;
 
@@ -185,12 +208,17 @@ class actividadesController extends Controller
         $data['leccion'] = $id_leccion;
 
         return view('actividadesRepaso.actividaddos',$data);
-
+        }else{
+            return \Redirect::back();
+        }
     }
     //    ------------------------------------------------------   adtividad TRES ------------------------------------------------------------------
 
     public function actividadTres($id_leccion){
 
+            $leccion = leccionesEnc::where('id', $id_leccion)->get();
+
+            if(count($leccion)>0){
         $control = controlAvance::where('leccion_id',$id_leccion)->where('actividad_id',3)->where('usuario_documento',\Auth::user()->documento)->get();
         if($control[0]->estado!="Finalizada"){
             $control[0]->estado="En progreso";
@@ -201,7 +229,11 @@ class actividadesController extends Controller
         $traduccionesMostrar = array();
         $Traducciones =array();
 
-        $palabrasEspDet = leccionesDet::select('palabra_id')->where('leccion_id', $id_leccion)->orderBy('palabra_id','asc')->get();
+        $numPalabras =leccionesDet::select('palabra_id')->where('leccion_id', $id_leccion)->orderBy('palabra_id','asc')->count();
+
+        $inicio = floor($numPalabras/3);
+        $fin= $inicio+$inicio;
+        $palabrasEspDet = leccionesDet::select('palabra_id')->where('leccion_id', $id_leccion)->skip($fin)->take($numPalabras)->orderBy('palabra_id','asc')->get();
 
         foreach($palabrasEspDet as $palabraEsp){
             $traducciones = traducciones::select('id', 'traduccion')
@@ -241,12 +273,16 @@ class actividadesController extends Controller
 
         }
         //shuffle($traduccionesMostrar);
+        $data['idleccion'] = $id_leccion;
         $data['palabrasEspDet'] = $palabrasEspDet;
         $data['listaTraducciones'] = $listaTraducciones;
         $data['traduccionesMostrar'] = $traduccionesMostrar;
         $data['leccion'] = $id_leccion;
         //dd($data);
         return view('actividadesRepaso.actividadtres',$data);
+            }else{
+                return \Redirect::back();
+            }
     }
 
 

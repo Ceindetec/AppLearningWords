@@ -56,7 +56,7 @@ Route::group(['middleware'=>['is_docente']], function(){
 	/*
 	Palabras
 	*/
-	Route::get('palabras', 'PalabraController@index');
+	Route::get('palabras', 'PalabraController@index')->name('Palabras');
 	Route::post('palabras/getpalabras', 'PalabraController@getPalabras')->name('getPalabras');
 	Route::get('palabras/crear', 'PalabraController@ModalcrearPalabra')->name('crearPalabra');
 	Route::post('palabras/insert', 'PalabraController@insertarPalabra')->name('insertPalabra');
