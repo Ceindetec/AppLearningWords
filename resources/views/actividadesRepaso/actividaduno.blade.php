@@ -8,11 +8,17 @@ td, th {
 	text-align: center;
 }
 .draggable {
+	width: {{$maxCntCarPalabraTra*10}}px;
+	color: #ffffff;
 	padding: 3px 10px;
 	border-radius: 5px;
- cursor: pointer;
-	background: #ccc;
+ 	cursor: pointer;
+	background: #2a3f54;
 	z-index: 100;
+}
+
+.draggableEnUso{
+	background: #9abc4f;
 }
 
 .respuestas{
@@ -70,7 +76,7 @@ td, th {
 
 			</div>	
 			<div class ="col-md-offset-1 col-md-3 ">
-				{!!Form::label(null,$traduccionesMostrar[$i],['class'=>'draggable'])!!}
+				{!!Form::label(null,$traduccionesMostrar[$i],['class'=>'draggable text-center'])!!}
 			</div>			
 		</div>		
 		</br>
