@@ -21,7 +21,7 @@ class UserTableSeeder extends Seeder
 	        'nombres' => 'Ceindetec',
 	        'apellidos' => 'Superadmin',
 	        'documento' => '86071518',
-	        'password' => 'Secreto',
+	        'password' => '123456',
 	        'remember_token' => str_random(10),
 	        'rol' => 'superadmin',
 	        'institucion_id' => $ins->id

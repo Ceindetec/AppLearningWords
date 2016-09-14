@@ -9,20 +9,20 @@ td, th {
 @endsection
 
 @section('content')
-<div class="page-title">
+<!-- <div class="page-title">
 	<div class="title_left">
 		<h3>
 			Registro de lecciones
 		</h3>
 	</div>
-</div>
+</div> -->
 <div class="clearfix"></div>
 <div class="panel panel-primary">
 	<div class="panel-heading">
 		<h3 class="panel-title">
 			
 		</h3>		
-		 <a href="{!!route('lecciones.create')!!}" class="btn btn-success">Crear nueva lección</a> 
+		 <a href="{!!route('lecciones.create')!!}" class="btn btn-success">Create new lesson</a> 
 	</div>
 
 	<div class="panel-body">
@@ -30,11 +30,11 @@ td, th {
 			<thead>
 				<tr>
 					<th>Id</th>			
-					<th>Nombre lección</th>
-					<th>Palabras</th>
-					<th>Editar</th>
-					<th>Progresos</th>
-					<th>Eliminar</th>
+					<th>Lesson name</th>
+					<th>Words</th>
+					<th>Edit</th>
+					<th>Progress</th>
+					<th>Remove</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -52,9 +52,9 @@ td, th {
 $(function(){
 
 	table[0] = $('#leccionesByDocente').DataTable( {
-		"language": {
-			"url": "{!!route('espanol')!!}"
-		},
+		// "language": {
+		// 	"url": "{!!route('espanol')!!}"
+		// },
 		ajax: {
 			url: "{!!route('lecciones.cargar')!!}",
 			"type": "POST"
@@ -72,18 +72,18 @@ $(function(){
 			{
 				"targets": [3],
 				"data": null,
-				"defaultContent": "<button class='btn btn-info' onclick='editarLeccion(event)'>Editar</button>"
+				"defaultContent": "<button class='btn btn-info' onclick='editarLeccion(event)'>Edit</button>"
 			},
 			{
 				"targets": [4],
 				"data": null,
-				"defaultContent": "<button class='btn btn-info' onclick='consultarLeccion(event)'>Consultar</button>"
+				"defaultContent": "<button class='btn btn-info' onclick='consultarLeccion(event)'>Consult</button>"
 
 			},
 			{
 				"targets": [5],
 				"data": null,
-				"defaultContent": "<button class='btn btn-danger' onclick='eliminarLeccion(event)'>Eliminar</button>"
+				"defaultContent": "<button class='btn btn-danger' onclick='eliminarLeccion(event)'>Remove</button>"
 			}
 		],
 		"scrollX": true
@@ -101,7 +101,7 @@ function editarLeccion(event){
 			data: {"id": data.id},
 			success: function(respuesta){
 					if(respuesta > 0){
-						$.msgbox("No se puede editar lecciones donde estudiantes ya hayan realizado repasos o evaluaciones.",{type:'error'});
+						$.msgbox("You can not edit lessons where students have already conducted rehearsals or evaluations.",{type:'error'});
 					}
 					else{
 						//window.location = "";
@@ -126,7 +126,7 @@ function consultarLeccion(event){
 				window.location = "progresos/"+data.id;
 			}
 			else
-				$.msgbox("Aun no existen participaciones registradas para la leccion seleccionada.",{type:'alert'});
+				$.msgbox("Although there are no shares registered for the selected lesson.",{type:'alert'});
 		}
 	});
 }
@@ -141,7 +141,7 @@ function eliminarLeccion(event){
 			data: {"id": data.id},
 			success: function(respuesta){				
 					if(respuesta > 0){
-						$.msgbox("La lección seleccionada tiene repasos y/o evaluaciones de actividades desarrolladas por estudiantes. ¿Esta seguro que desea eliminar esta lección?", { type: 'confirm' }, function(result){
+						$.msgbox("The lesson has selected rework or evaluations of activities carried out by students. Are you sure you want to delete this lesson?", { type: 'confirm' }, function(result){
 							if(result == 'Aceptar'){
 								eliminar(data.id);	
 								table[0].row( $(element).parents('tr') ).remove().draw( false );
@@ -150,7 +150,7 @@ function eliminarLeccion(event){
 					});
 					}
 					else{
-						$.msgbox("¿Esta seguro que desea eliminar esta lección?", { type: 'confirm' }, function(result){
+						$.msgbox("Are you sure you want to delete this lesson?", { type: 'confirm' }, function(result){
 							if(result == 'Aceptar'){
 								eliminar(data.id);	
 								table[0].row( $(element).parents('tr') ).remove().draw( false );
