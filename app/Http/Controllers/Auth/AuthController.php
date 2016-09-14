@@ -44,7 +44,6 @@ class AuthController extends Controller
      */
     protected function validator(array $data)
     {
-        //dd($data);$data
         return Validator::make($data, [
             'nombres' => 'required|max:255',
             'apellidos' => 'required|max:255',
