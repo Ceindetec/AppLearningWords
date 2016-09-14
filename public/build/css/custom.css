@@ -96,7 +96,7 @@
 .menu_section h3 {
   padding-left: 23px;
   color: #fff;
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
   letter-spacing: .5px;
   font-weight: bold;
   font-size: 11px;
@@ -329,7 +329,7 @@ body {
   color: #73879C;
   background: #2A3F54;
   font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 400;
   line-height: 1.471; }
 
@@ -542,7 +542,7 @@ a:hover, a:focus {
   padding: 13px 15px 12px; }
 
 .nav.side-menu > li.current-page, .nav.side-menu > li.active {
-  border-right: 5px solid #1ABB9C; }
+  border-right: 5px solid #9abd4f; }
 
 .nav li.current-page {
   background: rgba(255, 255, 255, 0.05); }
@@ -2043,7 +2043,7 @@ input.parsley-error, textarea.parsley-error, select.parsley-error {
   font-size: 12px;
   font-weight: bold;
   color: #bbb;
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
   letter-spacing: 1px; }
 
 /* ***** autocomplete ***** */
@@ -2076,11 +2076,11 @@ a.btn-success, a.btn-primary, a.btn-warning, a.btn-danger {
   color: #fff; }
 
 .btn-success {
-  background: #26B99A;
-  border: 1px solid #169F85; }
+  background: #9abd4f;
+  border: 1px solid #81A03C; }
 
 .btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .open .dropdown-toggle.btn-success {
-  background: #169F85; }
+  background: #81A03C; }
 
 .btn-dark {
   color: #E9EDEF;
@@ -2876,7 +2876,7 @@ ul.project_files li a i {
   position: relative; }
 
 .view .tools {
-  text-transform: uppercase;
+   /*text-transform: uppercase;*/
   color: #fff;
   text-align: center;
   position: relative;
@@ -2910,7 +2910,7 @@ ul.project_files li a i {
   padding: 7px 14px;
   background: #000;
   color: #fff;
-  text-transform: uppercase;
+   /*text-transform: uppercase;*/
   box-shadow: 0 0 1px #000; }
 
 .view-first img {
@@ -3881,7 +3881,7 @@ ul.notifications {
   display: block;
   text-align: center;
   text-decoration: none;
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
   padding: 9px 8px; }
 
 .tabbed_notifications .text {
@@ -3895,7 +3895,7 @@ ul.notifications {
 
 .tabbed_notifications h2 {
   font-weight: bold;
-  text-transform: uppercase;
+   /*text-transform: uppercase;*/
   width: 80%;
   float: left;
   height: 20px;
@@ -4075,7 +4075,7 @@ ul.notifications {
   line-height: 20px;
   margin-bottom: 2px;
   text-shadow: #fff 1px 1px 0px;
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
   width: 74px; }
 
 .daterangepicker .ranges input {

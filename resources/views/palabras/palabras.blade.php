@@ -22,19 +22,19 @@
 @endsection
 
 @section('content')
-    <div class="page-title">
+   <!--  <div class="page-title">
         <div class="title_left">
             <h3>
                 Registro de palabras
             </h3>
         </div>
-    </div>
+    </div> -->
     <div class="clearfix"></div>
 
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title"></h3>
-            <a href="{!!route('crearPalabra')!!}" class="btn btn-success" data-modal="">Registrar nueva palabra</a>
+            <a href="{!!route('crearPalabra')!!}" class="btn btn-success" data-modal="">Register new word</a>
         </div>
         <div class="panel-body">
             <table id="palabras" class="table table-striped table-bordered no-footer" cellspacing="0" width="100%">
@@ -42,11 +42,11 @@
                 <tr>
                     <th>id</th>
                     <th>idEspanol</th>
-                    <th>Palabra</th>
-                    <th>Traduccion</th>
-                    <th>Tiempo</th>
-                    <th>Editar</th>
-                    <th>Eliminar</th>
+                    <th>Word</th>
+                    <th>Translation</th>
+                    <th>Weather</th>
+                    <th>Edit</th>
+                    <th>Remove</th>
                 </tr>
                 </thead>
                 <tbody></tbody>
@@ -64,9 +64,9 @@
         });
 
         table[0] = $('#palabras').DataTable({
-            "language": {
-                "url": "{!!route('espanol')!!}"
-            },
+            // "language": {
+            //     "url": "{!!route('espanol')!!}"
+            // },
             ajax: {
                 url: "{!!route('getPalabras')!!}",
                 "type": "POST"
@@ -90,12 +90,12 @@
                 {
                 "targets": [5],
                 "data": null,
-                "defaultContent": "<a href={!!route('editarPalabra')!!} data-modal='' data-id='id' table='0'; class='btn btn-primary'>Editar</a>"
+                "defaultContent": "<a href={!!route('editarPalabra')!!} data-modal='' data-id='id' table='0'; class='btn btn-primary'>Edit</a>"
                 },
                 {
                 "targets": [6],
                 "data": null,
-                "defaultContent":  "<button class='btn btn-danger' onclick='eliminar(event)'>Eliminar</button>"
+                "defaultContent":  "<button class='btn btn-danger' onclick='eliminar(event)'>Remove</button>"
                 }
             ],
             "scrollX": true
@@ -104,7 +104,7 @@
 
     function eliminar(event){
         var element = event.target;
-        $.msgbox("Esta accion eliminara el contenido seleccionado, ¿Desea continuar?", { type: 'confirm' }, function(result){
+        $.msgbox("This will delete the selected content , Continue?", { type: 'confirm' }, function(result){
             if(result == 'Aceptar') {
                 var data = table[0].row($(element).parents('tr')).data();
                 $.ajax({
@@ -114,7 +114,7 @@
                     data:{ 'id' : data['id'], 'idEsp' : data['idEspanol']},
                     success: function(data){
                         table[0].row($(element).parents('tr')).remove().draw(false);
-                        $.msgbox("Registro eliminado con exito.", { type: 'success'});
+                        $.msgbox("Record deleted successfully", { type: 'success'});
                     },
                     error: function(data){
                         var respuesta =JSON.parse(data.responseText);

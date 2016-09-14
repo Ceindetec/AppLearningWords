@@ -9,18 +9,18 @@
 @endsection
 
 @section('content')
-    <div class="page-title">
+    <!-- <div class="page-title">
         <div class="title_left">
             <h3>
                 Informe de avances
             </h3>
         </div>
-    </div>
+    </div> -->
     <div class="clearfix"></div>
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title">
-                <b>Leccion: </b>{{$leccion[0]->nombre}}
+                <b>Lesson: </b>{{$leccion[0]->nombre}}
             </h3>
         </div>
 
@@ -28,11 +28,11 @@
             <table id="avances" class="table table-striped table-bordered no-footer" cellspacing="0" width="100%">
                 <thead>
                     <tr>
-                        <th>Identificacion</th>
-                        <th>Estudiante</th>
-                        <th>Actividad 1</th>
-                        <th>Actividad 2</th>
-                        <th>Actividad 3</th>
+                        <th>Document</th>
+                        <th>student</th>
+                        <th>Activity 1</th>
+                        <th>Activity 2</th>
+                        <th>Activity 3</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,7 +41,7 @@
             </table>
         </div>
         <div class="panel-footer" style="text-align:right">
-            {!! Form::button('Regresar', array('class' => 'btn btn-success', 'id'=>'cancelar')) !!}
+            {!! Form::button('Back', array('class' => 'btn btn-success', 'id'=>'cancelar')) !!}
         </div>
     </div>
 @endsection
@@ -53,9 +53,9 @@
         $(function(){
 
             table[0] = $('#avances').DataTable( {
-                "language": {
-                    "url": "{!!route('espanol')!!}"
-                },
+                // "language": {
+                //     "url": "{!!route('espanol')!!}"
+                // },
                 ajax: {
                     url: "{!!route('getAvances', $leccion[0]->id)!!}",
                     "type": "get"

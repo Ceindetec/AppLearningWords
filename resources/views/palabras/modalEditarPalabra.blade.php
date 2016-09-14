@@ -2,7 +2,7 @@
     {!!Form::model($datosForm, array('route' => array('updatePal')))!!}
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4> Editar palabra</h4>
+        <h4> Edit word</h4>
     </div>
     <div class="modal-body">
         {!!Form::hidden('idTraduccion')!!}
@@ -11,22 +11,22 @@
         {{--{!!Form::hidden('tipo')!!}--}}
         {!!Form::hidden('categoria', null, ['id'=>'categoria'])!!}
         <div class="form-group row">
-            <div class="col-xs-12">{!!Form::label('palabra','Palabra Español (*)')!!}</div>
+            <div class="col-xs-12">{!!Form::label('palabra','Word in Spanish (*)')!!}</div>
             <div class="col-xs-12">{!!Form::text('palabra',null,['class'=>'form-control solo-letra', 'required'])!!}</div>
         </div>
         <div class="form-group row">
-            <div class="col-xs-12">{!!Form::label('traduccion','Traduccion (*)')!!}</div>
+            <div class="col-xs-12">{!!Form::label('traduccion','Translation (*)')!!}</div>
             <div class="col-xs-12">{!!Form::text('traduccion',null,['class'=>'form-control solo-letra', 'required'])!!}</div>
         </div>
         <div class="form-group row">
-            <div class="col-xs-6">{!!Form::label('tipo','Tipo')!!}</div>
-            <div class="col-xs-6">{!!Form::label('tiempo','Tiempo Verbal')!!}</div>
+            <div class="col-xs-6">{!!Form::label('tipo','Type')!!}</div>
+            <div class="col-xs-6">{!!Form::label('tiempo','Verbal tense')!!}</div>
             <div class="col-xs-6">{!!Form::select('tipo', $tiposP ,null ,['class'=>'form-control', 'id'=>'tipo'])!!}</div>
             <div class="col-xs-6">{!!Form::select('tiempo', $tiemposV ,null ,['class'=>'form-control'])!!}</div>
         </div>
         <div class="form-group row">
-            <div class="col-xs-6">{!!Form::label('categoria', 'Categoria (*)',['class'=>'control-label']) !!}</div>
-            <div class="col-xs-6">{!!Form::label('newCategoria', 'Nueva',['class'=>'control-label']) !!}</div>
+            <div class="col-xs-6">{!!Form::label('categoria', 'Category (*)',['class'=>'control-label']) !!}</div>
+            <div class="col-xs-6">{!!Form::label('newCategoria', 'New',['class'=>'control-label']) !!}</div>
             <div class="col-xs-6">
                 {!!Form::select('categorias[]', $categoriasP ,null ,['class'=>'form-control select2_multiple','style'=>'width:100%;',  'multiple'=>'multiple', 'id'=>'categorias'])!!}
             </div>
@@ -39,8 +39,8 @@
 
 
     <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        <input type="submit" class="btn btn-success" value="Guardar">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <input type="submit" class="btn btn-success" value="Save">
     </div>
 </div>
 {!!Form::close()!!}
@@ -96,7 +96,7 @@
                 url: '{{route('insertCategoria')}}',
                 data:{ 'nombre' : nombre.val()},
                 success: function(data){
-                    $.msgbox("Categoria agregada correctamente", { type: 'success'});
+                    $.msgbox("Category successfully added", { type: 'success'});
                     $("#categorias").append('<option value="' + data + '" selected="selected">' + nombre.val() + '</option>');
                     nombre.val("");
                 },
@@ -114,7 +114,7 @@
             });
         }
         else {
-            alert("Debe ingresar un nombre de categoria nueva");
+            alert("You must enter a new category name");
             $("#newCategoria").focus();
         }
 
