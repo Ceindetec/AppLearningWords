@@ -17,13 +17,18 @@ td, th {
 		cursor: pointer;
 	}
 
+.activity{
+	font-weight: bold;
+	font-size: 34px;
+}
+
 </style>
 @endsection
 
 @section('content')
 <div class="page-title">
 	<div class="title_left">
-		<h3>Lección a Repasar	</h3>
+		{{--<h3>Lección a Repasar	</h3>--}}
 	</div>
 </div>
 
@@ -36,101 +41,86 @@ td, th {
 
 			<div class="col-xs-12 col-md-offset-1">
 			<div class="col-lg-3 col-md-6">
-				@if($actividad1=="No iniciada")
-					<div class="panel panel-danger">
-						@elseif($actividad1=="En progreso")
-							<div class="panel panel-warning">
-								@else
-									<div class="panel panel-success">
-										@endif
+				<a href="#" onclick='actividaduno(); return false;'>
+				<div class="panel panel-{{($actividad1=="Not started")?"danger":(($actividad1=="In progress")?"warning":"success")}}">
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-xs-3">
 								<i class="fa fa-hand-pointer-o fa-5x" aria-hidden="true"></i>
 							</div>
 							<div class="col-xs-9 text-right">
-								<i class="fa fa-question pregunta" aria-hidden="true"></i>
+								{{--<i class="fa fa-question pregunta" aria-hidden="true"></i>--}}
 
-								<div class="estado">Actividad Uno</div>
+								<div class="estado">Activity  <spam class="activity">1</spam></div>
 							</div>
 						</div>
 					</div>
-					<a href="#" onclick='actividaduno(); return false;'>
+
 						<div class="panel-footer">
 							<span class="pull-left">{{$actividad1}}</span>
 							<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
 							<div class="clearfix"></div>
 						</div>
-					</a>
 				</div>
+				</a>
 			</div>
 
 			<div class="col-lg-3 col-md-6">
-				@if($actividad2=="No iniciada")
-					<div class="panel panel-danger">
-				@elseif($actividad2=="En progreso")
-					<div class="panel panel-warning">
-				@else
-					<div class="panel panel-success">
-				@endif
+				<a href="#" onclick='actividaddos(); return false;'>
+				<div class="panel panel-{{($actividad2=="Not started")?"danger":(($actividad2=="In progress")?"warning":"success")}}">
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-xs-3">
 								<i class="fa fa-pencil-square-o fa-5x" aria-hidden="true"></i>
 							</div>
 							<div class="col-xs-9 text-right">
-								<i class="fa fa-question pregunta" aria-hidden="true"></i>
-								<div class="estado">Actividad Dos</div>
+								{{--<i class="fa fa-question pregunta" aria-hidden="true"></i>--}}
+								<div class="estado">Activity  <spam class="activity">2</spam></div>
 							</div>
 						</div>
 					</div>
-					<a href="#" onclick='actividaddos(); return false;'>
 						<div class="panel-footer">
 							<span class="pull-left">{{$actividad2}}</span>
 							<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
 							<div class="clearfix"></div>
 						</div>
-					</a>
 				</div>
+				</a>
 			</div>
 
 			<div class="col-lg-3 col-md-6">
-				@if($actividad3=="No iniciada")
-					<div class="panel panel-danger">
-						@elseif($actividad3=="En progreso")
-							<div class="panel panel-warning">
-								@else
-									<div class="panel panel-success">
-										@endif
-					<div class="panel-heading">
-						<div class="row">
-							<div class="col-xs-3">
-								<i class="fa fa-list-ul fa-5x" aria-hidden="true"></i>
-							</div>
-							<div class="col-xs-9 text-right">
-								<i class="fa fa-question pregunta" aria-hidden="true"></i>
-								<div class="estado">Actividad Tres</div>
+				<a href="#" onclick='actividadtres(); return false;'>
+
+					<div class="panel panel-{{($actividad3=="Not started")?"danger":(($actividad3=="In progress")?"warning":"success")}}">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-xs-3">
+									<i class="fa fa-list-ul fa-5x" aria-hidden="true"></i>
+								</div>
+								<div class="col-xs-9 text-right">
+									{{--<i class="fa fa-question pregunta" aria-hidden="true"></i>--}}
+									<div class="estado">Activity  <spam class="activity">3</spam></div>
+								</div>
 							</div>
 						</div>
+
+							<div class="panel-footer">
+								<span class="pull-left">{{$actividad3}}</span>
+								<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+								<div class="clearfix"></div>
+							</div>
+
 					</div>
-					<a href="#" onclick='actividadtres(); return false;'>
-						<div class="panel-footer">
-							<span class="pull-left">{{$actividad3}}</span>
-							<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-							<div class="clearfix"></div>
-						</div>
-					</a>
-				</div>
+				</a>
 			</div>
 
 			</div>
 
 
 		</div>
-		<div class="panel-footer">
+{{--		<div class="panel-footer">
 			{!! Form::button('Menu de Lecciones', array('class' => 'btn btn-success ', 'id'=>'menelecciones')) !!}
-		</div>
-
+		</div>--}}
 	</div>
 </div>
 @endsection

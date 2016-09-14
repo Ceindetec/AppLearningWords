@@ -14,7 +14,7 @@ class CreateControlAvancesTable extends Migration
     {
         Schema::create('control_avances', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('estado',['No iniciada','En progreso','Finalizada']);
+            $table->enum('estado',['Not started','In progress','Completed']);
             $table->string('usuario_documento')->index();
             $table->foreign('usuario_documento')->references('documento')->on('users');
             $table->integer('actividad_id')->unsigned();
