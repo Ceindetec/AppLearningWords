@@ -13,6 +13,9 @@
 
   <title>Learning Words !! </title>
 
+  <link rel="shortcut icon" href="{{{ asset('favicon.png') }}}">
+  <link rel="icon" href="{{ asset('favicon.png') }}">
+
   <!-- Bootstrap -->
     {!!Html::style('vendors/bootstrap/dist/css/bootstrap.css')!!}
     {{--{!!Html::style('vendors/bootstrap/dist/css/styles.css')!!} --}}

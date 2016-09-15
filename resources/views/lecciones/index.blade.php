@@ -177,7 +177,7 @@ function eliminar(datos){
 			async: false,
 			data: {"id": datos},
 			success: function(respuesta){
-				$.msgbox("Se ha eliminado de manera exitosa la lección.",{type:'success'});
+				$.msgbox("Has been removed successfully lesson.",{type:'success'});
 			}
 		});
 }
