@@ -10,20 +10,20 @@ td, th {
 @endsection
 
 @section('content')
-<div class="page-title">
-	<div class="title_left">
-		<h3>Editar lección</h3>
-	</div>
-</div>
+{{--<div class="page-title">--}}
+	{{--<div class="title_left">--}}
+		{{--<h3>Editar lección</h3>--}}
+	{{--</div>--}}
+{{--</div>--}}
 
 <div class="panel panel-primary">
 	<div class="panel-heading">
-		<h3 class="panel-title">Agregar palabras</h3>		
+		<h3 class="panel-title">Edit lesson</h3>
 	</div>
 	<div class="panel-body">
 		{!!Form::model($encabezado, ['route'=>['lecciones.update', $encabezado->id]])!!}
 			<div class="form-group">
-				{!!Form::label('Nombre de la lección: ')!!}
+				{!!Form::label('nombreleccion', 'Lesson name: ')!!}
 				{!!Form::text('nombreleccion', $encabezado->nombre ,['class'=>'form-control', 'id' => 'nombreleccion', 'required', 'placeholder' => 'Asigne un nombre a la lección actual ...'])!!}
 				{!! Form::hidden('leccion_id', $encabezado->id, ['id' => 'leccion_id']) !!}
 			</div>
@@ -31,17 +31,17 @@ td, th {
 
 		{!!Form::open()!!}
 			<div class="form-group">
-				{!!Form::label('Seleccione categoria: ')!!}
-				{!!Form::select('categorias', $categorias ,null,['class'=>'form-control', 'id' => 'categ', 'required', 'placeholder' => 'Seleccione ...'])!!}
+				{!!Form::label('Word category: ')!!}
+				{!!Form::select('categorias', $categorias ,null,['class'=>'form-control', 'id' => 'categ', 'required', 'placeholder' => 'Select one ...'])!!}
 			</div>
 			<div class="form-group">
-				{!!Form::label('Buscar palabra: ')!!}
+				{!!Form::label('Choose a word: ')!!}
 					<div class="row">
 						<div class="col-sm-10">
-							{!!Form::select('Nombre', [], null, ['class'=>'form-control','readonly','id'=>'name', 'required','placeholder' => 'Escriba la palabra a buscar'])!!}
+							{!!Form::select('Nombre', [], null, ['class'=>'form-control','readonly','id'=>'name', 'required','placeholder' => 'Type a word'])!!}
 						</div>	
 						<div class="col-sm-2 text-center">
-							{!! Form::button('Agregar', array('class' => 'btn btn-primary', 'id'=>'agregarPalabra')) !!}
+							{!! Form::button('Add', array('class' => 'btn btn-primary', 'id'=>'agregarPalabra')) !!}
 						</div>	
 					</div>
 			</div>
@@ -52,7 +52,7 @@ td, th {
 <div class="panel panel-primary">
 	<div class="panel-heading">
 		<h3 class="panel-title">
-			Palabras en la lección actual
+			Lesson words
 		</h3>	
 	</div>
 	<div class="panel-body">
@@ -60,9 +60,9 @@ td, th {
 			<thead>
 				<tr>
 					<th>Id</th>
-					<th>Palabra</th>
-					<th>Traduccion</th>
-					<th>Eliminar</th>
+					<th>Spanish</th>
+					<th>English</th>
+					<th>Action</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -72,8 +72,8 @@ td, th {
 		</table>
 	</div>
 	<div class="panel-footer" style="text-align:right">
-		{!! Form::button('Guardar', array('class' => 'btn btn-success', 'id'=>'guardar')) !!}
-		{!! Form::button('Cancelar', array('class' => 'btn btn-success', 'id'=>'cancelar')) !!}
+		{!! Form::button('Save', array('class' => 'btn btn-success', 'id'=>'guardar')) !!}
+		{!! Form::button('Cancel', array('class' => 'btn btn-success', 'id'=>'cancelar')) !!}
 	</div>
 </div>
 @endsection
@@ -90,9 +90,6 @@ var nombre_leccion = $('#nombreleccion').val();
 /*****************************************************************************************************************/
 $(function(){
 	table[0] = $('#palabrasAgregadas').DataTable( {
-		"language": {
-			"url": "{!!route('espanol')!!}"
-		},
 		ajax: {
 			url: "{!!route('detallelecciongrid', ['id' => $encabezado->id])!!}",
 			"type": "POST"
@@ -107,7 +104,7 @@ $(function(){
 		{
 			"targets": [3],
 			"data": null,
-			"defaultContent":  "<button class='btn btn-danger' onclick='eliminarPalabra(event)'>Eliminar</button>" 
+			"defaultContent":  "<button class='btn btn-danger' onclick='eliminarPalabra(event)'>Delete</button>"
 		}
 		],
 		"scrollX": true
