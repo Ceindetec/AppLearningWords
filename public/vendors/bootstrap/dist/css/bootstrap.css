@@ -5704,23 +5704,28 @@ button.list-group-item-danger.active:focus {
   border-bottom-color: #ddd;
 }
 .panel-primary {
-  border-color: #337ab7;
+  border-color: #2A3F54;
 }
+/* line 6, C:/Users/ditovar/Downloads/compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_panels.scss */
 .panel-primary > .panel-heading {
   color: #fff;
-  background-color: #337ab7;
-  border-color: #337ab7;
+  background-color: #2A3F54;
+  border-color: #2A3F54;
 }
+/* line 11, C:/Users/ditovar/Downloads/compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_panels.scss */
 .panel-primary > .panel-heading + .panel-collapse > .panel-body {
-  border-top-color: #337ab7;
+  border-top-color: #2A3F54;
 }
+/* line 14, C:/Users/ditovar/Downloads/compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_panels.scss */
 .panel-primary > .panel-heading .badge {
-  color: #337ab7;
+  color: #2A3F54;
   background-color: #fff;
 }
+/* line 20, C:/Users/ditovar/Downloads/compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_panels.scss */
 .panel-primary > .panel-footer + .panel-collapse > .panel-body {
-  border-bottom-color: #337ab7;
+  border-bottom-color: #2A3F54;
 }
+
 .panel-success {
   border-color: #d6e9c6;
 }
