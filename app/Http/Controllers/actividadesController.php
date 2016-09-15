@@ -44,21 +44,21 @@ class actividadesController extends Controller
                 $finalizado=0;
                 foreach($estados as $estado){
                     //dd($estado);
-                    if($estado->estado=="No iniciada"){
+                    if($estado->estado=="Not started"){
                         $noiniciado++;
-                    }else if($estado->estado=="Finalizada"){
+                    }else if($estado->estado=="Completed"){
                         $finalizado++;
                     }
                 }
 
                 if($noiniciado==3)
-                    $leccion['estado'] = "No iniciada";
+                    $leccion['estado'] = "Not started";
                 else if($finalizado==3)
-                    $leccion['estado'] = "Finalizada";
+                    $leccion['estado'] = "Completed";
                 else
-                    $leccion['estado'] = "En progreso";
+                    $leccion['estado'] = "In progress";
                 }else{
-                    $leccion['estado'] = "No iniciada";
+                    $leccion['estado'] = "Not started";
                 }
             }else{
                 $leccion['estado'] = "rol incorrecto";
@@ -90,8 +90,8 @@ class actividadesController extends Controller
                     $avances->actividad_id=$actividad->id;
                     $avances->usuario_documento=\Auth::user()->documento;
                     $avances->leccion_id=$id;
-                    $avances->estado="No iniciada";
-
+                    $avances->estado="Not started";
+                    //dd($avances);
                     $avances->save();
 
                 }
@@ -107,7 +107,7 @@ class actividadesController extends Controller
                 $data["actividad".$control->actividad_id]=$control->estado;
             }
 
-//dd($data);
+            //dd($data);
             return view('actividadesRepaso.actividadesrepaso',$data);
         }else{
             return \Redirect::back();
@@ -118,12 +118,15 @@ class actividadesController extends Controller
 //    ------------------------------------------------------   adtividad UNO ------------------------------------------------------------------
 
     public function actividadUno($id_leccion){
+
+        //maxCntCarPalabratra es cantidad de caracteres por palabra truduccion
+        $maxCntCarPalabraTra=0;
         $leccion = leccionesEnc::where('id', $id_leccion)->get();
 
         if(count($leccion)>0){
         $control = controlAvance::where('leccion_id',$id_leccion)->where('actividad_id',1)->where('usuario_documento',\Auth::user()->documento)->get();
-        if($control[0]->estado!="Finalizada"){
-            $control[0]->estado="En progreso";
+        if($control[0]->estado!="Completed"){
+            $control[0]->estado="In progress";
             $control[0]->save();
         }
 
@@ -144,17 +147,24 @@ class actividadesController extends Controller
                 ->get();
 
             foreach($traducciones as $trad){
+
+
+                $maxCntCarPalabraTra= (strlen($trad->traduccion)>$maxCntCarPalabraTra)?strlen($trad->traduccion):$maxCntCarPalabraTra;
+
+
                 $listaTraducciones[$palabraEsp->palabra_id] = $trad->traduccion;
                 $traduccionesMostrar[$palabraEsp->palabra_id] = $trad->traduccion;
             }
 
         }
         shuffle($traduccionesMostrar);
+        $data['maxCntCarPalabraTra'] = $maxCntCarPalabraTra;
         $data['idleccion'] = $id_leccion;
         $data['palabrasEspDet'] = $palabrasEspDet;
         $data['listaTraducciones'] = $listaTraducciones;
         $data['traduccionesMostrar'] = $traduccionesMostrar;
         $data['leccion'] = $id_leccion;
+            //dd($data);
         return view('actividadesRepaso.actividaduno',$data);
         }else{
             return \Redirect::back();
@@ -170,8 +180,8 @@ class actividadesController extends Controller
 
         if(count($leccion)>0){
         $control = controlAvance::where('leccion_id',$id_leccion)->where('actividad_id',2)->where('usuario_documento',\Auth::user()->documento)->get();
-        if($control[0]->estado!="Finalizada"){
-            $control[0]->estado="En progreso";
+        if($control[0]->estado!="Completed"){
+            $control[0]->estado="In progress";
             $control[0]->save();
         }
 
@@ -220,8 +230,8 @@ class actividadesController extends Controller
 
             if(count($leccion)>0){
         $control = controlAvance::where('leccion_id',$id_leccion)->where('actividad_id',3)->where('usuario_documento',\Auth::user()->documento)->get();
-        if($control[0]->estado!="Finalizada"){
-            $control[0]->estado="En progreso";
+        if($control[0]->estado!="Completed"){
+            $control[0]->estado="In progress";
             $control[0]->save();
         }
 
@@ -290,7 +300,7 @@ class actividadesController extends Controller
     public function controlAvanceFinalisada(Request $request){
 
         $control = controlAvance::where('leccion_id',$request->input("id_leccion"))->where('actividad_id',$request->input("id_actividad"))->where('usuario_documento',\Auth::user()->documento)->get();
-            $control[0]->estado="Finalizada";
+            $control[0]->estado="Completed";
             $control[0]->save();
 
     }

@@ -31,7 +31,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-4 control-label">ContraseÃ±a</label>
+                            <label class="col-md-4 control-label">Contraseña</label>
                             <div class="col-md-6">
                                 {!! Form::password('password', ['class' => 'form-control']) !!}
                             </div>
