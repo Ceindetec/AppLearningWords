@@ -8,7 +8,8 @@ td, th {
 	text-align: center;
 }
 .draggable {
-	width: {{$maxCntCarPalabraTra*10}}px;
+	width: {{$maxCntCarPalabraTra*15}}px;
+	box-shadow: 5px 5px 5px #888888;
 	color: #ffffff;
 	padding: 3px 10px;
 	border-radius: 5px;
@@ -18,13 +19,22 @@ td, th {
 }
 
 .draggableEnUso{
-	background: #9abc4f;
+	background: #e8a710;
 }
+
+.noarrastable{
+	width: {{$maxCntCarPalabraEsp*15}}px;
+	color: #ffffff;
+	padding: 3px 10px;
+	border-radius: 5px;
+	background: #3d7193;
+}
+
 
 .respuestas{
 	border-radius: 5px;
 	border: solid #888888 2px;
-	width: 200px;
+	/*width: 200px;*/
 	height: 30px;
 	background: #f2f2f2;
 }
@@ -36,7 +46,9 @@ td, th {
 	border: solid #3c763d 2px;
 }
 
+.check{
 
+}
 
 </style>
 @endsection
@@ -44,14 +56,14 @@ td, th {
 @section('content')
 <div class="page-title">
 	<div class="title_left">
-		<h3>Actividad de repaso uno</h3>
+		<h3>Activity 1</h3>
 	</div>
 </div>
 
 <div class="panel panel-primary">
 	<div class="panel-heading">
 		<h3 class="panel-title">
-			Arrastra la traducción frente a cada palabra en español.
+			Drag the correct translation to its word in spanish.
 		</h3>		
 		
 	</div>
@@ -63,20 +75,20 @@ td, th {
 	@foreach($palabrasEspDet as $valor)
 		 
 		 <div  class="row">
-			<div class ="col-md-3 col-md-offset-2" style="text-align:right"	>
+			<div class ="col-xs-3 col-md-offset-2" style="text-align:right"	>
 				@if($valor->getpalabra)
-					{!!Form::label($valor->getpalabra->palabra)!!}
+					{!!Form::label(null,$valor->getpalabra->palabra,["class"=>"noarrastable text-center"])!!}
 				@endif
 			</div>
-			<div class ="col-md-2">
+			<div class ="col-xs-2">
 
-				<div id="respuesta{{$i}}" class=" form-control respuestas droppable" >
+				<div id="respuesta{{$i}}" class=" form-control respuestas droppable" data-label="">
 
 				</div>
 
 			</div>	
-			<div class ="col-md-offset-1 col-md-3 ">
-				{!!Form::label(null,$traduccionesMostrar[$i],['class'=>'draggable text-center'])!!}
+			<div class ="col-md-2 ">
+				{!!Form::label(null,$traduccionesMostrar[$i],['id'=>"label".$i,'class'=>'draggable text-center center-block'])!!}
 			</div>			
 		</div>		
 		</br>
@@ -91,11 +103,11 @@ td, th {
 
 		<div class="row">
 			<div class="col-xs-6">
-				{!! Form::button('Verificar', array('class' => 'btn btn-success', 'id'=>'verificar')) !!}
+				{!! Form::button('Verify !', array('class' => 'btn btn-success', 'id'=>'verificar')) !!}
 			</div>
 			<div class="col-xs-6">
-				{!! Form::button('Siguiente', array('class' => 'btn btn-success pull-right hidden', 'id'=>'siguiente')) !!}
-				{!! Form::button('Menu de Actividades', array('class' => 'btn btn-success pull-right ', 'id'=>'regresar')) !!}
+				{!! Form::button('Next', array('class' => 'btn btn-success pull-right hidden', 'id'=>'siguiente')) !!}
+				{!! Form::button('Activities menu', array('class' => 'btn btn-success pull-right ', 'id'=>'regresar')) !!}
 			</div>
 		</div>
 
@@ -119,27 +131,51 @@ td, th {
 
 		$( ".draggable" ).draggable({
 			//revert: true,
-		helper:'clone',
+			helper:'clone',
 			cursor: "crosshair",
 			containment: "div.padre",
 			stop: function( event, ui ) {
+//console.log("jumm");
+				//$(this).addClass("draggableEnUso");
 
+
+				$(".draggable").each(function(){
+					$(this).removeClass("draggableEnUso");
+				});
+
+
+				$(".respuestas").each(function(index, obj) {
+					if($(this).data("label")!="")
+					//console.log($(this).data("label"));
+							$("#"+$(this).data("label")).addClass("draggableEnUso");
+				});
 			}
 		});
 
 		$( ".droppable" ).droppable({
 			drop: function(event, ui) {
-					//console.log(ui.draggable.index());
+
 				var contenido = ui.draggable[0].innerHTML;
 
+
+
+
+
 				$(this).removeClass("borde-error");
+
+				$(this).empty();
+
 				$(".respuestas").each(function(index, obj) {
-					if(($(this).html())==ui.draggable[0].innerHTML){
+					//console.log($(this).children("span").html());
+					if(($(this).children("span").html())==ui.draggable[0].innerHTML){
 						//$(this).html("");
 						$(this).empty();
+						$(this).data("label","");
 					}
 					});
-					$(this).html(ui.draggable[0].innerHTML);
+					$(this).append("<span>"+ui.draggable[0].innerHTML+"</span>");
+
+					$(this).data("label",$(ui.draggable[0]).attr("id"));
 					//$(this).droppable( "disable" );
 
 
@@ -165,8 +201,8 @@ td, th {
 
 	var traduccionesmostrar = '{!! json_encode($traduccionesMostrar) !!}';
 	var traduccionesJsonMos = JSON.parse(traduccionesmostrar);
-	console.log(traduccionesJsonMos);
-	console.log(traduccionesJsonMos[0]);
+	//console.log(traduccionesJsonMos);
+	//console.log(traduccionesJsonMos[0]);
 
 
 $('#verificar').on('click', function ( ) {
@@ -174,17 +210,22 @@ $('#verificar').on('click', function ( ) {
 	var i=0;
 	var validar=true;
 
-	$(".respuestas").each(function(){
-		$("#respuesta"+i).addClass("borde-error");
-	});
+/*	$(".respuestas").each(function(index, obj){
+		//console.log(obj);
+		$(obj).children("i").remove();
+	});*/
 
 	$.each(traduccionesJson, function(index, obj) {
 		//console.log($("#respuesta"+i).html());
 
-		if(obj==$("#respuesta"+i).html()){
+		if(obj==$("#respuesta"+i).children("span").html()){
 			$("#respuesta"+i).addClass("borde-correcto");
+			$("#respuesta"+i).children("i").remove();
+			$("#respuesta"+i).append("<i class='fa fa-check pull-right' aria-hidden='true' style='color: #3a8039;'></i>");
 		}else{
 			$("#respuesta"+i).addClass("borde-error");
+			$("#respuesta"+i).children("i").remove();
+			$("#respuesta"+i).append("<i class='fa fa-times pull-right' aria-hidden='true' style='color: #a94442'></i>");
 			validar=false;
 		}
 

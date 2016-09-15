@@ -121,6 +121,8 @@ class actividadesController extends Controller
 
         //maxCntCarPalabratra es cantidad de caracteres por palabra truduccion
         $maxCntCarPalabraTra=0;
+        $maxCntCarPalabraEsp=0;
+
         $leccion = leccionesEnc::where('id', $id_leccion)->get();
 
         if(count($leccion)>0){
@@ -141,6 +143,10 @@ class actividadesController extends Controller
 
         $palabrasEspDet = leccionesDet::select('palabra_id')->where('leccion_id', $id_leccion)->take($limite)->orderBy('palabra_id','asc')->get();
         foreach($palabrasEspDet as $palabraEsp){
+
+            if($palabraEsp->getpalabra)
+                    $maxCntCarPalabraEsp= (strlen($palabraEsp->getpalabra->palabra)>$maxCntCarPalabraEsp)?strlen($palabraEsp->getpalabra->palabra):$maxCntCarPalabraEsp;
+
             $traducciones = traducciones::select('palabra_id', 'traduccion')
                 ->where('palabra_id', $palabraEsp->palabra_id)
                 ->where('idiomas_id', 1)
@@ -159,6 +165,7 @@ class actividadesController extends Controller
         }
         shuffle($traduccionesMostrar);
         $data['maxCntCarPalabraTra'] = $maxCntCarPalabraTra;
+        $data['maxCntCarPalabraEsp'] = $maxCntCarPalabraEsp;
         $data['idleccion'] = $id_leccion;
         $data['palabrasEspDet'] = $palabrasEspDet;
         $data['listaTraducciones'] = $listaTraducciones;
@@ -176,6 +183,7 @@ class actividadesController extends Controller
 
     public function actividadDos($id_leccion){
 
+        $maxCntCarPalabraTra=0;
         $leccion = leccionesEnc::where('id', $id_leccion)->get();
 
         if(count($leccion)>0){
@@ -202,12 +210,14 @@ class actividadesController extends Controller
                 ->get();
             $palabraEsp->getpalabra;
             foreach($traducciones as $trad){
+                $maxCntCarPalabraTra= (strlen($trad->traduccion)>$maxCntCarPalabraTra)?strlen($trad->traduccion):$maxCntCarPalabraTra;
                 $listaTraducciones[$palabraEsp->palabra_id] = $trad->traduccion;
                 $traduccionesMostrar[$palabraEsp->palabra_id] = $trad->traduccion;
             }
 
         }
         shuffle($traduccionesMostrar);
+        $data['maxCntCarPalabraTra'] = $maxCntCarPalabraTra;
         $data['idleccion'] = $id_leccion;
         $data['palabrasEspDet'] = $palabrasEspDet;
         $data['listaTraducciones'] = $listaTraducciones;
@@ -216,7 +226,7 @@ class actividadesController extends Controller
 
         $data['traduccionesMostrar'] = $traduccionesMostrar;
         $data['leccion'] = $id_leccion;
-
+//dd($data);
         return view('actividadesRepaso.actividaddos',$data);
         }else{
             return \Redirect::back();
