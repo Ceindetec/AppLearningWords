@@ -14,7 +14,8 @@
   <title>Learning Words !! </title>
 
   <!-- Bootstrap -->
-  {!!Html::style('vendors/bootstrap/dist/css/styles.css')!!} 
+    {!!Html::style('vendors/bootstrap/dist/css/bootstrap.css')!!}
+    {{--{!!Html::style('vendors/bootstrap/dist/css/styles.css')!!} --}}
   <!-- Font Awesome -->
   {!!Html::style('vendors/font-awesome/css/font-awesome.min.css')!!}
   <!-- iCheck -->

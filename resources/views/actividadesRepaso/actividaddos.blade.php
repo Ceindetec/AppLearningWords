@@ -20,20 +20,27 @@
 		.borde-correcto{
 			border: solid #3c763d 2px;
 		}
+		.noarrastable{
+			width: {{$maxCntCarPalabraTra*15}}px;
+			color: #ffffff;
+			padding: 3px 10px;
+			border-radius: 5px;
+			background: #3d7193;
+		}
 	</style>
 @endsection
 
 @section('content')
 	<div class="page-title">
 		<div class="title_left">
-			<h3>Actividad de repaso uno</h3>
+			<h3>Activity 2</h3>
 		</div>
 	</div>
 
 	<div class="panel panel-primary">
 		<div class="panel-heading">
 			<h3 class="panel-title">
-				Escribe la traducción correspondiente a la palabra.
+				Type the traslation for each word
 			</h3>
 
 		</div>
@@ -52,7 +59,7 @@
 				<div  class="row">
 					<div class ="col-md-3 col-md-offset-2" style="text-align:right"	>
 						@if($valor)
-							{!!Form::label($valor)!!}
+							{!!Form::label(null,$valor,["class"=>"noarrastable text-center"])!!}
 							{{--{!! Form::hidden('palabra'.$i,$i, ['id' => 'palabra'.$i]) !!}--}}
 						@endif
 					</div>
@@ -79,11 +86,11 @@
 		<div class="panel-footer">
 			<div class="row">
 				<div class="col-xs-6">
-					{!! Form::button('Verificar', array('class' => 'btn btn-success', 'id'=>'verificar')) !!}
+					{!! Form::button('Verify !', array('class' => 'btn btn-success', 'id'=>'verificar')) !!}
 				</div>
 				<div class="col-xs-6">
-					{!! Form::button('Siguiente', array('class' => 'btn btn-success pull-right hidden', 'id'=>'siguiente')) !!}
-					{!! Form::button('Menu de Actividades', array('class' => 'btn btn-success pull-right', 'id'=>'regresar')) !!}
+					{!! Form::button('Next', array('class' => 'btn btn-success pull-right hidden', 'id'=>'siguiente')) !!}
+					{!! Form::button('Activities menu', array('class' => 'btn btn-success pull-right ', 'id'=>'regresar')) !!}
 				</div>
 			</div>
 		</div>
