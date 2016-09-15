@@ -31,12 +31,25 @@ class leccionesController extends Controller
     public function create()
     {
         $categorias = categoria::select('id', 'nombre')->get();
-        foreach($categorias as $categoria)
-            $listaCategorias[$categoria['id']] = $categoria['nombre'];
-        return view('lecciones.crearLeccion', compact('listaCategorias'));
+        if (count($categorias) >0) {
+            foreach ($categorias as $categoria)
+                $listaCategorias[$categoria['id']] = $categoria['nombre'];
+            return view('lecciones.crearLeccion', compact('listaCategorias'));
+        }
+        else{
+            $listaCategorias = Array();
+            return view('lecciones.crearLeccion', compact('listaCategorias'));
+        }
     }
 
-   
+    public static function existenPalabras(){
+        $palabras = palabrasEsp::all();
+        if (count($palabras) > 0)
+            return true;
+        else
+            return false;
+    }
+
     public function store(Request $request){
 
     $nombre = $request->input("nombre");

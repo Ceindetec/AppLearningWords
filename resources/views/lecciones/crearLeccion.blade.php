@@ -10,52 +10,45 @@ td, th {
 @endsection
 
 @section('content')
-<div class="page-title">
-	<div class="title_left">
-		<h3>Crear lección</h3>
-	</div>
-</div>
-
 <div class="panel panel-primary">
 	<div class="panel-heading">
-		<h3 class="panel-title">Agregar palabras</h3>		
+		<h3 class="panel-title">New lesson</h3>
 	</div>
 	<div class="panel-body">
-		{{--<div class="row">--}}
-			{!!Form::open()!!}	
+		{!!Form::open()!!}
+			<div class="form-group">
+				{!!Form::label('nombreleccion', 'Lesson name: ')!!}
 				<div class="form-group">
-					{!!Form::label('Nombre de la lección: ')!!}
-				<div class="form-group">
-					{!!Form::text('nombreleccion', null,['class'=>'form-control', 'id' => 'nombreleccion', 'required', 'placeholder' => 'Asigne un nombre a la lección actual ...'])!!}
+					{!!Form::text('nombreleccion', null,['class'=>'form-control', 'id' => 'nombreleccion', 'required', 'placeholder' => 'New lesson name..'])!!}
 				</div>
 				<div class="form-group">
-					{!!Form::label('Seleccione categoria: ')!!}
-				<div class="form-group">
-					{!!Form::select('categorias', $listaCategorias ,null,['class'=>'form-control', 'id' => 'categ', 'required', 'placeholder' => 'Seleccione ...'])!!}
-				</div>
+					{!!Form::label('categorias', 'Word category: ')!!}
+					<div class="form-group">
+						{!!Form::select('categorias', $listaCategorias ,null,['class'=>'form-control', 'id' => 'categ', 'required', 'placeholder' => 'Select one..'])!!}
+					</div>
 				</div>				
 				<div class="form-group">
 					<div class="form-group">
-					{!!Form::label('Buscar palabra: ')!!}		
+					{!!Form::label('Nombre', 'Choose a word: ')!!}
 					</div>		
 					<div class="row">	
 						<div class="form-group col-md-10">	
-							{!!Form::select('Nombre', [], null, ['class'=>'form-control','readonly','id'=>'name', 'required','placeholder' => 'Escriba la palabra a buscar'])!!}
+							{!!Form::select('Nombre', [], null, ['class'=>'form-control','readonly','id'=>'name', 'required','placeholder' => 'Type a word..'])!!}
 						</div>	
 						<div class="form-group col-md-2 align-right">	
-							{!! Form::button('Agregar', array('class' => 'btn btn-primary', 'id'=>'agregarPalabra')) !!}
+							{!! Form::button('Add', array('class' => 'btn btn-primary', 'id'=>'agregarPalabra', 'data-toggle'=>"tooltip", 'tittle'=>'Add selected word to lesson')) !!}
 						</div>	
 					</div>	
-				</div>								 			
-			{!!Form::close()!!}			
-		</div>
+				</div>
+		{!!Form::close()!!}
+			</div>
 	</div>
 </div>
 
 <div class="panel panel-primary">
 	<div class="panel-heading">
 		<h3 class="panel-title">
-			Palabras en la lección actual
+			Lesson words
 		</h3>	
 	</div>
 	<div class="panel-body">
@@ -63,8 +56,8 @@ td, th {
 			<thead>
 				<tr>
 					<th>Id</th>			
-					<th>Palabra</th>						
-					<th>Eliminar</th>
+					<th>Word</th>
+					<th>Action</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -73,8 +66,8 @@ td, th {
 		</table>
 	</div>
 	<div class="panel-footer" style="text-align:right">
-		{!! Form::button('Guardar', array('class' => 'btn btn-success', 'id'=>'guardar')) !!}
-		{!! Form::button('Cancelar', array('class' => 'btn btn-success', 'id'=>'cancelar')) !!}
+		{!! Form::button('Save', array('class' => 'btn btn-success', 'id'=>'guardar')) !!}
+		{!! Form::button('Cancel', array('class' => 'btn btn-success', 'id'=>'cancelar')) !!}
 	</div>
 </div>
 @endsection
@@ -87,11 +80,8 @@ td, th {
 // Función que construye el data table de los detalles de la lección.
 /*****************************************************************************************************************/
 $(function(){
-
+	$('[data-toggle="tooltip"]').tooltip();
 	table[0] = $('#palabrasAgregadas').DataTable( {
-		"language": {
-			"url": "{!!route('espanol')!!}"
-		},
 		columns: [ ],
 		"columnDefs": [
 		{
@@ -102,7 +92,7 @@ $(function(){
 		{
 			"targets": [2],
 			"data": null,
-			"defaultContent":  "<button class='btn btn-danger' onclick='eliminarPalabra(event)'>Eliminar</button>" 
+			"defaultContent":  "<button class='btn btn-danger' onclick='eliminarPalabra(event)'>Delete</button>"
 		}
 		],
 		"scrollX": true
@@ -148,23 +138,22 @@ $('#agregarPalabra').on('click', function () {
 	var t = $('#palabrasAgregadas').DataTable();    
 	var esta = false;
 	var validator = $("form").kendoValidator().data("kendoValidator");
-                    if (validator.validate()) {     
-						esta = buscarpalabra($('#name').val());
-						
-						if(esta){
-							if (esta == false){								
-								agregarpalabras(t);			
-								$('#guardar').attr('disabled',false);
-							}
-									
-						else
-							$.msgbox("La palabra " + $('#name option:selected').text() + " ya se encuentra en la lección actual.", { type: 'error' });
-						}
-						else{
-							agregarpalabras(t);
-							$('#guardar').attr('disabled',false);
-						}							
-				}	
+    if (validator.validate()) {
+		esta = buscarpalabra($('#name').val());
+		if(esta){
+			if (esta == false){
+				agregarpalabras(t);
+				$('#guardar').attr('disabled',false);
+			}
+			else
+				$.msgbox("La palabra " + $('#name option:selected').text() + " ya se encuentra en la lección actual.", { type: 'error' });
+		}
+		else{
+			agregarpalabras(t);
+			if (palabras.length >= 15)
+				$('#guardar').attr('disabled',false);
+		}
+	}
 });
 
 /*****************************************************************************************************************/
@@ -242,16 +231,14 @@ function eliminarPalabra(event){
 	var data = table[0].row( $(element).parents('tr') ).data();	
 	var id_palabra = data[0];
 	for(i=0; i< palabras.length; i++){
-						if(id_palabra == palabras[i]){
-							palabras.splice(i,1);
-							
-							if( palabras.length==0)
-								{$('#guardar').attr('disabled',true);
-						}
-						break;
-						}
-							
-				}		
+		if(id_palabra == palabras[i]){
+			palabras.splice(i,1);
+			if(palabras.length<15)
+				$('#guardar').attr('disabled',true);
+			break;
+		}
+
+}
 	
 	table[0].row( $(element).parents('tr') ).remove().draw();	
 };
