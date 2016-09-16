@@ -64,9 +64,13 @@
         });
 
         table[0] = $('#palabras').DataTable({
-            // "language": {
-            //     "url": "{!!route('espanol')!!}"
-            // },
+            "language": {
+                "lengthMenu": "Show _MENU_ words per page",
+                "zeroRecords": "No matching words found",
+                "info": "Showing _START_ to _END_ of _TOTAL_ words",
+                "infoEmpty": "No words available",
+                "infoFiltered": "(filtered from _MAX_ total words)"
+            },
             ajax: {
                 url: "{!!route('getPalabras')!!}",
                 "type": "POST"
