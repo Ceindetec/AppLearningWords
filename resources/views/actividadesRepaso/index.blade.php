@@ -177,6 +177,7 @@ function  repasar(evento){
 	console.log(elemento);
 	var data = table.row($(elemento).parents('tr')).data();
 	//console.log(data['id']);
+
 	window.location = "actividades/" + data['id'];
 
 }

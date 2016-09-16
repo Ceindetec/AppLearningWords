@@ -52,19 +52,22 @@ class actividadesController extends Controller
                 }
 
                 if($noiniciado==3)
-                    $leccion['estado'] = "Not started";
+                    $leccion['estado'] = "<div style='background-color:#ff3724; color: #fff8f6'>Not started </div>";
                 else if($finalizado==3)
-                    $leccion['estado'] = "Completed";
+                    $leccion['estado'] = "<div style='background-color:#3a8039; color: #fff8f6'>Completed</div>";
                 else
-                    $leccion['estado'] = "In progress";
+                    $leccion['estado'] = "<div style='background-color:#ff9811;color: #fff8f6'>In progress</div>";
                 }else{
-                    $leccion['estado'] = "Not started";
+                    $leccion['estado'] = "<div style='background-color:#ff3724; color: #fff8f6'>Not started</div>";
                 }
             }else{
                 $leccion['estado'] = "rol incorrecto";
 
             }
         }
+
+        //dd($lecciones);
+
         return json_encode(["data" => $lecciones]);
 
     }
@@ -204,6 +207,7 @@ class actividadesController extends Controller
         $traduccionesMostrar = array();
         $palabrasEspDet = leccionesDet::select('palabra_id')->where('leccion_id', $id_leccion)->skip($fin)->take(5)->orderBy('palabra_id','asc')->get();
         foreach($palabrasEspDet as $palabraEsp){
+
             $traducciones = traducciones::select('palabra_id', 'traduccion')
                 ->where('palabra_id', $palabraEsp->palabra_id)
                 ->where('idiomas_id', 1)
@@ -235,6 +239,8 @@ class actividadesController extends Controller
     //    ------------------------------------------------------   adtividad TRES ------------------------------------------------------------------
 
     public function actividadTres($id_leccion){
+        $maxCntCarPalabraTra=0;
+        $maxCntCarPalabraEsp=0;
 
             $leccion = leccionesEnc::where('id', $id_leccion)->get();
 
@@ -256,6 +262,9 @@ class actividadesController extends Controller
         $palabrasEspDet = leccionesDet::select('palabra_id')->where('leccion_id', $id_leccion)->skip($fin)->take($numPalabras)->orderBy('palabra_id','asc')->get();
 
         foreach($palabrasEspDet as $palabraEsp){
+            if($palabraEsp->getpalabra)
+                $maxCntCarPalabraEsp= (strlen($palabraEsp->getpalabra->palabra)>$maxCntCarPalabraEsp)?strlen($palabraEsp->getpalabra->palabra):$maxCntCarPalabraEsp;
+
             $traducciones = traducciones::select('id', 'traduccion')
                 ->where('palabra_id', $palabraEsp->palabra_id)
                 ->where('idiomas_id', 1)
@@ -271,6 +280,7 @@ class actividadesController extends Controller
 
             foreach($traducciones as $trad){
                 $listaTraduccionesextras =array();
+                $maxCntCarPalabraTra= (strlen($trad->traduccion)>$maxCntCarPalabraTra)?strlen($trad->traduccion):$maxCntCarPalabraTra;
                 $listaAMostrar = array();
                 $listaTraducciones[$palabraEsp->palabra_id] = $trad->traduccion;
                 $listaTraduccionesextras=$Traducciones;
@@ -293,6 +303,8 @@ class actividadesController extends Controller
 
         }
         //shuffle($traduccionesMostrar);
+        $data['maxCntCarPalabraTra'] = $maxCntCarPalabraTra;
+        $data['maxCntCarPalabraEsp'] = $maxCntCarPalabraEsp;
         $data['idleccion'] = $id_leccion;
         $data['palabrasEspDet'] = $palabrasEspDet;
         $data['listaTraducciones'] = $listaTraducciones;
@@ -304,6 +316,84 @@ class actividadesController extends Controller
                 return \Redirect::back();
             }
     }
+
+//    ------------------------------------------------------   adtividad TRES 1 ------------------------------------------------------------------
+
+    public function actividadTres1($id_leccion){
+
+        $leccion = leccionesEnc::where('id', $id_leccion)->get();
+
+        if(count($leccion)>0){
+            $control = controlAvance::where('leccion_id',$id_leccion)->where('actividad_id',3)->where('usuario_documento',\Auth::user()->documento)->get();
+            if($control[0]->estado!="Completed"){
+                $control[0]->estado="In progress";
+                $control[0]->save();
+            }
+
+            $listaTraducciones = array();
+            $traduccionesMostrar = array();
+            $Traducciones =array();
+
+            $numPalabras =leccionesDet::select('palabra_id')->where('leccion_id', $id_leccion)->orderBy('palabra_id','asc')->count();
+
+            $inicio = floor($numPalabras/3);
+            $fin= $inicio+$inicio;
+            $palabrasEspDet = leccionesDet::select('palabra_id')->where('leccion_id', $id_leccion)->skip($fin)->take($numPalabras)->orderBy('palabra_id','asc')->get();
+
+            foreach($palabrasEspDet as $palabraEsp){
+                $traducciones = traducciones::select('id', 'traduccion')
+                    ->where('palabra_id', $palabraEsp->palabra_id)
+                    ->where('idiomas_id', 1)
+                    ->get();
+                $Traducciones[$traducciones[0]->id]=$traducciones[0]->traduccion;
+            }
+
+            foreach($palabrasEspDet as $palabraEsp){
+                $traducciones = traducciones::select('id', 'traduccion')
+                    ->where('palabra_id', $palabraEsp->palabra_id)
+                    ->where('idiomas_id', 1)
+                    ->get();
+
+                foreach($traducciones as $trad){
+                    $listaTraduccionesextras =array();
+                    $listaAMostrar = array();
+                    $listaTraducciones[$palabraEsp->palabra_id] = $trad->traduccion;
+                    $listaTraduccionesextras=$Traducciones;
+
+                    unset($listaTraduccionesextras[$traducciones[0]->id]);
+                    shuffle($listaTraduccionesextras);
+
+                    for($i=0;$i<count($listaTraduccionesextras);$i++){
+                        if($i>2)
+                            break;
+                        $listaAMostrar[]=$listaTraduccionesextras[$i];
+                    }
+                    $listaAMostrar[]=$trad->traduccion;
+                    shuffle($listaAMostrar);
+
+
+
+                    $traduccionesMostrar[$palabraEsp->palabra_id] = $listaAMostrar;
+                }
+
+            }
+            //shuffle($traduccionesMostrar);
+            $data['idleccion'] = $id_leccion;
+            $data['palabrasEspDet'] = $palabrasEspDet;
+            $data['listaTraducciones'] = $listaTraducciones;
+            $data['traduccionesMostrar'] = $traduccionesMostrar;
+            $data['leccion'] = $id_leccion;
+            dd($data);
+            return view('actividadesRepaso.actividadtres1',$data);
+        }else{
+            return \Redirect::back();
+        }
+    }
+
+
+
+
+
 
 
 

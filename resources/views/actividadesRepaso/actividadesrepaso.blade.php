@@ -129,7 +129,12 @@ td, th {
 <script type="text/javascript">
 var table;
 	$(function(){
-
+		$("#menuleccion").removeClass("hidden").addClass("show");
+		$("#spanLeccion").text("{{$nombreleccion}}");
+		$("#aLeccion").attr("href","{{route("actividadesRepaso",$idleccion)}}");
+		$("#aActividad1").attr("href","{{route("actividadUno",$idleccion)}}");
+		$("#aActividad2").attr("href","{{route("actividadDos",$idleccion)}}");
+		$("#aActividad3").attr("href","{{route("actividadTres",$idleccion)}}");
 
 	});
 

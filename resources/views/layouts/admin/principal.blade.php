@@ -188,6 +188,7 @@
 
 <script type="text/javascript">
 kendo.culture("es-ES");
+$("#menuleccion").addClass("hidden");
 </script>
 
 {!!Html::script('js/inicio.js')!!}  

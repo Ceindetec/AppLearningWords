@@ -32,6 +32,7 @@ Route::group(['middleware' => ['is_estudiante']], function() {
 	Route::get('actividaduno/{idleccion}', 'actividadesController@actividadUno')->name('actividadUno');
 	Route::get('actividaddos/{idleccion}', 'actividadesController@actividadDos')->name('actividadDos');
 	Route::get('actividadtres/{idleccion}', 'actividadesController@actividadTres')->name('actividadTres');
+	Route::get('actividadtres1/{idleccion}', 'actividadesController@actividadTres1')->name('actividadTres1');
 
 	Route::post('actividadfinalizada', 'actividadesController@controlAvanceFinalisada')->name('actividadFinalizada');
 
