@@ -122,8 +122,14 @@ td, th {
 	{!!Html::script('js/jquery-ui-1.11.4/jquery-ui.js')!!}
 
 <script type="text/javascript">
-
+	$("#menuleccion").removeClass("hidden").addClass("show");
 	$(function(){
+
+
+
+
+
+
 
 		$(".respuestas").each(function(){
 			$(this).empty();
@@ -156,10 +162,6 @@ td, th {
 			drop: function(event, ui) {
 
 				var contenido = ui.draggable[0].innerHTML;
-
-
-
-
 
 				$(this).removeClass("borde-error");
 

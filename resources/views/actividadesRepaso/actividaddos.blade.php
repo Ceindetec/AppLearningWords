@@ -153,6 +153,7 @@
 			var validar=true;
 			$.each(palabrasJsonEsp,function(index, valor){
 
+
 				console.log(valor.getpalabra.palabra.toLowerCase()+" -> " +$("#respuesta"+i).val().toLowerCase());
 
 				if(valor.getpalabra.palabra.toLowerCase()==$("#respuesta"+i).val().toLowerCase()){

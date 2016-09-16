@@ -8,23 +8,17 @@
 			text-align: center;
 		}
 		.draggable {
-			width: {{$maxCntCarPalabraTra*12}}px;
-			box-shadow: 5px 5px 5px #888888;
-			color: #ffffff;
 			padding: 3px 10px;
 			border-radius: 5px;
 			cursor: pointer;
-			background: #2a3f54;
+			background: #ccc;
 			z-index: 100;
-		}
-
-		.draggableEnUso{
-			background: #e8a710;
 		}
 
 		.respuestas{
 			border-radius: 5px;
 			border: solid #888888 2px;
+			width: 200px;
 			height: 30px;
 			background: #f2f2f2;
 		}
@@ -36,13 +30,7 @@
 			border: solid #3c763d 2px;
 		}
 
-		.noarrastable{
-			width: {{$maxCntCarPalabraTra*15}}px;
-			color: #ffffff;
-			padding: 3px 10px;
-			border-radius: 5px;
-			background: #3d7193;
-		}
+
 
 	</style>
 @endsection
@@ -50,7 +38,7 @@
 @section('content')
 	<div class="page-title">
 		<div class="title_left">
-			<h3>Activity 3</h3>
+			<h3>Actividad de repaso uno</h3>
 		</div>
 	</div>
 
@@ -61,43 +49,37 @@
 			</h3>
 
 		</div>
-		<div class="panel-body " >
+		<div class="panel-body padre" >
 			{!!Form::open()!!}
 			<?php $i = 0;
 
 			$repuestas = array();
 			?>
-			{{--	{!! Form::hidden('palabrasEsp', json_encode($palabrasEspDet), ['id' => 'palabrasEsp']) !!}
-                    {!! Form::hidden('palabrasEsp', json_encode($listaTraducciones), ['id' => 'traducciones']) !!}
-                    {!! Form::hidden('trad', json_encode($traduccionesMostrar), ['id' => 'trad']) !!}--}}
 
 			@foreach($palabrasEspDet as $valor)
 
-				<div  class="row padre">
-					<div class ="  col-xs-4 col-sm-2  col-md-3 " style="text-align:right"	>
+				<div  class="row">
+					<div class ="col-md-2 col-md-offset-2" style="text-align:right"	>
 						@if($valor->getpalabra)
-							{!!Form::label(null,$valor->getpalabra->palabra,["class"=>"noarrastable text-center"])!!}
-							{{--{!! Form::hidden('palabra'.$i,$i, ['id' => 'palabra'.$i]) !!}--}}
+							{!!Form::label($valor->getpalabra->palabra)!!}
 						@endif
 					</div>
-					<div class ="col-xs-8 col-sm-3 col-md-2">
+					<div class ="col-md-2">
 
-						{{--<div class="row">--}}
-						<div id="respuesta{{$i}}" class="form-control respuestas droppable" ></div>
+
+						<div id="respuesta{{$i}}" class=" respuestas droppable" ></div>
 
 					</div>
-					<div id="grupo{{$i}}" class ="col-xs-12 col-sm-7 col-md-7 ">
+					<div class ="col-md-offset-1 col-md-3 ">
 
-						@foreach($traduccionesMostrar[$valor->palabra_id] as  $index => $mostrar)
+						@foreach($traduccionesMostrar[$valor->palabra_id] as $mostrar)
 
 
-
-						{!!Form::label(null,$mostrar,['id'=>"label".$i."".$index,'class'=>'draggable text-center','data-grupo'=>$i])!!}
-
+						{!!Form::label(null,$mostrar,['class'=>'draggable'])!!}
 
 						@endforeach
 
-					{{--</div>--}}
+
 					</div>
 				</div>
 				</br>
@@ -139,50 +121,16 @@
 				$(this).empty();
 			});
 
-
-/*			$( ".draggable" ).draggable({
+			$( ".draggable" ).draggable({
 				//revert: true,
 				helper:'clone',
 				cursor: "crosshair",
 				axis: "x",
-				containment: $('.draggable').parent().parent(),
+				containment: "div.padre",
 				stop: function( event, ui ) {
- $(".draggable").each(function(){
- $(this).removeClass("draggableEnUso");
- });
 
-
- $(".respuestas").each(function(index, obj) {
- if($(this).data("label")!="")
- //console.log($(this).data("label"));
- $("#"+$(this).data("label")).addClass("draggableEnUso");
- });
 				}
-			});*/
-
-
-
-			$('.draggable').each(function(){
-				$(this).draggable({
-					helper:'clone',
-					cursor: "crosshair",
-					containment: $(this).parent().parent(),
-					stop: function( event, ui ) {
-						$(".draggable").each(function(){
-							$(this).removeClass("draggableEnUso");
-						});
-
-
-						$(".respuestas").each(function(index, obj) {
-							if($(this).data("label")!="")
-							//console.log($(this).data("label"));
-								$("#"+$(this).data("label")).addClass("draggableEnUso");
-						});
-					}
-				});
 			});
-
-
 
 			$( ".droppable" ).droppable({
 				drop: function(event, ui) {
@@ -191,18 +139,14 @@
 					var contenido = ui.draggable[0].innerHTML;
 
 					$(this).removeClass("borde-error");
-					$(this).empty();
-					$(".respuestas").each(function(index, obj) {
-						//console.log($(this).children("span").html());
-						if(($(this).children("span").html())==ui.draggable[0].innerHTML){
+/*					$(".respuestas").each(function(index, obj) {
+						if(($(this).html())==ui.draggable[0].innerHTML){
 							//$(this).html("");
 							$(this).empty();
-							$(this).data("label","");
 						}
-					});
-					$(this).append("<span>"+ui.draggable[0].innerHTML+"</span>");
-
-					$(this).data("label",$(ui.draggable[0]).attr("id"));
+					});*/
+					$(this).html(ui.draggable[0].innerHTML);
+					//$(this).droppable( "disable" );
 
 
 				}
@@ -213,9 +157,6 @@
 
 
 
-
-		/*palabras = $('#palabrasEsp').val();
-		 palabrasJson = JSON.parse(palabras);*/
 
 		var palabrasEsp = '{!! json_encode($palabrasEspDet) !!}';
 
@@ -234,40 +175,26 @@
 
 		var traduccionesmostrar = '{!! json_encode($traduccionesMostrar) !!}';
 		var traduccionesJsonMos = JSON.parse(traduccionesmostrar);
-		//console.log(traduccionesJsonMos);
-		//console.log(traduccionesJsonMos[0]);
+		console.log(traduccionesJsonMos);
+		console.log(traduccionesJsonMos[0]);
 
-
-		/*	traduccion = $('#traducciones').val();
-		 traduccionJson = JSON.parse(traduccion);
-		 //console.log(traduccionJson);
-
-		 //console.log("traducciones: ",$('#traducciones').val());
-		 //console.log("mostrar: ",$('#trad').val());
-		 mostrarTrad = $('#trad').val();
-		 trad = JSON.parse(mostrarTrad);
-		 //console.log("vector",trad)*/
 
 		$('#verificar').on('click', function ( ) {
 
 			var i=0;
 			var validar=true;
 
-/*			$(".respuestas").each(function(){
+			$(".respuestas").each(function(){
 				$("#respuesta"+i).addClass("borde-error");
-			});*/
+			});
 
 			$.each(traduccionesJson, function(index, obj) {
 				//console.log($("#respuesta"+i).html());
 
-				if(obj==$("#respuesta"+i).children("span").html()){
+				if(obj==$("#respuesta"+i).html()){
 					$("#respuesta"+i).addClass("borde-correcto");
-					$("#respuesta"+i).children("i").remove();
-					$("#respuesta"+i).append("<i class='fa fa-check pull-right' aria-hidden='true' style='color: #3a8039;'></i>");
 				}else{
 					$("#respuesta"+i).addClass("borde-error");
-					$("#respuesta"+i).children("i").remove();
-					$("#respuesta"+i).append("<i class='fa fa-times pull-right' aria-hidden='true' style='color: #a94442'></i>");
 					validar=false;
 				}
 
