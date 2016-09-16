@@ -3,9 +3,13 @@
 
 @section('css')
 <style>
-td, th {
-	text-align: center;
-}
+	td, th {
+		text-align: center;
+	}
+
+	h3 small{
+		color: #e8e8e8;;
+	}
 </style>
 @endsection
 
@@ -48,7 +52,7 @@ td, th {
 <div class="panel panel-primary">
 	<div class="panel-heading">
 		<h3 class="panel-title">
-			Lesson words
+			Lesson words <small>(at least 15)</small>
 		</h3>	
 	</div>
 	<div class="panel-body">
@@ -82,6 +86,13 @@ td, th {
 $(function(){
 	$('[data-toggle="tooltip"]').tooltip();
 	table[0] = $('#palabrasAgregadas').DataTable( {
+		"language": {
+			"lengthMenu": "Show _MENU_ words per page",
+			"zeroRecords": "No matching words found",
+			"info": "Showing _START_ to _END_ of _TOTAL_ words",
+			"infoEmpty": "No words available",
+			"infoFiltered": "(filtered from _MAX_ total words)"
+		},
 		columns: [ ],
 		"columnDefs": [
 		{

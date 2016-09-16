@@ -52,9 +52,14 @@ td, th {
 $(function(){
 
 	table[0] = $('#leccionesByDocente').DataTable( {
-		// "language": {
-		// 	"url": "{!!route('espanol')!!}"
-		// },
+		"language": {
+			"lengthMenu": "Show _MENU_ lessons per page",
+			"zeroRecords": "No matching lessons found",
+			"info": "Showing _START_ to _END_ of _TOTAL_ lessons",
+			"infoEmpty": "No lessons available",
+			"infoFiltered": "(filtered from _MAX_ total lessons)"
+		},
+
 		ajax: {
 			url: "{!!route('lecciones.cargar')!!}",
 			"type": "POST"

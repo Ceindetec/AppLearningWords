@@ -60,8 +60,8 @@ td, th {
 			<thead>
 				<tr>
 					<th>Id</th>
-					<th>Spanish</th>
-					<th>English</th>
+					<th>Word</th>
+					<th>Translation</th>
 					<th>Action</th>
 				</tr>
 			</thead>
@@ -90,6 +90,13 @@ var nombre_leccion = $('#nombreleccion').val();
 /*****************************************************************************************************************/
 $(function(){
 	table[0] = $('#palabrasAgregadas').DataTable( {
+		"language": {
+			"lengthMenu": "Show _MENU_ words per page",
+			"zeroRecords": "No matching words found",
+			"info": "Showing _START_ to _END_ of _TOTAL_ words",
+			"infoEmpty": "No words available",
+			"infoFiltered": "(filtered from _MAX_ total words)"
+		},
 		ajax: {
 			url: "{!!route('detallelecciongrid', ['id' => $encabezado->id])!!}",
 			"type": "POST"
