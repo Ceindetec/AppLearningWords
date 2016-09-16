@@ -16,7 +16,7 @@
 					<li><a href="#" onclick="return false;"><i class="fa fa-tasks"></i>Lessons<span class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
 
-								<li><a href="{{ route('lecciones.index') }}">Manage lessons</a></li>
+							<li><a href="{{ route('lecciones.index') }}">Manage lessons</a></li>
 							<li><a href="{{ route('lecciones.create') }}">Create lesson</a></li>
 
 						</ul>
@@ -26,6 +26,17 @@
 				@elseif($user->rol == 'estudiante')
 					<li><a href="{{ route('actividadesRepaso.index') }}"><i class="fa fa-home"></i>home</a></li>
 					<li><a href="{{ route('actividadesRepaso.index') }}"><i class="fa fa-tasks"></i>Lessons</a></li>
+
+					<li id="menuleccion"><a id="aLeccion" href="#" onclick="return false;"><i class="fa fa-tasks"></i><span id="spanLeccion"></span><span class="fa fa-chevron-down"></span></a>
+						<ul class="nav child_menu">
+
+							<li><a href="#" id="aActividad1">Activity 1</a></li>
+							<li><a href="#" id="aActividad2">Activity 2</a></li>
+							<li><a href="#" id="aActividad3">Activity 3</a></li>
+
+						</ul>
+					</li>
+
 				@endif
 
 			@endif
