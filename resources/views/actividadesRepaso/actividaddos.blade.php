@@ -105,6 +105,13 @@
 	{{--<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>--}}
 
 	<script type="text/javascript">
+		$("#menuleccion").removeClass("hidden").addClass("show");
+		$("#spanLeccion").text(sessionStorage.getItem('nombreLeccion'));
+
+		$("#aLeccion").attr("href",sessionStorage.getItem('hrefaLeccion'));
+		$("#aActividad1").attr("href",sessionStorage.getItem('hrefaActividad1'));
+		$("#aActividad2").attr("href",sessionStorage.getItem('hrefaActividad2'));
+		$("#aActividad3").attr("href",sessionStorage.getItem('hrefaActividad3'));
 
 		var palabrasEsp = '{!! json_encode($palabrasEspDet) !!}';
 

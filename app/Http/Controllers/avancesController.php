@@ -32,7 +32,16 @@ class avancesController extends Controller
             $documento['usuario'] = $documento->getNombreUsuario->nombres." ".$documento->getNombreUsuario->apellidos;
             $avances = controlAvance::where('leccion_id',$id)->where('usuario_documento',$documento->usuario_documento)->get();
             foreach ($avances as $avance){
-                $documento[$avance->actividad_id] = $avance->estado;
+                //$documento[$avance->actividad_id] = $avance->estado;
+                if($avance->estado=="Not started"){
+                    $documento[$avance->actividad_id] = "<div style='background-color:#ff3724; color: #fff8f6'>Not started </div>";
+                }elseif($avance->estado=="Completed"){
+                    $documento[$avance->actividad_id] = "<div style='background-color:#3a8039; color: #fff8f6'>Completed</div>";
+                }else{
+                    $documento[$avance->actividad_id] = "<div style='background-color:#ff9811;color: #fff8f6'>In progress</div>";
+                }
+
+
             }
         }
         return json_encode(["data"=>$documentos]);

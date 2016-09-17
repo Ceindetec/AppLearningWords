@@ -199,13 +199,13 @@ class actividadesController extends Controller
         $numPalabras =leccionesDet::select('palabra_id')->where('leccion_id', $id_leccion)->orderBy('palabra_id','asc')->count();
 
         $inicio = floor($numPalabras/3);
-        $fin= $inicio+$inicio;
+        //$fin= $inicio+$inicio;
 
         //dd($inicio ." -> ".$fin);
 
         $listaTraducciones = array();
         $traduccionesMostrar = array();
-        $palabrasEspDet = leccionesDet::select('palabra_id')->where('leccion_id', $id_leccion)->skip($fin)->take(5)->orderBy('palabra_id','asc')->get();
+        $palabrasEspDet = leccionesDet::select('palabra_id')->where('leccion_id', $id_leccion)->skip($inicio)->take($inicio)->orderBy('palabra_id','asc')->get();
         foreach($palabrasEspDet as $palabraEsp){
 
             $traducciones = traducciones::select('palabra_id', 'traduccion')
@@ -259,6 +259,9 @@ class actividadesController extends Controller
 
         $inicio = floor($numPalabras/3);
         $fin= $inicio+$inicio;
+
+                //dd($fin ." -> ".$numPalabras);
+
         $palabrasEspDet = leccionesDet::select('palabra_id')->where('leccion_id', $id_leccion)->skip($fin)->take($numPalabras)->orderBy('palabra_id','asc')->get();
 
         foreach($palabrasEspDet as $palabraEsp){
