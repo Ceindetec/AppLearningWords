@@ -100,14 +100,18 @@ class leccionesController extends Controller
     {
         $leccion = leccionesEnc::find($id);
         if (count($leccion) >0){
-            $data['encabezado'] = leccionesEnc::find($id);
+            $band = $this->accionVerificarAvancesLeccion($id);
+            if ($band == 0) {
+                $data['encabezado'] = leccionesEnc::find($id);
+                $categorias = categoria::select('id', 'nombre')->get();
+                foreach ($categorias as $categoria)
+                    $listaCategorias[$categoria['id']] = $categoria['nombre'];
 
-            $categorias = categoria::select('id', 'nombre')->get();
-            foreach($categorias as $categoria)
-                $listaCategorias[$categoria['id']] = $categoria['nombre'];
-
-            $data['categorias'] = $listaCategorias;
-            return view('lecciones.editarLeccion', $data);
+                $data['categorias'] = $listaCategorias;
+                return view('lecciones.editarLeccion', $data);
+            }
+            else
+                return \Redirect::back();
         }
         else
             return \Redirect::route('lecciones.index');
@@ -162,14 +166,22 @@ class leccionesController extends Controller
     
     }
 
-    function checkEstadoLeccion(Request $request){
-        $id_leccion = $request -> input("id");
+    function  accionVerificarAvancesLeccion($id_leccion){
         $countActividades = controlAvance::where('leccion_id', $id_leccion)->count();
         $countEvaluaciones = evaluaciones::where('leccion_id', $id_leccion)->count();
-        
+
         if($countEvaluaciones > 0 ||  $countActividades > 0 )
-            return 1;        
+            return 1;
         else
             return 0;
     }
+
+    function checkEstadoLeccion(Request $request){
+//        $id_leccion = $request -> input("id");
+        $res = $this->accionVerificarAvancesLeccion($request->id);
+        return $res;
+    }
+
+
+
 }
