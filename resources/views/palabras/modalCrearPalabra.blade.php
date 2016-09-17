@@ -6,7 +6,7 @@
     </div>
     <div class="modal-body">
         <div class="form-group row">
-            <div class="col-xs-12">{!!Form::label('palabra', 'Word in Spanish (*)')!!}</div>
+            <div class="col-xs-12">{!!Form::label('palabra', 'Word in spanish (*)')!!}</div>
             <div class="col-xs-12">{!!Form::text('palabra',null,['class'=>'form-control tilde', 'required'])!!}</div>
         </div>
         <div class="form-group row">
