@@ -114,7 +114,11 @@ http://localhost/ingles/public/leccionesRepaso/86071522?_=1467216393792
 
 		table = $('#lecciones').DataTable( {
 			"language": {
-				"url": "{!!route('espanol')!!}"
+				"lengthMenu": "Show _MENU_ words per page",
+				"zeroRecords": "No matching words found",
+				"info": "Showing _START_ to _END_ of _TOTAL_ words",
+				"infoEmpty": "No words available",
+				"infoFiltered": "(filtered from _MAX_ total words)"
 			},
 			ajax: {
 				url: "actividadesRepaso/"+id_docente,

@@ -7,7 +7,7 @@
     <div class="modal-body">
         <div class="form-group row">
             <div class="col-xs-12">{!!Form::label('palabra', 'Word in Spanish (*)')!!}</div>
-            <div class="col-xs-12">{!!Form::text('palabra',null,['class'=>'form-control solo-letra', 'required'])!!}</div>
+            <div class="col-xs-12">{!!Form::text('palabra',null,['class'=>'form-control tilde', 'required'])!!}</div>
         </div>
         <div class="form-group row">
             <div class="col-xs-12">{!!Form::label('traduccion', 'Translation (*)')!!}</div>
@@ -17,9 +17,9 @@
             <div class="col-xs-6">{!!Form::label('categoria', 'Category',['class'=>'control-label']) !!}</div>
             <div class="col-xs-6">{!!Form::label('newCategoria', 'New',['class'=>'control-label']) !!}</div>
             <div class="col-xs-6">
-                {!!Form::select('categoria[]', $arrayCategorias ,null ,['class'=>'form-control select2_multiple solo-letra','style'=>'width:100%;',  'multiple'=>'multiple', 'id'=>'categoria', 'required'])!!}
+                {!!Form::select('categoria[]', $arrayCategorias ,null ,['class'=>'form-control select2_multiple tilde','style'=>'width:100%;',  'multiple'=>'multiple', 'id'=>'categoria', 'required'])!!}
             </div>
-            <div class="col-xs-4">{!!Form::text('newCategoria',null,['class'=>'form-control solo-letra', 'id'=>'newCategoria'])!!}</div>
+            <div class="col-xs-4">{!!Form::text('newCategoria',null,['class'=>'form-control tilde', 'id'=>'newCategoria'])!!}</div>
             <div class="col-xs-2 text-center">
                 <button type="button" class="btn btn-primary" onclick="nuevaCat()"><i class="fa fa-check" aria-hidden="true"></i></button>
             </div>
@@ -63,6 +63,10 @@
 
         $('.solo-letra').keyup(function (){
             this.value = (this.value + '').replace(/[^A-Za-z ]/g, '');
+        });
+
+        $('.tilde').keyup(function (){
+            this.value = (this.value + '').replace(/[^A-Za-zÑñáéíóúÁÉÍÓÚÜü ]/g, '');
         });
     });
 
