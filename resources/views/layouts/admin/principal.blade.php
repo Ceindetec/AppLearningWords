@@ -3,7 +3,7 @@
 <?php $user = Auth::user(); ?>
 <head>
 
-  <meta charset="utf-8"> 
+  <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="">
@@ -13,9 +13,12 @@
 
   <title>Learning Words !! </title>
 
+  <link rel="shortcut icon" href="{{{ asset('favicon.png') }}}">
+  <link rel="icon" href="{{ asset('favicon.png') }}">
+
   <!-- Bootstrap -->
     {!!Html::style('vendors/bootstrap/dist/css/bootstrap.css')!!}
-    {{--{!!Html::style('vendors/bootstrap/dist/css/styles.css')!!} --}}
+   <!-- {!!Html::style('vendors/bootstrap/dist/css/styles.css')!!}  -->
   <!-- Font Awesome -->
   {!!Html::style('vendors/font-awesome/css/font-awesome.min.css')!!}
   <!-- iCheck -->
