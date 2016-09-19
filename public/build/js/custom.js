@@ -14,8 +14,17 @@ var CURRENT_URL = window.location.href.split('?')[0],
     $NAV_MENU = $('.nav_menu'),
     $FOOTER = $('footer');
 
+
+
+
 // Sidebar
 $(document).ready(function() {
+
+
+
+
+
+
     // TODO: This is some kind of easy fix, maybe we can improve this
     var setContentHeight = function () {
         // reset height

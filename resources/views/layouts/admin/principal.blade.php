@@ -174,7 +174,7 @@
 {!!Html::script('vendors/datatable/js/jquery.dataTables.js')!!}
 
 <!-- Custom Theme Scripts -->
-{!!Html::script('build/js/custom.min.js')!!}
+{!!Html::script('build/js/custom.js')!!}
 
 <!-- msgbox js-->
 {!!Html::script('js/msgbox/jquery.msgbox.js')!!}
