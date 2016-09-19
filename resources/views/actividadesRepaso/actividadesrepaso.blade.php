@@ -9,9 +9,6 @@ td, th {
 	height:100px;
 	width: 200px;
 }
-.estado{
-	font-size: 24px;
-}
 
 	.pregunta{
 		cursor: pointer;
@@ -19,8 +16,50 @@ td, th {
 
 .activity{
 	font-weight: bold;
-	font-size: 34px;
 }
+
+
+@media (max-width: 768px) {
+	.estado{
+		font-size: 24px;
+	}
+	.activity{
+		font-size: 32px;
+	}
+}
+@media (min-width: 768px) and (max-width: 992px) {
+	.estado{
+		font-size: 34px;
+	}
+	.activity{
+		font-size: 42px;
+	}
+}
+@media (min-width: 992px) and (max-width: 1200px) {
+	.estado{
+		font-size: 44px;
+	}
+	.activity{
+		font-size: 52px;
+	}
+}
+@media (min-width: 1200px) {
+	.estado{
+		font-size: 48px;
+	}
+	.activity{
+		font-size: 52px;
+	}
+}
+
+.sizeEstado{
+	font-size: 20px;
+}
+
+	.panel-activity:hover{
+		box-shadow: 8px 8px 10px #888888;
+	}
+
 
 </style>
 @endsection
@@ -42,11 +81,12 @@ td, th {
 			<div class="col-xs-12 col-md-offset-1 col-md-10">
 			<div class="col-xs-12">
 				<a href="#" onclick='actividaduno(); return false;'>
-				<div class="panel panel-{{($actividad1=="Not started")?"danger":(($actividad1=="In progress")?"warning":"success")}}">
+				<div class="panel panel-{{($actividad1=="Not started")?"danger":(($actividad1=="In progress")?"warning":"success")}} panel-activity">
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-xs-3">
-								<i class="fa fa-hand-pointer-o fa-5x" aria-hidden="true"></i>
+								{{--<i class="fa fa-hand-pointer-o fa-5x" aria-hidden="true"></i>--}}
+								<img src="..\Images\draganddrop-02.png" class="img-responsive" alt="Responsive image">
 							</div>
 							<div class="col-xs-9 text-right">
 								{{--<i class="fa fa-question pregunta" aria-hidden="true"></i>--}}
@@ -56,8 +96,8 @@ td, th {
 						</div>
 					</div>
 
-						<div class="panel-footer">
-							<span class="pull-left">{{$actividad1}}</span>
+						<div class="panel-footer text-center">
+							<span class="sizeEstado" >{{$actividad1}}</span>
 							<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
 							<div class="clearfix"></div>
 						</div>
@@ -67,11 +107,12 @@ td, th {
 
 				<div class="col-xs-12">
 				<a href="#" onclick='actividaddos(); return false;'>
-				<div class="panel panel-{{($actividad2=="Not started")?"danger":(($actividad2=="In progress")?"warning":"success")}}">
+				<div class="panel panel-{{($actividad2=="Not started")?"danger":(($actividad2=="In progress")?"warning":"success")}} panel-activity">
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-xs-3">
-								<i class="fa fa-pencil-square-o fa-5x" aria-hidden="true"></i>
+								{{--<i class="fa fa-pencil-square-o fa-5x" aria-hidden="true"></i>--}}
+								<img src="..\Images\check-02.png" class="img-responsive" alt="Responsive image">
 							</div>
 							<div class="col-xs-9 text-right">
 								{{--<i class="fa fa-question pregunta" aria-hidden="true"></i>--}}
@@ -79,8 +120,8 @@ td, th {
 							</div>
 						</div>
 					</div>
-						<div class="panel-footer">
-							<span class="pull-left">{{$actividad2}}</span>
+						<div class="panel-footer text-center">
+							<span class="sizeEstado">{{$actividad2}}</span>
 							<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
 							<div class="clearfix"></div>
 						</div>
@@ -91,11 +132,12 @@ td, th {
 				<div class="col-xs-12">
 				<a href="#" onclick='actividadtres(); return false;'>
 
-					<div class="panel panel-{{($actividad3=="Not started")?"danger":(($actividad3=="In progress")?"warning":"success")}}">
+					<div class="panel panel-{{($actividad3=="Not started")?"danger":(($actividad3=="In progress")?"warning":"success")}} panel-activity">
 						<div class="panel-heading">
 							<div class="row">
 								<div class="col-xs-3">
-									<i class="fa fa-list-ul fa-5x" aria-hidden="true"></i>
+									{{--<i class="fa fa-list-ul fa-5x" aria-hidden="true"></i>--}}
+									<img src="..\Images\list-02.png" class="img-responsive" alt="Responsive image">
 								</div>
 								<div class="col-xs-9 text-right">
 									{{--<i class="fa fa-question pregunta" aria-hidden="true"></i>--}}
@@ -104,8 +146,8 @@ td, th {
 							</div>
 						</div>
 
-							<div class="panel-footer">
-								<span class="pull-left">{{$actividad3}}</span>
+							<div class="panel-footer text-center">
+								<span class="sizeEstado" >{{$actividad3}}</span>
 								<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
 								<div class="clearfix"></div>
 							</div>
