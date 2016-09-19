@@ -129,12 +129,18 @@ td, th {
 <script type="text/javascript">
 var table;
 	$(function(){
-		$("#menuleccion").removeClass("hidden").addClass("show");
+		$("#menuleccion").removeClass("hidden").addClass("show"); 
 		$("#spanLeccion").text("{{$nombreleccion}}");
+			sessionStorage.setItem('nombreLeccion', "{{$nombreleccion}}");
+
 		$("#aLeccion").attr("href","{{route("actividadesRepaso",$idleccion)}}");
+			sessionStorage.setItem('hrefaLeccion', "{{route("actividadesRepaso",$idleccion)}}");
 		$("#aActividad1").attr("href","{{route("actividadUno",$idleccion)}}");
+			sessionStorage.setItem('hrefaActividad1', "{{route("actividadUno",$idleccion)}}");
 		$("#aActividad2").attr("href","{{route("actividadDos",$idleccion)}}");
+			sessionStorage.setItem('hrefaActividad2', "{{route("actividadDos",$idleccion)}}");
 		$("#aActividad3").attr("href","{{route("actividadTres",$idleccion)}}");
+			sessionStorage.setItem('hrefaActividad3', "{{route("actividadTres",$idleccion)}}");
 
 	});
 
