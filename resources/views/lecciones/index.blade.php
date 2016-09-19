@@ -9,13 +9,13 @@ td, th {
 @endsection
 
 @section('content')
-<!-- <div class="page-title">
-	<div class="title_left">
+<div class="page-title">
+	<!-- <div class="title_left">
 		<h3>
 			Registro de lecciones
 		</h3>
-	</div>
-</div> -->
+	</div> -->
+</div> 
 <div class="clearfix"></div>
 <div class="panel panel-primary">
 	<div class="panel-heading">
