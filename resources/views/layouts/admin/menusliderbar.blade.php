@@ -27,7 +27,7 @@
 					<li><a href="{{ route('actividadesRepaso.index') }}"><i class="fa fa-home"></i>home</a></li>
 					<li><a href="{{ route('actividadesRepaso.index') }}"><i class="fa fa-tasks"></i>Lessons</a></li>
 
-					<li id="menuleccion"><a id="aLeccion" href="#" onclick="return false;"><i class="fa fa-tasks"></i><span id="spanLeccion"></span><span class="fa fa-chevron-down"></span></a>
+					<li id="menuleccion"><a id="aLeccion" href="#" onclick="return false;"><i class="fa fa-sitemap" aria-hidden="true"></i><span id="spanLeccion"></span><span class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
 
 							<li><a href="#" id="aActividad1">Activity 1</a></li>
