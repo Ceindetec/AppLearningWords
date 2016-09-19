@@ -15,9 +15,9 @@ td, th {
 
 @section('content')
 <div class="page-title">
-	<div class="title_left">
+	<!-- <div class="title_left">
 		<h3>Lecciones a Repasar</h3>
-	</div>
+	</div> -->
 </div>
 
 <div class="col-sm-10 col-sm-offset-1">
@@ -25,7 +25,7 @@ td, th {
 		<div class="panel-heading">
 			<form class="form-horizontal">
 				<div class="form-group">
-							{!!Form::label(null,'Seleccione un Docente: ',['class'=>"col-sm-3 control-label"])!!}
+							{!!Form::label(null,'Select a Teaching: ',['class'=>"col-sm-3 control-label"])!!}
 						<div class="col-sm-8">
 							{!!Form::select('docentes', $listadocentes ,null,['class'=>'form-control', 'id' => 'docentes', 'required'])!!}
 						</div>
