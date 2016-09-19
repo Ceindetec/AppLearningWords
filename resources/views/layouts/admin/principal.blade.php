@@ -69,7 +69,8 @@
           <div class="navbar nav_title" style="border: 0;">
             
               <!--<i class="fa fa-paw"></i> <span>Control RFID!</span>-->
-              @include('layouts.admin.lgogran')
+              <span id="logogrande">@include('layouts.admin.lgogran')</span>
+              <span id="logochiqui" style="display: none">@include('layouts.admin.logochiqui')</span>
             
           </div>
 
