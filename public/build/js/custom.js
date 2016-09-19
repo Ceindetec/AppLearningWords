@@ -14,17 +14,8 @@ var CURRENT_URL = window.location.href.split('?')[0],
     $NAV_MENU = $('.nav_menu'),
     $FOOTER = $('footer');
 
-
-
-
 // Sidebar
 $(document).ready(function() {
-
-
-
-
-
-
     // TODO: This is some kind of easy fix, maybe we can improve this
     var setContentHeight = function () {
         // reset height
@@ -66,12 +57,17 @@ $(document).ready(function() {
 
     // toggle small or large menu
     $MENU_TOGGLE.on('click', function() {
+
         if ($BODY.hasClass('nav-md')) {
             $SIDEBAR_MENU.find('li.active ul').hide();
             $SIDEBAR_MENU.find('li.active').addClass('active-sm').removeClass('active');
+            $("#logogrande").hide();
+            $("#logochiqui").show();
         } else {
             $SIDEBAR_MENU.find('li.active-sm ul').show();
             $SIDEBAR_MENU.find('li.active-sm').addClass('active').removeClass('active-sm');
+            $("#logogrande").show();
+            $("#logochiqui").hide();
         }
 
         $BODY.toggleClass('nav-md nav-sm');
