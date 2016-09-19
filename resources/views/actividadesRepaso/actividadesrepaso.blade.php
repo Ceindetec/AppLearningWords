@@ -32,15 +32,15 @@ td, th {
 	</div>
 </div>
 
-<div class="col-sm-10 col-sm-offset-1">
+<div class="col-sm-6">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
 <h3>{{$nombreleccion}}</h3>
 		</div>
 		<div class="panel-body">
 
-			<div class="col-xs-12 col-md-offset-1">
-			<div class="col-lg-3 col-md-6">
+			<div class="col-xs-12 col-md-offset-1 col-md-10">
+			<div class="col-xs-12">
 				<a href="#" onclick='actividaduno(); return false;'>
 				<div class="panel panel-{{($actividad1=="Not started")?"danger":(($actividad1=="In progress")?"warning":"success")}}">
 					<div class="panel-heading">
@@ -65,7 +65,7 @@ td, th {
 				</a>
 			</div>
 
-			<div class="col-lg-3 col-md-6">
+				<div class="col-xs-12">
 				<a href="#" onclick='actividaddos(); return false;'>
 				<div class="panel panel-{{($actividad2=="Not started")?"danger":(($actividad2=="In progress")?"warning":"success")}}">
 					<div class="panel-heading">
@@ -88,7 +88,7 @@ td, th {
 				</a>
 			</div>
 
-			<div class="col-lg-3 col-md-6">
+				<div class="col-xs-12">
 				<a href="#" onclick='actividadtres(); return false;'>
 
 					<div class="panel panel-{{($actividad3=="Not started")?"danger":(($actividad3=="In progress")?"warning":"success")}}">
@@ -123,6 +123,12 @@ td, th {
 		</div>--}}
 	</div>
 </div>
+
+	<div class="col-sm-6">
+		<img src="..\Images\modelo1.png" class="img-responsive hidden-xs hidden-sm  hidden-md" alt="Responsive image">
+		<img src="..\Images\modelo2.png" class="img-responsive hidden-xs hidden-lg" alt="Responsive image">
+	</div>
+
 @endsection
 
 @section('scripts')
