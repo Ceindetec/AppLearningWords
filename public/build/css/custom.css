@@ -2,6 +2,11 @@
 .left_col {
   background: #2A3F54; }
 
+  td {
+  text-align: center;
+  font-size: 16px;
+}
+
 .nav-sm .container.body .col-md-3.left_col {
   width: 70px;
   padding: 0;
@@ -199,7 +204,11 @@
   position: fixed; }
 
 body .container.body .right_col {
-  background: #F7F7F7; }
+  background: #F7F7F7; 
+  background: url('../../Images/fondo.jpg') 100%;
+  background-size: cover;
+  /*background-repeat: no-repeat;*/
+}
 
 .nav-md .container.body .right_col {
   padding: 10px 20px 0;
@@ -545,7 +554,7 @@ a:hover, a:focus {
   border-right: 5px solid #9abd4f; }
 
 .nav li.current-page {
-  background: rgba(255, 255, 255, 0.05); }
+  background: rgba(154, 189, 79, 0.1); }
 
 .nav li li li.current-page {
   background: none; }
