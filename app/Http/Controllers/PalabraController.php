@@ -16,7 +16,7 @@ use LearningWords\traducciones;
 use Symfony\Component\HttpKernel\Tests\DataCollector\DumpDataCollectorTest;
 use LearningWords\Http\Requests\RequestEditarPalabra;
 use LearningWords\Http\Requests\RequestCategoria;
-
+header('Content-Type: text/html; charset=UTF-8');
 class PalabraController extends Controller
 {
     /**
@@ -38,8 +38,8 @@ class PalabraController extends Controller
     {
 //        dd($request->all());
         $result = '';
-        $palEspanol = ucwords(strtolower($request->input('palabra')));
-        $traduccion = ucwords(strtolower($request->input('traduccion')));
+        $palEspanol = ucwords(mb_strtolower($request->input('palabra')));
+        $traduccion = ucwords(mb_strtolower($request->input('traduccion')));
         $respuesta = "";
         $result['estado'] = false;
         $cantIguales = 0;
@@ -47,7 +47,7 @@ class PalabraController extends Controller
 
         $Traduccion = traducciones::find($request->input('idTraduccion'));
         $Palabra_esp = palabrasEsp::find($request->input('idPalabra'));
-
+//        dd($Palabra_esp);
         if($palEspanol != "" && $traduccion != "" && count($request->input('categorias')) > 0){
             $catIngresadas = $request->input('categorias');
             $catExistentes = preg_split("/,/", $request->input('categoria'));
@@ -58,10 +58,18 @@ class PalabraController extends Controller
                         $cantIguales++;
                 }
             }
-
-            if($palEspanol != $Palabra_esp->palabra){
-                $cant =  palabrasEsp::where('palabra', $palEspanol)->count();
-                if ($cant==0){
+            if($palEspanol !== $Palabra_esp->palabra) {
+                $val = 1;
+//                dd($palEspanol);
+                $cant = palabrasEsp::where('palabra', $palEspanol)->get();
+//                dd("if" . count($cant) . " > 0");
+                if (count($cant) > 0) {
+                    if ($palEspanol !== $cant[0]->palabra)
+                        $val = 0;
+                } else
+                    $val = 0;
+//                dd($val);
+                if ($val==0){
                     $Palabra_esp->palabra = $palEspanol;
                     $Palabra_esp->save();
                     $cambios++;
@@ -229,11 +237,13 @@ class PalabraController extends Controller
      * @return [json] [Respuesta satisfactoria o negativa a accion segun corresponda]
      */
     public function insertarPalabra(Request $request){
+//        dd($request->all());
         $result = '';
-        $palEspanol = $request->input('palabra');
-        $traduccion = $request->input('traduccion');
+        $palEspanol = utf8_encode(ucwords(mb_strtolower($request->input('palabra'))));
+        $traduccion = ucwords(mb_strtolower($request->input('traduccion')));
         $respuesta = "";
         $result['estado'] = false;
+
         if ($palEspanol != "" && $traduccion != "" && count($request->input('categoria')) != 0 ){
             if(isset($request->checkTiempos)){
                 if ($this->validarExistencia($palEspanol, $traduccion, 'N/A')) {
@@ -270,6 +280,7 @@ class PalabraController extends Controller
         else {
             $respuesta = "Falta Informacion";
         }
+//        dd($respuesta);
         $result['mensaje'] = $respuesta;
         return json_encode($result);
     }
@@ -297,8 +308,9 @@ class PalabraController extends Controller
      */
     public function validarExistencia($espanol, $traduccion, $siglaTiempo){
         $texto = false;
-        $idEspanol = palabrasEsp::select('id')->where('palabra', ucwords(strtolower($espanol)))->get();
-        $regtraduccion = traducciones::where('traduccion', ucwords($traduccion))->get();
+//        dd(utf8_encode($espanol));
+        $idEspanol = palabrasEsp::select('id')->where('palabra',$espanol)->get();
+        $regtraduccion = traducciones::where('traduccion', $traduccion)->get();
         $tiempo = tiempoVerbal::select('id')->where('sigla', $siglaTiempo)->get();
         if(count($idEspanol)>0 && count($regtraduccion)>0){
             if($regtraduccion[0]->palabra_id == $idEspanol[0]->id && $regtraduccion[0]->tiempoverbal_id == $tiempo[0]->id) {
@@ -315,9 +327,16 @@ class PalabraController extends Controller
      */
     public function ejecutarInsertPalabras($palEspanol, $traduccion, $padreid, $siglaTiempoV, $arrayCategorias, $tipo){
         $respuesta="";
-        $palEspanol = ucwords(strtolower($palEspanol));
-        $traduccion = ucwords(strtolower($traduccion));
-        $idpalabraEsp = palabrasEsp::select('id')->where('palabra', $palEspanol)->get();
+        $palEspanol = ucwords(mb_strtolower($palEspanol));
+        $traduccion = ucwords(mb_strtolower($traduccion));
+
+        $idpalabraEsp = palabrasEsp::select('id', 'palabra')->where('palabra', $palEspanol)->get();
+
+        if (count($idpalabraEsp) > 0) {
+            if ($idpalabraEsp[0]->palabra !== $palEspanol)
+                $idpalabraEsp = null;
+        }
+
         $regTraduccion = traducciones::where('traduccion', $traduccion)->get();
 
         if(count($regTraduccion)>0 && count($idpalabraEsp)>0){
