@@ -57,13 +57,13 @@
 
 			@foreach($listaTraducciones as $valor)
 				<div  class="row">
-					<div class ="col-md-3 col-md-offset-2" style="text-align:right"	>
+					<div class ="col-xs-4 col-sm-3 col-sm-offset-1 col-md-3 col-md-offset-2 " style="text-align:right"	>
 						@if($valor)
 							{!!Form::label(null,$valor,["class"=>"noarrastable text-center"])!!}
 							{{--{!! Form::hidden('palabra'.$i,$i, ['id' => 'palabra'.$i]) !!}--}}
 						@endif
 					</div>
-					<div class ="col-md-2">
+					<div class ="col-xs-6 col-sm-4 col-md-4 col-lg-3">
 						<div class="form-group has-feedback">
 							{!!Form::text('La respuesta '.$i, null ,['class'=>'form-control respuestas', 'id' => 'respuesta'.$i, 'required'])!!}
 							<span class="glyphicon  form-control-feedback " aria-hidden="true"></span>
