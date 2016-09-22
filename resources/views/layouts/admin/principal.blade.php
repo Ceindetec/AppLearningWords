@@ -107,7 +107,7 @@
       <!-- /top navigation -->
 
       <!-- page content -->
-      <div class="right_col" role="main">
+      <div class="right_col row" role="main">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
          @yield('content')
        </div>
