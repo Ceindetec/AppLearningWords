@@ -4,10 +4,16 @@
 	<!-- <h1>Bienvenido a Learnig Words</h1> -->
 <div style="display: block">
 
-	<div class="col-md-offset-4">
+	
+	
+	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+		
+	</div>
+
+	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 		
 <svg version="1.0" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="500px" viewBox="0 0 461.627 265.99" enable-background="new 0 0 461.627 265.99"
+	  viewBox="0 0 461.627 265.99" enable-background="new 0 0 461.627 265.99"
 	 xml:space="preserve">
 <g>
 	<g>
@@ -913,11 +919,9 @@ FWH2AAAAAElFTkSuQmCC" transform="matrix(0.24 0 0 0.24 42.1909 157.9297)">
 </image>
 <text transform="matrix(1 0 0 1 70.8164 247.252)" fill="#5B5B55" stroke="#51524E" stroke-miterlimit="10" font-family="'Governor'" font-size="64.177">Bienvenidos</text>
 </svg>
-
-
-
-
 	</div>
+
+	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4"></div>
 </div>
 	
 @endsection
