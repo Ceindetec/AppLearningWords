@@ -7,6 +7,37 @@ $.ajaxSetup({
 });
 
 
+function touchHandler(event)
+{
+    var touches = event.changedTouches,
+    first = touches[0],
+    type = "";
+    switch(event.type)
+    {
+        case "touchstart": type = "mousedown"; break;
+        case "touchmove":  type="mousemove"; break;        
+        case "touchend":   type="mouseup"; break;
+        default: return;
+    }
+
+    var simulatedEvent = document.createEvent("MouseEvent");
+    simulatedEvent.initMouseEvent(type, true, true, window, 1, 
+      first.screenX, first.screenY, 
+      first.clientX, first.clientY, false, 
+      false, false, false, 0/*left*/, null);
+    first.target.dispatchEvent(simulatedEvent);
+   // event.preventDefault();
+}
+
+function envttohs() 
+{
+    document.addEventListener("touchstart", touchHandler, true);
+    document.addEventListener("touchmove", touchHandler, true);
+    document.addEventListener("touchend", touchHandler, true);
+    document.addEventListener("touchcancel", touchHandler, true);    
+}
+
+
 var table = [];
 
 
@@ -17,6 +48,7 @@ var modalBsContent = $('#modalBs').find(".modal-content");
 
 $(function(){
 
+    envttohs();
     /*elimina boton de seleccion de filtros de la grid*/
 
     $('span[unselectable].k-dropdown-wrap.k-state-default').removeAttr('style');
@@ -93,13 +125,13 @@ function EventoFormularioModal(modal, onSuccess, oneError) {
                 if(jqXHR.status == 422){
                     oneError(JSON.parse(jqXHR.responseText));
                 }else{
-                   var message = "Error de ejecución: " + textStatus + " " + errorThrown;
-                   $.msgbox(message, { type: 'error' });
-                   console.log("Error: "); 
-               }
+                 var message = "Error de ejecución: " + textStatus + " " + errorThrown;
+                 $.msgbox(message, { type: 'error' });
+                 console.log("Error: "); 
+             }
 
-           }
-       });
+         }
+     });
         return false;
     });
 }
