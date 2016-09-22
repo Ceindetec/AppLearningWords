@@ -113,10 +113,10 @@
 
 			<div class="row">
 				<div class="col-xs-6">
-					{!! Form::button('Verificar', array('class' => 'btn btn-success', 'id'=>'verificar')) !!}
+					{!! Form::button('Verify !', array('class' => 'btn btn-success', 'id'=>'verificar')) !!}
 				</div>
 				<div class="col-xs-6">
-					{!! Form::button('Menu de Actividades', array('class' => 'btn btn-success pull-right', 'id'=>'regresar')) !!}
+					{!! Form::button('Activities menu', array('class' => 'btn btn-success pull-right', 'id'=>'regresar')) !!}
 				</div>
 			</div>
 
