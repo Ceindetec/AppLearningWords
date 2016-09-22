@@ -44,7 +44,7 @@
                     <th>idEspanol</th>
                     <th>Word</th>
                     <th>Translation</th>
-                    <th>Weather</th>
+                    <th>Tense</th>
                     <th>Edit</th>
                     <th>Remove</th>
                 </tr>
