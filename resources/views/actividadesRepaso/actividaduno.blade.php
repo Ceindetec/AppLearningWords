@@ -46,7 +46,12 @@ td, th {
 	border: solid #3c763d 2px;
 }
 
-.check{
+.cerebro{
+	position:fixed !important;
+	right:0px;
+	top:25%;
+	z-index:10 !important;
+	padding-left: 60px;
 
 }
 
@@ -54,66 +59,81 @@ td, th {
 @endsection
 
 @section('content')
-<div class="page-title">
-	<div class="title_left">
-		<h3>Activity 1</h3>
-	</div>
-</div>
 
-<div class="panel panel-primary">
-	<div class="panel-heading">
-		<h3 class="panel-title">
-			Drag the correct translation to its word in spanish.
-		</h3>		
-		
-	</div>
-	<div class="panel-body padre" >
-		{!!Form::open()!!}	
-	<?php $i = 0;
-	?>
-
-	@foreach($palabrasEspDet as $valor)
-		 
-		 <div  class="row">
-			<div class ="col-xs-3 col-md-offset-2" style="text-align:right"	>
-				@if($valor->getpalabra)
-					{!!Form::label(null,$valor->getpalabra->palabra,["class"=>"noarrastable text-center"])!!}
-				@endif
+	<div class="row">
+		<div class="page-title">
+			<div class="title_left">
+				<h3>Activity 1</h3>
 			</div>
-			<div class ="col-xs-2">
+		</div>
+	</div>
 
-				<div id="respuesta{{$i}}" class=" form-control respuestas droppable" data-label="">
+
+
+	<div class="row">
+
+		<div class=" col-xs-12 col-sm-12 col-md-8">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						Drag the correct translation to its word in spanish.
+					</h3>
 
 				</div>
+				<div class="panel-body padre" >
+					{!!Form::open()!!}
+				<?php $i = 0;
+				?>
 
-			</div>	
-			<div class ="col-md-2 ">
-				{!!Form::label(null,$traduccionesMostrar[$i],['id'=>"label".$i,'class'=>'draggable text-center center-block'])!!}
-			</div>			
-		</div>		
-		</br>
-		<?php 
-			$i++;
-		?>
-		@endforeach
+				@foreach($palabrasEspDet as $valor)
 
-		{!!Form::close()!!}	
-	</div>
-	<div class="panel-footer">
+					 <div  class="row">
+						<div class ="col-xs-4 " style="text-align:right"	>
+							@if($valor->getpalabra)
+								{!!Form::label(null,$valor->getpalabra->palabra,["class"=>"noarrastable text-center"])!!}
+							@endif
+						</div>
+						<div class ="col-xs-4">
 
-		<div class="row">
-			<div class="col-xs-6">
-				{!! Form::button('Verify !', array('class' => 'btn btn-success', 'id'=>'verificar')) !!}
-			</div>
-			<div class="col-xs-6">
-				{!! Form::button('Next', array('class' => 'btn btn-success pull-right hidden', 'id'=>'siguiente')) !!}
-				{!! Form::button('Activities menu', array('class' => 'btn btn-success pull-right ', 'id'=>'regresar')) !!}
+							<div id="respuesta{{$i}}" class=" form-control respuestas droppable" data-label="">
+
+							</div>
+
+						</div>
+						<div class ="col-md-4 ">
+							{!!Form::label(null,$traduccionesMostrar[$i],['id'=>"label".$i,'class'=>'draggable text-center center-block'])!!}
+						</div>
+					</div>
+					</br>
+					<?php
+						$i++;
+					?>
+					@endforeach
+
+					{!!Form::close()!!}
+				</div>
+				<div class="panel-footer">
+
+					<div class="row">
+						<div class="col-xs-6">
+							{!! Form::button('Verify !', array('class' => 'btn btn-success', 'id'=>'verificar')) !!}
+						</div>
+						<div class="col-xs-6">
+							{!! Form::button('Next', array('class' => 'btn btn-success pull-right hidden', 'id'=>'siguiente')) !!}
+							{!! Form::button('Activities menu', array('class' => 'btn btn-success pull-right ', 'id'=>'regresar')) !!}
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 
-	</div>
+		<div class="col-md-4 cerebro" >
+			<img src="..\Images\ilustracioneslearning-0{{rand(1,5)}}.png" class="img-responsive hidden-xs hidden-sm  " alt="Responsive image" >
+		</div>
 
-</div>
+
+
+	</div>
 
 @endsection
 
@@ -131,12 +151,6 @@ td, th {
 	$("#aActividad3").attr("href",sessionStorage.getItem('hrefaActividad3'));
 
 	$(function(){
-
-
-
-
-
-
 
 		$(".respuestas").each(function(){
 			$(this).empty();

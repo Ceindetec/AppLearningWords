@@ -27,76 +27,97 @@
 			border-radius: 5px;
 			background: #3d7193;
 		}
+		.cerebro{
+			position:fixed !important;
+			right:0px;
+			top:25%;
+			z-index:10 !important;
+			padding-left: 60px;
+
+		}
 	</style>
 @endsection
 
 @section('content')
-	<div class="page-title">
-		<div class="title_left">
-			<h3>Activity 2</h3>
+	<div class="row">
+		<div class="page-title">
+			<div class="title_left">
+				<h3>Activity 2</h3>
+			</div>
 		</div>
 	</div>
 
-	<div class="panel panel-primary">
-		<div class="panel-heading">
-			<h3 class="panel-title">
-				Type the traslation for each word
-			</h3>
+	<div class="row">
 
-		</div>
-		<div class="panel-body padre" >
-			{!!Form::open()!!}
-			<?php $i = 0;
+		<div class=" col-xs-12 col-sm-12 col-md-8">
 
-			?>
-			@foreach($palabrasEspDet as $valor)
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						Type the traslation for each word
+					</h3>
+
+				</div>
+				<div class="panel-body padre" >
+					{!!Form::open()!!}
+					<?php $i = 0;
+
+					?>
+					@foreach($palabrasEspDet as $valor)
 
 
-			@endforeach
+					@endforeach
 
 
-			@foreach($listaTraducciones as $valor)
-				<div  class="row">
+					@foreach($listaTraducciones as $valor)
+						<div  class="row">
 					<div class ="col-xs-4 col-sm-3 col-sm-offset-1 col-md-3 col-md-offset-2 " style="text-align:right"	>
-						@if($valor)
-							{!!Form::label(null,$valor,["class"=>"noarrastable text-center"])!!}
-							{{--{!! Form::hidden('palabra'.$i,$i, ['id' => 'palabra'.$i]) !!}--}}
-						@endif
-					</div>
+								@if($valor)
+									{!!Form::label(null,$valor,["class"=>"noarrastable text-center"])!!}
+									{{--{!! Form::hidden('palabra'.$i,$i, ['id' => 'palabra'.$i]) !!}--}}
+								@endif
+							</div>
 					<div class ="col-xs-6 col-sm-4 col-md-4 col-lg-3">
-						<div class="form-group has-feedback">
-							{!!Form::text('La respuesta '.$i, null ,['class'=>'form-control respuestas', 'id' => 'respuesta'.$i, 'required'])!!}
-							<span class="glyphicon  form-control-feedback " aria-hidden="true"></span>
+								<div class="form-group has-feedback">
+									{!!Form::text('La respuesta '.$i, null ,['class'=>'form-control respuestas', 'id' => 'respuesta'.$i, 'required'])!!}
+									<span class="glyphicon  form-control-feedback " aria-hidden="true"></span>
+								</div>
+
+
+							</div>
+
 						</div>
+						</br>
 
+						<?php
+						$i++;
+						//$count++;
+						?>
+					@endforeach
 
+					{!!Form::close()!!}
+				</div>
+				<div class="panel-footer">
+					<div class="row">
+						<div class="col-xs-6">
+							{!! Form::button('Verify !', array('class' => 'btn btn-success', 'id'=>'verificar')) !!}
+						</div>
+						<div class="col-xs-6">
+							{!! Form::button('Next', array('class' => 'btn btn-success pull-right hidden', 'id'=>'siguiente')) !!}
+							{!! Form::button('Activities menu', array('class' => 'btn btn-success pull-right ', 'id'=>'regresar')) !!}
+						</div>
 					</div>
-
 				</div>
-				</br>
 
-				<?php
-				$i++;
-				//$count++;
-				?>
-			@endforeach
-
-			{!!Form::close()!!}
-		</div>
-		<div class="panel-footer">
-			<div class="row">
-				<div class="col-xs-6">
-					{!! Form::button('Verify !', array('class' => 'btn btn-success', 'id'=>'verificar')) !!}
-				</div>
-				<div class="col-xs-6">
-					{!! Form::button('Next', array('class' => 'btn btn-success pull-right hidden', 'id'=>'siguiente')) !!}
-					{!! Form::button('Activities menu', array('class' => 'btn btn-success pull-right ', 'id'=>'regresar')) !!}
-				</div>
 			</div>
 		</div>
 
-	</div>
+		<div class="col-md-4 cerebro" >
+			<img src="..\Images\ilustracioneslearning-0{{rand(1,5)}}.png" class="img-responsive hidden-xs hidden-sm  " alt="Responsive image" >
+		</div>
 
+
+	</div>
 @endsection
 
 @section('scripts')
