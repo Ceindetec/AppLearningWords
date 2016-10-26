@@ -32,8 +32,8 @@
 			right:0px;
 			top:25%;
 			z-index:10 !important;
-			padding-left: 60px;
-
+			width: 29%
+			
 		}
 	</style>
 @endsection
@@ -112,7 +112,7 @@
 			</div>
 		</div>
 
-		<div class="col-md-4 cerebro" >
+		<div class="cerebro" >
 			<img src="..\Images\ilustracioneslearning-0{{rand(1,5)}}.png" class="img-responsive hidden-xs hidden-sm  " alt="Responsive image" >
 		</div>
 
@@ -153,9 +153,9 @@
 		//console.log(traduccionesJsonMos);
 		//console.log(traduccionesJsonMos[0]);
 
-		$.each(palabrasJsonEsp,function(index, valor){
-			console.log(valor.getpalabra.palabra);
-		});
+		//$.each(palabrasJsonEsp,function(index, valor){
+		//	console.log(valor.getpalabra.palabra);
+		//});
 		/*	traduccion = $('#traducciones').val();
 		 traduccionJson = JSON.parse(traduccion);
 		 //console.log(traduccionJson);
@@ -182,9 +182,9 @@
 			$.each(palabrasJsonEsp,function(index, valor){
 
 
-				console.log(valor.getpalabra.palabra.toLowerCase()+" -> " +$("#respuesta"+i).val().toLowerCase());
+				//console.log(valor.getpalabra.palabra.toLowerCase().trim()+" -> " +$("#respuesta"+i).val().toLowerCase().trim());
 
-				if(valor.getpalabra.palabra.toLowerCase()==$("#respuesta"+i).val().toLowerCase()){
+				if(valor.getpalabra.palabra.toLowerCase().trim()==$("#respuesta"+i).val().toLowerCase().trim()){
 
 					$("#respuesta"+i).parent().addClass("has-success");
 					$("#respuesta"+i).siblings().addClass("glyphicon-ok");
