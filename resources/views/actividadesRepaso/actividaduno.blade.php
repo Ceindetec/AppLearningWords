@@ -46,14 +46,14 @@ td, th {
 	border: solid #3c763d 2px;
 }
 
-.cerebro{
-	position:fixed !important;
-	right:0px;
-	top:25%;
-	z-index:10 !important;
-	padding-left: 60px;
-
-}
+		.cerebro{
+			position:fixed !important;
+			right:0px;
+			top:25%;
+			z-index:10 !important;
+			width: 29%
+			
+		}
 
 </style>
 @endsection
@@ -127,7 +127,7 @@ td, th {
 			</div>
 		</div>
 
-		<div class="col-md-4 cerebro" >
+		<div class="cerebro" >
 			<img src="..\Images\ilustracioneslearning-0{{rand(1,5)}}.png" class="img-responsive hidden-xs hidden-sm  " alt="Responsive image" >
 		</div>
 
